@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: Quartz | KeepGoing博客</title>
+  <title>shiro配置以及使用 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="KeepGoing博客">
-<meta property="og:url" content="http://yoursite.com/tags/Quartz/index.html">
+  <meta name="description" content="shiro配置以及使用">
+<meta name="keywords" content="博客,java,shiro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shiro配置以及使用">
+<meta property="og:url" content="http://yoursite.com/2018/05/21/shiro框架详细配置及使用/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
+<meta property="og:description" content="shiro配置以及使用">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-06T15:08:34.239Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KeepGoing博客">
+<meta name="twitter:title" content="shiro配置以及使用">
+<meta name="twitter:description" content="shiro配置以及使用">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -163,36 +168,90 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-shiro框架详细配置及使用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/21/spring的Quartz配置/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/21/spring的Quartz配置/">springd的Quartz实现定时任务</a>
+    <h1 class="article-title" itemprop="name">
+      shiro配置以及使用
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/05/21/shiro框架详细配置及使用/" class="archive-article-date">
+  	<time datetime="2018-05-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-21</time>
+</a>
+		
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+        
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>shiro配置以及使用<br><a id="more"></a></p>
+<h2 id="shiro配置以及使用"><a href="#shiro配置以及使用" class="headerlink" title="shiro配置以及使用"></a>shiro配置以及使用</h2><blockquote>
+<p><strong>1.web.xml文件的配置</strong></p>
+</blockquote>
+<p>&lt;!-Shiro过滤器 –&gt;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</span><br><span class="line">&lt;init-param&gt;</span><br><span class="line">&lt;param-name&gt;targetFilterLifecycle&lt;/param-name&gt;</span><br><span class="line">&lt;param-value&gt;true&lt;/param-value&gt;</span><br><span class="line">&lt;/init-param&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span><br><span class="line">&lt;dispatcher&gt;REQUEST&lt;/dispatcher&gt;</span><br><span class="line">&lt;dispatcher&gt;FORWARD&lt;/dispatcher&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><strong>2.applicationContext-shiro.xml 实现</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd&quot;</span><br><span class="line">default-lazy-init=&quot;true&quot;&gt;</span><br><span class="line">&lt;description&gt;Shiro Configuration&lt;/description&gt;</span><br><span class="line">    &lt;!--安全管理器--&gt;</span><br><span class="line">    &lt;bean id=&quot;securityManager&quot; class=&quot;org.apache.shiro.web.mgt.DefaultWebSecurityManager&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;realm&quot; ref=&quot;shiroDbRealm&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;cacheManager&quot; ref=&quot;cacheManager&quot;/&gt;</span><br><span class="line">       &lt;!--  &lt;property name=&quot;sessionManager&quot; ref=&quot;sessionManager&quot;/&gt; --&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">    &lt;!-- 項目自定义的Realm --&gt;</span><br><span class="line">    &lt;bean id=&quot;shiroDbRealm&quot; class=&quot;com.huaxia.security.shiro.ShiroDbRealm&quot;/&gt;   =========  自己写的域==============</span><br><span class="line">    &lt;!-- Shiro Filter --&gt;</span><br><span class="line">    &lt;bean id=&quot;shiroFilter&quot; class=&quot;org.apache.shiro.spring.web.ShiroFilterFactoryBean&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;loginUrl&quot; value=&quot;/login&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;successUrl&quot; value=&quot;/index&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;unauthorizedUrl&quot; value=&quot;/unauth&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;filterChainDefinitions&quot;&gt;</span><br><span class="line">            &lt;value&gt;</span><br><span class="line">                /commons/** = anon</span><br><span class="line">                /plugins/** = anon</span><br><span class="line">                /assets/** = anon</span><br><span class="line">                /css/** = anon</span><br><span class="line">                /js/** = anon</span><br><span class="line">                /img/** = anon</span><br><span class="line">                /fonts/** = anon</span><br><span class="line">                /bootstrap/** = anon</span><br><span class="line">                /login = anon</span><br><span class="line">                /interface/** = anon</span><br><span class="line">                /** = user</span><br><span class="line">                </span><br><span class="line">            &lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">    &lt;/b  &lt;!-- 用户授权信息Cache --&gt;</span><br><span class="line">&lt;bean id=&quot;cacheManager&quot; class=&quot;org.apache.shiro.cache.MemoryConstrainedCacheManager&quot; /&gt;</span><br><span class="line">    &lt;!-- 会话管理器 --&gt;</span><br><span class="line">&lt;bean id=&quot;sessionManager&quot; class=&quot;org.apache.shiro.web.session.mgt.DefaultWebSessionManager&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;globalSessionTimeout&quot; value=&quot;#&#123;30 * 60 * 1000&#125;&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;sessionIdUrlRewritingEnabled&quot; value=&quot;false&quot;/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">    &lt;!-- 在方法中 注入  securityManager ，进行代理控制 --&gt;</span><br><span class="line">    &lt;bean class=&quot;org.springframework.beans.factory.config.MethodInvokingFactoryBean&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;staticMethod&quot; value=&quot;org.apache.shiro.SecurityUtils.setSecurityManager&quot;/&gt;</span><br><span class="line">      &lt;property name=&quot;arguments&quot; ref=&quot;securityManager&quot;/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">    &lt;!-- 保证实现了Shiro内部lifecycle函数的bean执行 --&gt;</span><br><span class="line">    &lt;bean id=&quot;lifecycleBeanPostProcessor&quot; class=&quot;org.apache.shiro.spring.LifecycleBeanPostProcessor&quot;/&gt;</span><br><span class="line">&lt;!-- AOP式方法级权限检查 --&gt;</span><br><span class="line">&lt;bean</span><br><span class="line">class=&quot;org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator&quot;</span><br><span class="line">depends-on=&quot;lifecycleBeanPostProcessor&quot;&gt;</span><br><span class="line">&lt;property name=&quot;proxyTargetClass&quot; value=&quot;false&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">    &lt;!-- 启用shrio授权注解拦截方式 --&gt;</span><br><span class="line">    &lt;bean class=&quot;org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot;/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> <strong>3. shiroUser 实体类</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class ShiroUser implements Serializable  &#123;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* </span><br><span class="line">*/</span><br><span class="line">private static final long serialVersionUID = 1L;</span><br><span class="line">private Long id;</span><br><span class="line">    private String username;</span><br><span class="line">    </span><br><span class="line">public ShiroUser(Long id, String username) &#123;</span><br><span class="line">super();</span><br><span class="line">this.id = id;</span><br><span class="line">this.username = username;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public Long getId() &#123;</span><br><span class="line">return id;</span><br><span class="line">&#125;</span><br><span class="line">public void setId(Long id) &#123;</span><br><span class="line">this.id = id;</span><br><span class="line">&#125;</span><br><span class="line">public String getUsername() &#123;</span><br><span class="line">return username;</span><br><span class="line">&#125;</span><br><span class="line">public void setUsername(String username) &#123;</span><br><span class="line">this.username = username;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>4. ShiroDbRealm  实现</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class ShiroDbRealm  extends AuthorizingRealm&#123;</span><br><span class="line">    private static final Logger LOGGER = LogManager.getLogger(ShiroDbRealm.class);</span><br><span class="line">    @Autowired</span><br><span class="line">    private ILoginService loginService;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    protected AuthenticationInfo doGetAuthenticationInfo(</span><br><span class="line">            AuthenticationToken authcToken) throws AuthenticationException &#123;</span><br><span class="line">        LOGGER.info(&quot;Shiro开始登录认证&quot;);</span><br><span class="line">        UsernamePasswordToken token = (UsernamePasswordToken) authcToken;</span><br><span class="line">        User un = loginService.selectByUsername(token.getUsername());</span><br><span class="line">       </span><br><span class="line">        // 账号不存在</span><br><span class="line">   if (un == null) &#123;</span><br><span class="line">         return null;</span><br><span class="line">   &#125;</span><br><span class="line">   ShiroUser shiroUser = new ShiroUser(un.getId(), un.getUsername());</span><br><span class="line">   // 认证缓存信息</span><br><span class="line">        return new SimpleAuthenticationInfo(shiroUser, un.getPassword().toCharArray(), getName());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">@Override</span><br><span class="line">protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) &#123;</span><br><span class="line">// TODO Auto-generated method stub</span><br><span class="line">return null;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>5. controllerd 的实现</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">@SystemControllerLog(operatePoint=OperatePointConstants.LOGIN, operateType=OperateTypeConstants.LOGIN)</span><br><span class="line">   @PostMapping(&quot;/login&quot;)</span><br><span class="line">   @CsrfToken(remove = true)</span><br><span class="line">   @ResponseBody</span><br><span class="line">   public Object loginPost(String username, String password) &#123;</span><br><span class="line">       logger.info(&quot;POST请求登录&quot;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       if (StringUtils.isBlank(username)) &#123;</span><br><span class="line">           return renderError(&quot;用户名不能为空&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">       if (StringUtils.isBlank(password)) &#123;</span><br><span class="line">           return renderError(&quot;密码不能为空&quot;);</span><br><span class="line">       &#125;else&#123;</span><br><span class="line">       password = SymmetricEncoder.encryptStr(secretkey, password);</span><br><span class="line">        LOGGER.info(password);</span><br><span class="line">       &#125;</span><br><span class="line">       Subject user = SecurityUtils.getSubject();</span><br><span class="line">       UsernamePasswordToken token = new UsernamePasswordToken(username,password);</span><br><span class="line">       Result result=new Result();</span><br><span class="line">       try &#123;</span><br><span class="line">           user.login(token);                                                                                                                                                          //在这一步跳入入自己实现的域即shiroDbRealm中验证</span><br><span class="line">           return renderSuccess();</span><br><span class="line">       &#125; catch (UnknownAccountException e) &#123;</span><br><span class="line">       result.setMsg(&quot;账号不存在&quot;);</span><br><span class="line">       return result;</span><br><span class="line">           /*throw new RuntimeException(&quot;账号不存在！&quot;, e);*/</span><br><span class="line">       &#125; catch (DisabledAccountException e) &#123;</span><br><span class="line">       result.setMsg(&quot;账号未启用&quot;);</span><br><span class="line">       return result;</span><br><span class="line">           /*throw new RuntimeException(&quot;账号未启用&quot;, e);*/</span><br><span class="line">       &#125; catch (IncorrectCredentialsException e) &#123;</span><br><span class="line">       result.setMsg(&quot;密码错误,请重试&quot;);</span><br><span class="line">       return result;</span><br><span class="line">           /*throw new RuntimeException(&quot;密码错误,请重试&quot;, e);*/</span><br><span class="line">       &#125; catch (Throwable e) &#123;</span><br><span class="line">       result.setMsg(&quot;未知错误,请联系管理员&quot;);</span><br><span class="line">       return result;</span><br><span class="line">          throw new RuntimeException(&quot;未知错误,请联系管理员&quot;, e);</span><br><span class="line">       &#125;</span><br><span class="line">      </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhi.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wei.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -202,29 +261,155 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Quartz</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">shiro</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
 
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/05/21/shiro框架详细配置及使用/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/05/24/aliPayMent/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          支付宝支付接口
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2018/04/21/servlet与ajax json数据交互/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">servlet与ajax交互</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#shiro配置以及使用"><span class="toc-number">1.</span> <span class="toc-text">shiro配置以及使用</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/05/21/shiro框架详细配置及使用/",
+  owner: 'p180j',
+  repo: 'p180j.github.io',
+  oauth: {
+    client_id: 'f08733074182ded4e7c9',
+    client_secret: '895c5e5cbe5c2b1a98371e8628457b5cc7f33707',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -256,9 +441,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
