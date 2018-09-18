@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>spring继承kfka实现消息发送 | KeepGoing博客</title>
+  <title>spring 搭建kfkaTemlate实现消息发送 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="spring继承kfka实现消息发送">
+  <meta name="description" content="spring 搭建kfkaTemlate实现消息队列">
 <meta name="keywords" content="博客,maven,java,kafka">
 <meta property="og:type" content="article">
-<meta property="og:title" content="spring继承kfka实现消息发送">
+<meta property="og:title" content="spring 搭建kfkaTemlate实现消息发送">
 <meta property="og:url" content="http://yoursite.com/2018/09/06/spring集成kfka实现消息队列/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="spring继承kfka实现消息发送">
+<meta property="og:description" content="spring 搭建kfkaTemlate实现消息队列">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-06T15:08:17.740Z">
+<meta property="og:updated_time" content="2018-09-18T13:31:15.737Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="spring继承kfka实现消息发送">
-<meta name="twitter:description" content="spring继承kfka实现消息发送">
+<meta name="twitter:title" content="spring 搭建kfkaTemlate实现消息发送">
+<meta name="twitter:description" content="spring 搭建kfkaTemlate实现消息队列">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -175,7 +175,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      spring继承kfka实现消息发送
+      spring 搭建kfkaTemlate实现消息发送
     </h1>
   
 
@@ -193,9 +193,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>spring继承kfka实现消息发送<br><a id="more"></a></p>
+        <p>spring 搭建kfkaTemlate实现消息队列<br><a id="more"></a></p>
 <blockquote>
-<p>1.搭建kafka运行环境 ，下载地址：<a href="http://kafka.apache.org/downloads" target="_blank" rel="noopener">http://kafka.apache.org/downloads</a></p>
+<p>1.搭建kafka运行环境 ，kafka下载地址：<a href="http://kafka.apache.org/downloads" target="_blank" rel="noopener">http://kafka.apache.org/downloads</a></p>
 </blockquote>
 <ul>
 <li>下载完修改安装文件config里面的server.properties文件，将listeners=PLAINTEXT://IP:9092改成服务器的IP，修改zookeeper注册地址</li>
@@ -360,6 +360,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/09/18/log4j2日志保存/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          logj2日志保存
+        
+      </div>
+    </a>
   
   
     <a href="/2018/07/24/Maven_profiles/" id="article-nav-older" class="article-nav-link-wrap">
@@ -547,19 +556,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
+                <a href="javascript:void(0)" class="js-tag color2">log4j2</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -571,7 +568,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
+                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -579,15 +588,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">github</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
