@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>WEB-INF的JSP文件引webRoot下的Js、css和图片的问题 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="WEB-INF的JSP文件引webRoot下的Js、css和图片的问题">
-<meta name="keywords" content="博客,java,maven">
+  <meta name="description" content="优雅REST风格的资源URL不希望带 .html 或 .do 等后缀.由于早期的Spring MVC不能很好地处理静态资源">
+<meta name="keywords" content="博客,maven,java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WEB-INF的JSP文件引webRoot下的Js、css和图片的问题">
 <meta property="og:url" content="http://yoursite.com/2018/09/20/关于解决WEB-INF的JSP文件引webRoot下的Js、css和图片的问题 /index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="WEB-INF的JSP文件引webRoot下的Js、css和图片的问题">
+<meta property="og:description" content="优雅REST风格的资源URL不希望带 .html 或 .do 等后缀.由于早期的Spring MVC不能很好地处理静态资源">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-20T14:27:54.969Z">
+<meta property="og:updated_time" content="2018-10-08T14:44:46.015Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WEB-INF的JSP文件引webRoot下的Js、css和图片的问题">
-<meta name="twitter:description" content="WEB-INF的JSP文件引webRoot下的Js、css和图片的问题">
+<meta name="twitter:description" content="优雅REST风格的资源URL不希望带 .html 或 .do 等后缀.由于早期的Spring MVC不能很好地处理静态资源">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -193,9 +193,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>WEB-INF的JSP文件引webRoot下的Js、css和图片的问题<br><a id="more"></a></p>
-<blockquote>
-<p>优雅REST风格的资源URL不希望带 .html 或 .do 等后缀.由于早期的Spring MVC不能很好地处理静态资源，所以在web.xml中配置DispatcherServlet的请求映射，往往使用 <em>.do 、 </em>.xhtml、*.hml等后缀方式进行区分。这就决定了请求URL必须是一个带后缀的URL，而无法采用真正的REST风格的URL。通俗说RESTf风格就是在Spring MVC 3.0新增的，它通过不带扩展名的URL来访问系统资源。</p>
+        <blockquote>
+<p>优雅REST风格的资源URL不希望带 .html 或 .do 等后缀.由于早期的Spring MVC不能很好地处理静态资源<a id="more"></a>，所以在web.xml中配置DispatcherServlet的请求映射，往往使用 <em>.do 、 </em>.xhtml、*.hml等后缀方式进行区分。这就决定了请求URL必须是一个带后缀的URL，而无法采用真正的REST风格的URL。通俗说RESTf风格就是在Spring MVC 3.0新增的，它通过不带扩展名的URL来访问系统资源。</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">配置如下：</span><br><span class="line">&lt;servlet&gt;    </span><br><span class="line">    &lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;     </span><br><span class="line">    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;  </span><br><span class="line">     &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;   </span><br><span class="line">&lt;/servlet&gt;    </span><br><span class="line">&lt;servlet-mapping&gt;      </span><br><span class="line">     &lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;    </span><br><span class="line">     &lt;url-pattern&gt;/&lt;/url-pattern&gt; </span><br><span class="line"> &lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><blockquote>
@@ -265,11 +264,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>
@@ -510,22 +509,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
@@ -534,7 +517,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -542,7 +525,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -554,6 +541,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
@@ -562,15 +553,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">github</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
               </li>
             
             <div class="clearfix"></div>

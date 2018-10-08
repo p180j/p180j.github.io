@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="KeepGoing博客">
 <meta property="og:description" content="shiro配置以及使用">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-06T15:08:34.239Z">
+<meta property="og:updated_time" content="2018-10-08T14:36:59.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shiro配置以及使用">
 <meta name="twitter:description" content="shiro配置以及使用">
@@ -194,7 +194,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>shiro配置以及使用<br><a id="more"></a></p>
-<h2 id="shiro配置以及使用"><a href="#shiro配置以及使用" class="headerlink" title="shiro配置以及使用"></a>shiro配置以及使用</h2><blockquote>
+<blockquote>
 <p><strong>1.web.xml文件的配置</strong></p>
 </blockquote>
 <p>&lt;!-Shiro过滤器 –&gt;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</span><br><span class="line">&lt;init-param&gt;</span><br><span class="line">&lt;param-name&gt;targetFilterLifecycle&lt;/param-name&gt;</span><br><span class="line">&lt;param-value&gt;true&lt;/param-value&gt;</span><br><span class="line">&lt;/init-param&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span><br><span class="line">&lt;dispatcher&gt;REQUEST&lt;/dispatcher&gt;</span><br><span class="line">&lt;dispatcher&gt;FORWARD&lt;/dispatcher&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure></p>
@@ -346,8 +346,8 @@
     </a>
   
   
-    <a href="/2018/04/21/servlet与ajax json数据交互/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">servlet与ajax交互</div>
+    <a href="/2018/04/21/spring的Quartz配置/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">springd的Quartz实现定时任务</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -374,7 +374,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#shiro配置以及使用"><span class="toc-number">1.</span> <span class="toc-text">shiro配置以及使用</span></a></li></ol>
+                    目录，不存在的…
                     </div>
                 </span>
             </div>
@@ -515,22 +515,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
@@ -539,7 +523,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -547,7 +531,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -559,6 +547,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
@@ -567,15 +559,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">github</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
               </li>
             
             <div class="clearfix"></div>

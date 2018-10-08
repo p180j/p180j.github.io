@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>springd的Quartz实现定时任务 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="springd的Quartz实现定时任务">
+  <meta name="description" content="1、Job表示一个工作，要执行的具体内容。此接口中只有一个方法">
 <meta name="keywords" content="博客,spring,Quartz">
 <meta property="og:type" content="article">
 <meta property="og:title" content="springd的Quartz实现定时任务">
 <meta property="og:url" content="http://yoursite.com/2018/04/21/spring的Quartz配置/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="springd的Quartz实现定时任务">
+<meta property="og:description" content="1、Job表示一个工作，要执行的具体内容。此接口中只有一个方法">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-25T04:12:21.645Z">
+<meta property="og:updated_time" content="2018-10-08T14:46:38.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springd的Quartz实现定时任务">
-<meta name="twitter:description" content="springd的Quartz实现定时任务">
+<meta name="twitter:description" content="1、Job表示一个工作，要执行的具体内容。此接口中只有一个方法">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -193,8 +193,67 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>springd的Quartz实现定时任务<br><a id="more"></a></p>
-<div id="article_content" class="article_content tracking-ad" data-mod="popu_307" data-dsm="post"><br>        <div class="markdown_views"><p> <br><br><br>1、Job <br><br>表示一个工作，要执行的具体内容。此接口中只有一个方法 <br><br>void execute(JobExecutionContext context)</p><br><br><p>2、JobDetail <br><br>JobDetail表示一个具体的可执行的调度程序，Job是这个可执行程调度程序所要执行的内容，另外JobDetail还包含了这个任务调度的方案和策略。</p><br><br><p>3、Trigger代表一个调度参数的配置，什么时候去调。</p><br><br><p>4、Scheduler代表一个调度容器，一个调度容器中可以注册多个JobDetail和Trigger。当Trigger与JobDetail组合，就可以被Scheduler容器调度了。</p><br><br><p>第一种：任务类继承QuartzJobBean <br><br>配置代码</p><br><pre class="prettyprint" name="code"><code class="hljs xml has-numbering">   <span class="hljs-comment">&lt;!–方式一：使用JobDetailBean，任务类必须实现Job接口 –&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">“myjob”</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">“org.springframework.scheduling.quartz.JobDetailBean”</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“name”</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">“exampleJob”</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“jobClass”</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">“com.ncs.hj.SpringQtz”</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“jobDataAsMap”</span>&gt;</span><br>       <span class="hljs-tag">&lt;<span class="hljs-title">map</span>&gt;</span><br>         <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">“service”</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">value</span>&gt;</span>simple is the beat<span class="hljs-tag">&lt;/<span class="hljs-title">value</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">entry</span>&gt;</span><br>       <span class="hljs-tag">&lt;/<span class="hljs-title">map</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span> </code></pre><br><br><br><br><p><a href="http://lib.csdn.net/base/java" class="replace_word" title="Java 知识库" target="_blank" style="color:#df3434; font-weight:bold;">Java</a>代码： </p><br><pre class="prettyprint" name="code"><code class="hljs java has-numbering"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpringQtz</span> <span class="hljs-keyword">extends</span> <strong><span class="hljs-title">QuartzJobBean</span></strong>{</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> counter = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">executeInternal</span>(JobExecutionContext context) <span class="hljs-keyword">throws</span> JobExecutionException {<br>        <span class="hljs-keyword">long</span> ms = System.currentTimeMillis();<br>        System.out.println(<span class="hljs-string">“\t\t”</span> + <span class="hljs-keyword">new</span> Date(ms));<br>        System.out.println(ms);<br>        System.out.println(<span class="hljs-string">“(“</span> + counter++ + <span class="hljs-string">“)”</span>);<br>        String s = (String) context.getMergedJobDataMap().get(<span class="hljs-string">“service”</span>);<br>        System.out.println(s);<br>        System.out.println();<br>    }  &lt;/code</code></pre><br><br><p>第二种：在配置文件里定义任务类和要执行的方法，类和方法仍然是普通类 <br><br>配置文件：</p><br><pre class="prettyprint" name="code"><code class="hljs xml has-numbering"> <span class="hljs-comment">&lt;!– 方式二：使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法–&gt;</span><br>    <span class="hljs-comment">&lt;!– 定义目标bean和bean中的方法 –&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">“SpringQtzJob”</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">“com.ncs.hj.SpringQtz”</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">“SpringQtzJobMethod”</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">“org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean”</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“targetObject”</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-title">ref</span> <span class="hljs-attribute">bean</span>=<span class="hljs-value">“SpringQtzJob”</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“targetMethod”</span>&gt;</span>  <span class="hljs-comment">&lt;!– 要执行的方法名称 –&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-title">value</span>&gt;</span>execute<span class="hljs-tag">&lt;/<span class="hljs-title">value</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span> </code></pre><br><br><p>JAVA代码： </p><br><pre class="prettyprint" name="code"><code class="hljs cs has-numbering"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> SpringQtz {<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> counter = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">execute</span>()  {<br>        <span class="hljs-keyword">long</span> ms = System.currentTimeMillis();<br>        System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">“\t\t”</span> + <span class="hljs-keyword">new</span> Date(ms));<br>        System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">“(“</span> + counter++ + <span class="hljs-string">“)”</span>);<br>    }<br>   } </code></pre><br><br><p> 共用的xml部分  ：</p><br><pre class="prettyprint" name="code"><code class="hljs xml has-numbering"><span class="hljs-comment">&lt;!– ======================== 调度触发器============ –&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">“CronTriggerBean”</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">“org.springframework.scheduling.quartz.CronTriggerBean”</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“jobDetail”</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">“SpringQtzJobMethod”</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“cronExpression”</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">“0/5 <em> </em> <em> </em> ?”</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span><br><br><span class="hljs-comment">&lt;!– ======================== 调度工厂 ================ –&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">“SpringJobSchedulerFactoryBean”</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">“org.springframework.scheduling.quartz.SchedulerFactoryBean”</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“triggers”</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-title">list</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-title">ref</span> <span class="hljs-attribute">bean</span>=<span class="hljs-value">“CronTriggerBean”</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-title">list</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span>   </code></pre></div><br></div>
+        <p>1、Job<br>表示一个工作，要执行的具体内容。此接口中只有一个方法 <a id="more"></a><br><br>void execute(JobExecutionContext context)</p><p></p>
+<p>2、JobDetail <br><br>JobDetail表示一个具体的可执行的调度程序，Job是这个可执行程调度程序所要执行的内容，另外JobDetail还包含了这个任务调度的方案和策略。</p>
+
+<p>3、Trigger代表一个调度参数的配置，什么时候去调。</p>
+
+<p>4、Scheduler代表一个调度容器，一个调度容器中可以注册多个JobDetail和Trigger。当Trigger与JobDetail组合，就可以被Scheduler容器调度了。</p>
+
+<p></p><p>第一种：任务类继承QuartzJobBean <br><br>配置代码</p><p></p>
+<pre class="prettyprint" name="code"><code class="hljs xml has-numbering">   <span class="hljs-comment">&lt;!--方式一：使用JobDetailBean，任务类必须实现Job接口 --&gt;</span>     
+    <span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"myjob"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"org.springframework.scheduling.quartz.JobDetailBean"</span>&gt;</span>    
+     <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"name"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"exampleJob"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span>    
+     <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"jobClass"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"com.ncs.hj.SpringQtz"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span>   
+     <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"jobDataAsMap"</span>&gt;</span>  
+       <span class="hljs-tag">&lt;<span class="hljs-title">map</span>&gt;</span>  
+         <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"service"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">value</span>&gt;</span>simple is the beat<span class="hljs-tag">&lt;/<span class="hljs-title">value</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">entry</span>&gt;</span>  
+       <span class="hljs-tag">&lt;/<span class="hljs-title">map</span>&gt;</span>  
+      <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span>  
+    <span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span> </code></pre>
+
+
+
+<p></p><p><a href="http://lib.csdn.net/base/java" class="replace_word" title="Java 知识库" target="_blank" style="color:#df3434; font-weight:bold;">Java</a>代码： </p><p></p>
+<pre class="prettyprint" name="code"><code class="hljs java has-numbering"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpringQtz</span> <span class="hljs-keyword">extends</span> **<span class="hljs-title">QuartzJobBean</span>**{</span>  
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> counter = <span class="hljs-number">0</span>;  
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">executeInternal</span>(JobExecutionContext context) <span class="hljs-keyword">throws</span> JobExecutionException {  
+        <span class="hljs-keyword">long</span> ms = System.currentTimeMillis();  
+        System.out.println(<span class="hljs-string">"\t\t"</span> + <span class="hljs-keyword">new</span> Date(ms));  
+        System.out.println(ms);  
+        System.out.println(<span class="hljs-string">"("</span> + counter++ + <span class="hljs-string">")"</span>);  
+        String s = (String) context.getMergedJobDataMap().get(<span class="hljs-string">"service"</span>);  
+        System.out.println(s);  
+        System.out.println();  
+    }  
+
+<p></p><p>第二种：在配置文件里定义任务类和要执行的方法，类和方法仍然是普通类 <br><br>配置文件：</p><p></p>
+<pre class="prettyprint" name="code"><code class="hljs xml has-numbering"> <span class="hljs-comment">&lt;!-- 方式二：使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法--&gt;</span>    
+    <span class="hljs-comment">&lt;!-- 定义目标bean和bean中的方法 --&gt;</span>  
+    <span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"SpringQtzJob"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"com.ncs.hj.SpringQtz"</span>/&gt;</span>  
+    <span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"SpringQtzJobMethod"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"</span>&gt;</span>  
+    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"targetObject"</span>&gt;</span>  
+        <span class="hljs-tag">&lt;<span class="hljs-title">ref</span> <span class="hljs-attribute">bean</span>=<span class="hljs-value">"SpringQtzJob"</span>/&gt;</span>  
+    <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span>  
+    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"targetMethod"</span>&gt;</span>  <span class="hljs-comment">&lt;!-- 要执行的方法名称 --&gt;</span>  
+        <span class="hljs-tag">&lt;<span class="hljs-title">value</span>&gt;</span>execute<span class="hljs-tag">&lt;/<span class="hljs-title">value</span>&gt;</span>  
+    <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span>  
+    <span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span> </code></pre>
+
+<p></p><p>JAVA代码： </p><p></p>
+<pre class="prettyprint" name="code"><code class="hljs cs has-numbering"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> SpringQtz {  
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> counter = <span class="hljs-number">0</span>;  
+    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">execute</span>()  {  
+        <span class="hljs-keyword">long</span> ms = System.currentTimeMillis();  
+        System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">"\t\t"</span> + <span class="hljs-keyword">new</span> Date(ms));  
+        System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">"("</span> + counter++ + <span class="hljs-string">")"</span>);  
+    }  
+   } </code></pre>
+
+<p></p><p> 共用的xml部分  ：</p><p></p>
+<p><pre class="prettyprint" name="code"><code class="hljs xml has-numbering"><span class="hljs-comment">&lt;!– ======================== 调度触发器============ –&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">“CronTriggerBean”</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">“org.springframework.scheduling.quartz.CronTriggerBean”</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“jobDetail”</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">“SpringQtzJobMethod”</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“cronExpression”</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">“0/5 <em> </em> <em> </em> ?”</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span>  </code></pre></p>
+<p><span class="hljs-comment">&lt;!– ======================== 调度工厂 ================ –&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">“SpringJobSchedulerFactoryBean”</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">“org.springframework.scheduling.quartz.SchedulerFactoryBean”</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“triggers”</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-title">list</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-title">ref</span> <span class="hljs-attribute">bean</span>=<span class="hljs-value">“CronTriggerBean”</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-title">list</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span>   </p></code></pre><br><p></p>
+
       
 
       
@@ -317,18 +376,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/04/21/poi工具类/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/05/21/shiro框架详细配置及使用/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          poi导出excel工具类
+          shiro配置以及使用
         
       </div>
     </a>
   
   
-    <a href="/2018/04/21/微信第三方登录App或者网站/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">java微信授权登录</div>
+    <a href="/2018/04/21/（Git的应用）本地库项目上传到github/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">git上传项目到git社区</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -496,22 +555,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
@@ -520,7 +563,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -528,7 +571,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -540,6 +587,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
@@ -548,15 +599,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">github</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
               </li>
             
             <div class="clearfix"></div>

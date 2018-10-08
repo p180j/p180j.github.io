@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>银联接口开发 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="银联接口开发">
+  <meta name="description" content="1. 流程  准备 chainapay.jar 、商户交易证书（商户私钥）、上银联公钥 加载签名工具类">
 <meta name="keywords" content="博客,java,支付">
 <meta property="og:type" content="article">
 <meta property="og:title" content="银联接口开发">
 <meta property="og:url" content="http://yoursite.com/2018/07/21/上银联接口开发/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="银联接口开发">
+<meta property="og:description" content="1. 流程  准备 chainapay.jar 、商户交易证书（商户私钥）、上银联公钥 加载签名工具类">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-06T15:07:56.106Z">
+<meta property="og:updated_time" content="2018-10-08T14:45:34.561Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="银联接口开发">
-<meta name="twitter:description" content="银联接口开发">
+<meta name="twitter:description" content="1. 流程  准备 chainapay.jar 、商户交易证书（商户私钥）、上银联公钥 加载签名工具类">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -193,17 +193,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>银联接口开发<br><a id="more"></a><br> <strong>1. 流程</strong></p>
+        <p> <strong>1. 流程</strong></p>
 <ul>
 <li>准备 chainapay.jar 、商户交易证书（商户私钥）、上银联公钥</li>
-<li>加载签名工具类</li>
-</ul>
+<li><p>加载签名工具类</p>
+<a id="more"></a>
 <blockquote>
 <p> 1 . 先配置上银联配置文件 security.properties（证书都是绝对路劲）</p>
 <h2 id="Security-properties-configuration-file"><a href="#Security-properties-configuration-file" class="headerlink" title="Security properties configuration file"></a>Security properties configuration file</h2><p>——–上银联公钥地址————<br>verify.file=/home/dianshang/sinoPay/paytrade/config/cp_test_verify_sign.cer<br>——–文件目录地址————<br>sign.filePath=/home/dianshang/sinoPay/paytrade/config<br>——–商户私钥地址————<br>sign.file=/home/dianshang/sinoPay/paytrade/config/cp_test_sign.pfx<br>——–商户私钥证书（交易证书）密码————<br>sign.file.password=1<br>——– 加密方式————<br>sign.cert.type=PKCS12<br>——– 不参与加密的字段————<br>sign.invalid.fields=Signature<br>——– 加密字段————<br>signature.field=Signature<br>——– 控制台————<br>log4j.name=CONSOLE</p>
 </blockquote>
-<ul>
-<li>加载签名类</li>
+</li>
+<li><p>加载签名类</p>
+</li>
 </ul>
 <blockquote>
 <p>// 加载安全密钥<br>public SecssUtil getSecssUtil() {<br>    String tPath=”config/security.properties”;<br>    String rootPath = this.getClass().getResource(“/“).getPath().toString();<br>    SecssUtil secssUtil = new SecssUtil();<br>    logger.info(“安全文件路径”+rootPath+tPath);<br>    secssUtil.init(rootPath+tPath);   //服务器security路径<br>    secssUtil.init(“D:/security.properties”);  //本地security路径<br>    logger.info(“安全证书加载完成…………..”);<br>    return secssUtil;<br>}</p>
@@ -672,22 +673,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
@@ -696,7 +681,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -704,7 +689,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -716,6 +705,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
@@ -724,15 +717,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">github</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
               </li>
             
             <div class="clearfix"></div>
