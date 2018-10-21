@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018 | KeepGoing博客</title>
+  <title>JVM虚拟机概念描述 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="KeepGoing博客">
-<meta property="og:url" content="http://yoursite.com/archives/2018/index.html">
+  <meta name="description" content="虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
+<meta name="keywords" content="博客,java虚拟机,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM虚拟机概念描述">
+<meta property="og:url" content="http://yoursite.com/2018/10/21/JVM/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
+<meta property="og:description" content="虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/10/21/JVM/1.jpg">
+<meta property="og:updated_time" content="2018-10-21T11:23:40.553Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KeepGoing博客">
+<meta name="twitter:title" content="JVM虚拟机概念描述">
+<meta name="twitter:description" content="虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
+<meta name="twitter:image" content="http://yoursite.com/2018/10/21/JVM/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -163,36 +170,154 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-JVM" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/21/JVM/" class="archive-article-date">
-  	<time datetime="2018-10-21T11:14:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-21</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/21/JVM/">JVM虚拟机概念描述</a>
+    <h1 class="article-title" itemprop="name">
+      JVM虚拟机概念描述
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/10/21/JVM/" class="archive-article-date">
+  	<time datetime="2018-10-21T11:14:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-21</time>
+</a>
+		
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+        
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。<a id="more"></a>
+</li>
+</ol>
+<p><img src="/2018/10/21/JVM/1.jpg" alt="在这里插入图片描述"></p>
+<ul>
+<li>类加载器：<blockquote>
+<p>负责从文件系统中或者网络中加载类和接口信息并赋予唯一的名字，加载的c信息都放到了方法区的空间，</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p>Java堆</p>
+<blockquote>
+<p>在java虚拟机启动时建立java堆，几乎所有对象实例都放在java堆中，它是县城共享的，Heap中的对象的内存需要等待GC进行回收。</p>
+</blockquote>
+</li>
+<li><p>Java栈</p>
+<blockquote>
+<p> 线程私有内存空间，有局部变量、操作数帧和帧数据区<br> 局部变量：报错函数的参数局部变量<br> 操作数帧：保存中间结果<br> 帧数据区：返回结果异常，异常处理表，方便异常时找到异常代码</p>
+</blockquote>
+</li>
+<li><p>方法区</p>
+<blockquote>
+<p> 存放类信息、类的方法、常量信息、常量池信息还有字符串和数字常量，在一定的条件下它也会被GC，当方法区域需要使用的内存超过其允许的大小时，会抛出OutOfMemory的错误信息。方法区理解为永久区时线程共享的区域。</p>
+</blockquote>
+</li>
+<li><p>本地方法栈</p>
+<blockquote>
+<p>  依赖于本地方法的实现，如某个JVM实现的本地方法借口使用C连接模型，则本地方法栈就是C栈，可以说某线程在调用本地方法时，就进入了一个不受JVM限制的领域，也就是JVM可以利用本地方法来动态扩展本身。</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>pc寄存器<blockquote>
+<p>每一个线程都有它自己的PC寄存器，也是该线程启动时创建的。PC寄存器的内容总是指向下一条将被执行指令的饿地址，这里的地址可以是一个本地指针，也可以是在方法区中相对应于该方法起始指令的偏移量。<br>若thread执行Java方法，则PC保存下一条执行指令的地址。若thread执行native方法，则Pc的值为undefined</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>回收系统</li>
+</ul>
+<blockquote>
+<p>通常我们说的JVM内存回收总是在指堆内存回收，确实只有堆中的内容是动态申请分配的，所以以上对象的年轻代和年老代都是指的JVM的Heap空间，而持久代则是之前提到的MethodArea，不属于Heap。<br>GC的基本原理：将内存中不再被使用的对象进行回收，GC中用于回收的方法称为收集器，由于GC需要消耗一些资源和时间，Java在对对象的生命周期特征进行分析后，按照新生代、旧生代的方式来对对象进行收集，以尽可能的缩短GC对应用造成的暂停</p>
+</blockquote>
+<ul>
+<li>执行引擎</li>
+</ul>
+<blockquote>
+<p>虚拟机的核心就是执行引擎，它负责处理虚拟机的字节码文件，一般是先编译成机器码在执行</p>
+</blockquote>
+<ul>
+<li><p>直接内存</p>
+<blockquote>
+<p> java的NIO库允许java使用直接内存从而提高性能，速度优于java堆。</p>
+</blockquote>
+<ol start="3">
+<li>内存溢出的原理以及处理：OutOfMemoryError</li>
+</ol>
+</li>
+<li><p>OutOfMemoryError： PermGen space（方法区）</p>
+</li>
+</ul>
+<blockquote>
+<p>【原因】发生这种问题的原意是程序中使用了大量的jar或class，使java虚拟机装载类的空间不够，与Permanent Generation space有关。<br>【解决】解决办法 ：增加java虚拟机中的XX:PermSize和XX:MaxPermSize参数的大小，其中XX:PermSize是初始永久保存区域大 小，XX:MaxPermSize是最大永久保存区域大小。如针对tomcat6.0，在catalina.sh 或catalina.bat文件中一系列环境变量名说明结束处（大约在70行左右） 增加一行： JAVA_OPTS=” -XX:PermSize=64M -XX:MaxPermSize=128m” </p>
+</blockquote>
+<ul>
+<li>OutOfMemoryError：Java heap space（堆内存）</li>
+</ul>
+<blockquote>
+<p>【原因】发生这种问题的原因是java虚拟机创建的对象太多，在进行垃圾回收之间，虚拟机分配的到堆内存空间已经用满了，与Heap space有关。<br>【解决】解决办法：增加Java虚拟机中Xms（初始堆大小）和Xmx（最大堆大小）参数的大小。如：set JAVA_OPTS= -Xms256m -Xmx1024m</p>
+</blockquote>
+<ul>
+<li>-OutOfMemoryError：unable to create new native thread（Java栈）</li>
+</ul>
+<blockquote>
+<p>【原因】Stack空间不足以创建额外的线程，要么是创建的线程过多，要么是Stack空间确实小了。<br>【解决】解决办法： 我们可以通过调整jvm参数，降低为每个线程分配的栈内存大小来解决问题，例如在jvm参数中添加-Xss128k将线程栈内存大小设置为128k。</p>
+</blockquote>
+<ul>
+<li>java.lang.StackOverflowError</li>
+</ul>
+<blockquote>
+<p>【原因】：这也内存溢出错误的一种，即线程栈的溢出，要么是方法调用层次过多（比如存在无限递归调用），要么是线程栈太小。<br>【解决】：优化程序设计，减少方法调用层次；调整-Xss参数增加线程栈大小。</p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhi.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wei.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -212,452 +337,135 @@
 		</ul>
 	</div>
 
-          
 
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/10/21/JVM/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/10/17/jenkins/" class="archive-article-date">
-  	<time datetime="2018-10-17T14:32:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-17</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/10/17/jenkins/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">jenkins自动化部署</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/10/17/jenkins/">jenkins自动化部署</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">jenkins</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">自动化发布</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/20/关于解决WEB-INF的JSP文件引webRoot下的Js、css和图片的问题 /" class="archive-article-date">
-  	<time datetime="2018-09-20T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-20</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/20/关于解决WEB-INF的JSP文件引webRoot下的Js、css和图片的问题 /">WEB-INF的JSP文件引webRoot下的Js、css和图片的问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/18/log4j2日志保存/" class="archive-article-date">
-  	<time datetime="2018-09-18T13:26:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/18/log4j2日志保存/">logj2日志保存</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">log4j2</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/06/spring集成kfka实现消息队列/" class="archive-article-date">
-  	<time datetime="2018-09-06T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/06/spring集成kfka实现消息队列/">spring 搭建kfkaTemlate实现消息发送</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">kafka</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/24/Maven_profiles/" class="archive-article-date">
-  	<time datetime="2018-07-24T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/24/Maven_profiles/">maven中利用profiles实现多环境打包</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">profiles</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/07/21/上银联接口开发/" class="archive-article-date">
-  	<time datetime="2018-07-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/21/上银联接口开发/">银联接口开发</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">支付</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/24/aliPayMent/" class="archive-article-date">
-  	<time datetime="2018-05-24T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/24/aliPayMent/">支付宝支付接口</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">aliPay</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/21/shiro框架详细配置及使用/" class="archive-article-date">
-  	<time datetime="2018-05-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/21/shiro框架详细配置及使用/">shiro配置以及使用</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">shiro</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/21/servlet与ajax json数据交互/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/21/servlet与ajax json数据交互/">servlet与ajax交互</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">servlet</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ajax</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="extend next" rel="next" href="/archives/2018/page/2/">Next &raquo;</a>
-    </nav>
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/10/21/JVM/",
+  owner: 'p180j',
+  repo: 'p180j.github.io',
+  oauth: {
+    client_id: 'f08733074182ded4e7c9',
+    client_secret: '895c5e5cbe5c2b1a98371e8628457b5cc7f33707',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -690,8 +498,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
