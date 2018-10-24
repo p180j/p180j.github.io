@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>KeepGoing博客</title>
+  <title>logj2日志保存 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="KeepGoing博客">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="原生实现rabbitMQ的方式">
+<meta name="keywords" content="博客,java,maven,log4j2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="logj2日志保存">
+<meta property="og:url" content="http://yoursite.com/2018/09/18/rabbitMq/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
+<meta property="og:description" content="原生实现rabbitMQ的方式">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/09/18/rabbitMq/1.png">
+<meta property="og:updated_time" content="2018-10-24T14:53:56.350Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KeepGoing博客">
+<meta name="twitter:title" content="logj2日志保存">
+<meta name="twitter:description" content="原生实现rabbitMQ的方式">
+<meta name="twitter:image" content="http://yoursite.com/2018/09/18/rabbitMq/1.png">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -157,35 +164,101 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-servlet与ajax json数据交互" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-rabbitMq" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/21/servlet与ajax json数据交互/">servlet与ajax交互</a>
+    <h1 class="article-title" itemprop="name">
+      logj2日志保存
     </h1>
   
 
         
-        <a href="/2018/04/21/servlet与ajax json数据交互/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
+        <a href="/2018/09/18/rabbitMq/" class="archive-article-date">
+  	<time datetime="2018-09-18T13:26:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-18</time>
 </a>
 		
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+        
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>前端ajax实现代码<br></p>
-        
-          <a class="article-more-a" href="/2018/04/21/servlet与ajax json数据交互/#more">more >></a>
-        
+        <p>原生实现rabbitMQ的方式<br><a id="more"></a></p>
+<ol>
+<li>为什么要使用rabbitMQ消息队列</li>
+</ol>
+<blockquote>
+<p>我们模拟这样一个场景，假如你在网上购物商城买了东西，你支付过程5s、发送短信通知5s、邮件通知等时间就更长了，你整个支的过程我们模拟这样一个场景，假如你在网上购物商城买了东西，你支付过程5s、发送短信通知5s、邮件通知等时间就更长了，你整个支付的过程就和很长了，因为代码是耦合在一起，但是如果你使用消息中间系统的话，我们支付过程就很短了，因为消息通知都是异步的，由消息系实现。</p>
+</blockquote>
+<ol start="2">
+<li>实现原生rabbitMQ流程</li>
+</ol>
+<blockquote>
+<p>创建连接工厂–&gt;给工厂设置连接属性（地址，端口、账号密码等）–&gt;由工厂得到连接<br>–&gt;通过连接得到信道–&gt;由信道设置交换器-&gt;信道发布消息</p>
+</blockquote>
+<p> <strong>生产者 :</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//创建连接工厂，设置工厂属性</span><br><span class="line">ConnectionFactory factory = new ConnectionFactory();   </span><br><span class="line">factory.setHost(&quot;127.0.0.1&quot;);        </span><br><span class="line">factory.setUsername(&quot;guest&quot;);</span><br><span class="line">factory.setPassword(&quot;guest&quot;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> //声明路由键和交换器</span><br><span class="line">private final static String EXCHANGE_NAME = &quot;direct_cc_confirm_1&quot;;   </span><br><span class="line"> //路由键</span><br><span class="line">private final static String ROUTE_KEY = &quot;error&quot;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> Connection connection = factory.newConnection();  </span><br><span class="line"> Channel channel = connection.createChannel();    </span><br><span class="line"> //通过信道声明一个交换器 第一个参数时交换器的名字 第二个参数时交换器的种类</span><br><span class="line"> channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.DIRECT); </span><br><span class="line"> //信道发布消息</span><br><span class="line">channel.basicPublish(EXCHANGE_NAME,ROUTE_KEY,null,message.getBytes());</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//关闭连接</span><br><span class="line"> channel.close();</span><br><span class="line">connection.close();</span><br></pre></td></tr></table></figure>
+<p><strong>消费者:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 在信道声明交换器前步骤相同，在以后就是不同了</span><br><span class="line">channel.queueBind(queueName,EXCHANGE_NAME,routingKey);</span><br><span class="line">        System.out.println(&quot;Waiting message.......&quot;);</span><br><span class="line"></span><br><span class="line">        // 创建队列消费者 设置一个监听器监听消费消息 </span><br><span class="line">        final Consumer consumerB = new DefaultConsumer(channel) &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException &#123;</span><br><span class="line">             String message = new String(body, &quot;UTF-8&quot;);</span><br><span class="line">             System.out.println( &quot;Received [&quot;+ envelope.getRoutingKey() + &quot;] &quot;+message);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        //消费者自动确认：autoAck参数为true</span><br><span class="line">        channel.basicConsume(queueName, true, consumerB);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p> <strong>以上只有一个生产者和消费者只有一个路由键，但是如果生产者由很多，消费者只有一个那就会只接受路由键匹配的生产者发送的消息</strong></p>
+<p><strong>生产者：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//定义一组路由键</span><br><span class="line"> String[]routingKeys = &#123;&quot;error&quot;,&quot;info&quot;,&quot;warning&quot;&#125;;</span><br><span class="line"> for(int i=0;i&lt;3;i++)&#123;</span><br><span class="line"> 	//路由键</span><br><span class="line">     String routingKey = routingKeys[i];            </span><br><span class="line">     //要发送的消息</span><br><span class="line">     String message = &quot;Hello world_&quot;+(i+1);</span><br><span class="line">     /**</span><br><span class="line">      * 发送消息到交换器上</span><br><span class="line">      * 参数1：交换器的名字</span><br><span class="line">      * 参数2：路由键</span><br><span class="line">      * 参数3：BasicProperties</span><br><span class="line">      * 参数4：要发送的消息</span><br><span class="line">      */</span><br><span class="line">     channel.basicPublish(EXCHANGE_NAME,routingKey,null,message.getBytes());</span><br><span class="line">     System.out.println(&quot;Sent &quot;+routingKey+&quot;:&quot;+message);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>消费者：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//只匹配生产者由error路由键发送的消息</span><br><span class="line"> String routingKey = &quot;error&quot;;</span><br><span class="line">        </span><br><span class="line">        //7.队列通过路由键绑定到交换器上</span><br><span class="line">        channel.queueBind(queueName,EXCHANGE_NAME,routingKey);</span><br><span class="line">        </span><br><span class="line">        System.out.println(&quot;Waiting message.......&quot;);</span><br><span class="line"></span><br><span class="line">        //8.设置一个监听器监听消费消息</span><br><span class="line">        Consumer consumerB = new DefaultConsumer(channel)&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void handleDelivery(String consumerTag, Envelope envelope,</span><br><span class="line">                                       AMQP.BasicProperties properties, byte[] body)</span><br><span class="line">                    throws IOException &#123;</span><br><span class="line">                String message = new String(body,&quot;UTF-8&quot;);</span><br><span class="line">                System.out.println(&quot;Accept:&quot;+envelope.getRoutingKey()+&quot;:&quot;+message);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;        </span><br><span class="line">        //9.自动确认：autoAck参数为flase</span><br><span class="line">        channel.basicConsume(queueName,flase,consumerB);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//消费者如果要接受所有信息的话</span><br><span class="line"> //5.声明随机队列</span><br><span class="line">        String queueName = channel.queueDeclare().getQueue();</span><br><span class="line">        </span><br><span class="line">        //6.定义一组路由键消费所有日志</span><br><span class="line">        String[]routingKeys = &#123;&quot;error&quot;,&quot;info&quot;,&quot;warning&quot;&#125;;</span><br><span class="line">        </span><br><span class="line">        //7.队列通过路由键绑定到交换器上</span><br><span class="line">        for(String routingKey:routingKeys)&#123;</span><br><span class="line">            //队列和交换器的绑定</span><br><span class="line">            channel.queueBind(queueName,EXCHANGE_NAME,routingKey);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;Waiting message.......&quot;);</span><br><span class="line"></span><br><span class="line">        //8.设置一个监听器监听消费消息</span><br><span class="line">        Consumer consumerA = new DefaultConsumer(channel)&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void handleDelivery(String consumerTag, Envelope envelope,</span><br><span class="line">                AMQP.BasicProperties properties, byte[] body)throws IOException &#123;</span><br><span class="line">                String message = new String(body,&quot;UTF-8&quot;);</span><br><span class="line">                System.out.println(&quot;Accept:&quot;+envelope.getRoutingKey()+&quot;:&quot;+message);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        channel.basicConsume(queueName,flase,consumerA);</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>rabbbitMQ自动确认机制</li>
+</ol>
+<blockquote>
+<p>自动确认机制分为同步确认和异步确认，就是在发送方发了消息，消费者返回ack，才确认这个消息为发送成功，否则就是发送失败，unacked.</p>
+</blockquote>
+<p><img src="/2018/09/18/rabbitMq/1.png" alt="在这里插入图片描述"></p>
+<p><strong>同步实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">channel.confirmSelect();</span><br><span class="line"></span><br><span class="line">      //发布消息的交换器上</span><br><span class="line">      for(int i=0;i&lt;2;i++)&#123;</span><br><span class="line">          String msg = &quot;Hello &quot;+(i+1);</span><br><span class="line">          channel.basicPublish(EXCHANGE_NAME,ROUTE_KEY,null,msg.getBytes());</span><br><span class="line">          //等待RabbitMQ返回消息确认消息已送达RabbitMQ服务器</span><br><span class="line">          if (channel.waitForConfirms())&#123;</span><br><span class="line">              System.out.println(&quot;发送方同步确认: &quot;+ROUTE_KEY+&quot;:&quot;+msg);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>异步实现</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">//将信道设置为发送方确认</span><br><span class="line">       channel.confirmSelect();</span><br><span class="line"></span><br><span class="line">       //信道被关闭监听器 用于RabbitMQ服务器断线重连</span><br><span class="line">       //channel.addShutdownListener();</span><br><span class="line"></span><br><span class="line">       /**</span><br><span class="line">        * 生产者异步确认监听</span><br><span class="line">        * 参数deliveryTag代表了当前channel唯一的投递</span><br><span class="line">        * 参数multiple:false</span><br><span class="line">        * </span><br><span class="line">        */</span><br><span class="line">       channel.addConfirmListener(new ConfirmListener() &#123;</span><br><span class="line">       	//RabbitMQ服务器确认收到消息</span><br><span class="line">           public void handleAck(long deliveryTag, boolean multiple)</span><br><span class="line">                   throws IOException &#123;</span><br><span class="line">               System.out.println(&quot;RabbitMQ服务器确认收到消息Ack deliveryTag=&quot;+deliveryTag</span><br><span class="line">                       +&quot;multiple:&quot;+multiple);</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           //RabbitMQ服务器由于自己内部出现故障没有收到消息</span><br><span class="line">           public void handleNack(long deliveryTag, boolean multiple)</span><br><span class="line">                   throws IOException &#123;</span><br><span class="line">               System.out.println(&quot;RabbitMQ服务没有收到消息Ack deliveryTag=&quot;+deliveryTag</span><br><span class="line">                       +&quot;multiple:&quot;+multiple);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line"></span><br><span class="line">       //生产者异步返回监听 这里和发布消息时的mandatory参数有关</span><br><span class="line">       //参数mandatory：mandatory=true，投递消息时无法找到一个合适的队列,把消息返回给生产者,mandatory=false 丢弃消息(缺省)</span><br><span class="line">       channel.addReturnListener(new ReturnListener() &#123;</span><br><span class="line">           public void handleReturn(int replyCode, String replyText,</span><br><span class="line">                                    String exchange, String routingKey,</span><br><span class="line">                                    AMQP.BasicProperties properties, byte[] body)</span><br><span class="line">                   throws IOException &#123;</span><br><span class="line">               String msg = new String(body);</span><br><span class="line">               System.out.println(&quot;replyText:&quot;+replyText);</span><br><span class="line">               System.out.println(&quot;exchange:&quot;+exchange);</span><br><span class="line">               System.out.println(&quot;routingKey:&quot;+routingKey);</span><br><span class="line">               System.out.println(&quot;msg:&quot;+msg);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;);</span><br><span class="line"> //后面是进行发布操作</span><br></pre></td></tr></table></figure></p>
+<p>  //9.消费者自动确认：autoAck参数为true<br> channel.basicConsume(queueName, true, consumerB);</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhi.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wei.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -204,11 +277,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">servlet</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ajax</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">log4j2</a>
         		</li>
       		
 		</ul>
@@ -218,16 +291,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/21/servlet与ajax json数据交互/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/09/18/rabbitMq/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/09/18/log4j2日志保存/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          logj2日志保存
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/06/spring集成kfka实现消息队列/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">spring 搭建kfkaTemlate实现消息发送</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -242,516 +383,48 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-spring的Quartz配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/21/spring的Quartz配置/">springd的Quartz实现定时任务</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/21/spring的Quartz配置/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-		
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1、Job<br>表示一个工作，要执行的具体内容。此接口中只有一个方法</p>
-        
-          <a class="article-more-a" href="/2018/04/21/spring的Quartz配置/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Quartz</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/21/spring的Quartz配置/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-poi工具类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/21/poi工具类/">poi导出excel工具类</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/21/poi工具类/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-		
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ol>
-<li>工具类代码实现</li></ol>
-        
-          <a class="article-more-a" href="/2018/04/21/poi工具类/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">poi</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/21/poi工具类/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-微信第三方登录App或者网站" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/21/微信第三方登录App或者网站/">java微信授权登录</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/21/微信第三方登录App或者网站/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-		
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>要能够实现微信授权登录，必须有认证的微信开放平台帐号、或是微信公众号的测试帐号。<br><br></p>
-        
-          <a class="article-more-a" href="/2018/04/21/微信第三方登录App或者网站/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">微信登录</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/21/微信第三方登录App或者网站/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-（Git的应用）本地库项目上传到github" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/21/（Git的应用）本地库项目上传到github/">git上传项目到git社区</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/21/（Git的应用）本地库项目上传到github/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-		
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><span style="font-size:14px">&nbsp; &nbsp; &nbsp; &nbsp;Git的安装就不说了。</span><br></p>
-        
-          <a class="article-more-a" href="/2018/04/21/（Git的应用）本地库项目上传到github/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">github</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/21/（Git的应用）本地库项目上传到github/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-随笔-生活" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/21/随笔-生活/">随笔-生活</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/21/随笔-生活/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-		
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>第一次自己在住的地方吃火锅，很开心。<br></p>
-        
-          <a class="article-more-a" href="/2018/04/21/随笔-生活/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/21/随笔-生活/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-你好，欢迎访问我的博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/18/你好，欢迎访问我的博客/">你好，欢迎访问我的第一个博客</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/18/你好，欢迎访问我的博客/" class="archive-article-date">
-  	<time datetime="2018-04-18T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-18</time>
-</a>
-		
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>您好，欢迎访问我的第一个博客！</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/18/你好，欢迎访问我的博客/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/09/18/rabbitMq/",
+  owner: 'p180j',
+  repo: 'p180j.github.io',
+  oauth: {
+    client_id: 'f08733074182ded4e7c9',
+    client_secret: '895c5e5cbe5c2b1a98371e8628457b5cc7f33707',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -783,8 +456,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
@@ -858,7 +531,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">java虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -866,11 +547,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
+                <a href="javascript:void(0)" class="js-tag color3">java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -882,10 +559,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">log4j2</a>
               </li>
              
@@ -894,27 +567,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">shiro</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -926,7 +583,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -935,10 +604,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">github</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
