@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/9 | KeepGoing博客</title>
+  <title>webservice四种实现方式详解 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="KeepGoing博客">
-<meta property="og:url" content="http://yoursite.com/archives/2018/09/index.html">
+  <meta name="description" content="1. 概念了解  WebService是两个系统的远程调用，使两个系统进行数据交互，如应用：天气预报服务、银行ATM取款、使用邮箱账号登录各网站等。">
+<meta name="keywords" content="博客,java,maven,webservice">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webservice四种实现方式详解">
+<meta property="og:url" content="http://yoursite.com/2018/10/25/webservice/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
+<meta property="og:description" content="1. 概念了解  WebService是两个系统的远程调用，使两个系统进行数据交互，如应用：天气预报服务、银行ATM取款、使用邮箱账号登录各网站等。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/2018/10/25/webservice/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/10/25/webservice/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/10/25/webservice/3.png">
+<meta property="og:updated_time" content="2018-10-25T13:57:38.668Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KeepGoing博客">
+<meta name="twitter:title" content="webservice四种实现方式详解">
+<meta name="twitter:description" content="1. 概念了解  WebService是两个系统的远程调用，使两个系统进行数据交互，如应用：天气预报服务、银行ATM取款、使用邮箱账号登录各网站等。">
+<meta name="twitter:image" content="http://yoursite.com/2018/10/25/webservice/1.png">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -157,82 +166,126 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-webservice" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      webservice四种实现方式详解
+    </h1>
+  
+
+        
+        <a href="/2018/10/25/webservice/" class="archive-article-date">
+  	<time datetime="2018-10-25T13:49:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-25</time>
+</a>
+		
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+        
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> <strong>1. 概念了解</strong></p>
+<ul>
+<li>WebService是两个系统的远程调用，使两个系统进行数据交互，如应用：天气预报服务、银行ATM取款、使用邮箱账号登录各网站等。<a id="more"></a></li>
+<li>WebService之间的调用是跨语言的调用。Java、.Net、php，发送Http请求，使用的数据格式是XML格式。</li>
+<li>webxml.com.cn上面有一些免费的WebService服务，可以进去看看。</li>
+</ul>
+<p><strong>2. 客户端实现的几种方式</strong></p>
+<p>   2.1   Wsimport实现方式</p>
+<blockquote>
+<p> 概念理解：</p>
+<ul>
+<li>WSDL – WebService Description Language – Web服务描述语言。<ul>
+<li>通过XML形式说明服务在什么地方－地址。address location</li>
+<li>通过XML形式说明服务提供什么样的方法 – 如何调用。operation</li>
+</ul>
+</li>
+</ul>
+<p>注意：该种方式使用简单，但一些关键的元素在代码生成时写死到生成代码中，不方便维护，所以仅用于测试。 </p>
+<p>实现方式：<br>（1）Wsimport命令介绍<br>Wsimport就是jdk（1.6版本之后）提供的的一个工具，他的作用就是根据WSDL地址生成客户端代码；<br>Wsimport位置JAVA_HOME/bin<br>Wsimport常用的参数：<br>-s，生成java文件的<br>-d，生成class文件的，默认的参数<br>-p，指定包名的，如果不加该参数，默认包名就是wsdl文档中的命名空间的倒序； </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class MobileClient &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">         //创建服务访问点集合的对象 ，wsdl文档中：&lt;wsdl:service name=&quot;MobileCodeWS&quot;&gt;</span><br><span class="line">        MobileCodeWS mobileCodeWS = new MobileCodeWS();</span><br><span class="line">        </span><br><span class="line">        //获取服务实现类，wsdl中：&lt;wsdl:portType name=&quot;MobileCodeWSSoap&quot;&gt;</span><br><span class="line">        MobileCodeWSSoap mobileCodeWSSoap = mobileCodeWS.getPort(MobileCodeWSSoap.class);</span><br><span class="line">        </span><br><span class="line">        //根据服务访问点的集合中的服务访问点的绑定对象来获得绑定的服务类</span><br><span class="line">        MobileCodeWSSoap mobileCodeWSSoap = mobileCodeWS.getMobileCodeWSSoap();</span><br><span class="line">        String mobileCodeInfo = mobileCodeWSSoap.getMobileCodeInfo(&quot;18518114962&quot;, &quot;&quot;);</span><br><span class="line">        System.out.println(mobileCodeInfo);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.2 service实现方式</p>
+<blockquote>
+<p> service编程调用方式 ，这种方式其实就是只需引用服务的方法类就行，不需要全部引用。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class ServiceClient &#123;  </span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws IOException &#123;  </span><br><span class="line">        //创建WSDL的URL，注意不是服务地址  </span><br><span class="line">        URL url = new URL(&quot;http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx?wsdl&quot;);  </span><br><span class="line"></span><br><span class="line">        //创建服务名称  </span><br><span class="line">        //1.namespaceURI - 命名空间地址 (wsdl文档中的targetNamespace)</span><br><span class="line">        //2.localPart - 服务视图名  ，wsdl文档中：&lt;wsdl:service name=&quot;MobileCodeWS&quot;&gt;</span><br><span class="line">        QName qname = new QName(&quot;http://WebXml.com.cn/&quot;, &quot;MobileCodeWS&quot;);  </span><br><span class="line">        </span><br><span class="line">         / /wsdlDocumentLocation - wsdl地址 ，serviceName - 服务名称 </span><br><span class="line">        Service service = Service.create(url, qname);  </span><br><span class="line">        //获取服务实现类  wsdl中：&lt;wsdl:portType name=&quot;MobileCodeWSSoap&quot;&gt;</span><br><span class="line">        MobileCodeWSSoap mobileCodeWSSoap = service.getPort(MobileCodeWSSoap.class);  </span><br><span class="line">        //调用查询方法  </span><br><span class="line">        String result = mobileCodeWSSoap.getMobileCodeInfo(&quot;1866666666&quot;, &quot;&quot;);  </span><br><span class="line">        System.out.println(result);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.3 HttpURLConnection调用方式</p>
+<blockquote>
+<p>操作步骤，开发步骤：<br>第一步：创建服务地址<br>第二步：打开一个通向服务地址的连接<br>第三步：设置参数 设置POST，POST必须大写，如果不大写，报异常<br>第四步：组织SOAP数据，发送请求<br>第五步：接收服务端响应，打印</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">public class HttpURLConectionMode &#123;</span><br><span class="line">    public static void main(String[] args) throws IOException &#123;</span><br><span class="line">        //第一步：创建服务地址，不是WSDL地址 </span><br><span class="line">        URL url = new URL(&quot;http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx&quot;);  </span><br><span class="line">        //第二步：打开一个通向服务地址的连接  </span><br><span class="line">        HttpURLConnection connection = (HttpURLConnection) url.openConnection();  </span><br><span class="line">        //第三步：设置参数  </span><br><span class="line">        //3.1发送方式设置：POST必须大写  </span><br><span class="line">        connection.setRequestMethod(&quot;POST&quot;);</span><br><span class="line">        //3.2设置数据格式：content-type  </span><br><span class="line">        connection.setRequestProperty(&quot;content-type&quot;, &quot;text/xml;charset=utf-8&quot;);  </span><br><span class="line">        //3.3设置输入输出，因为默认新创建的connection没有读写权限，  </span><br><span class="line">        connection.setDoInput(true);  </span><br><span class="line">        connection.setDoOutput(true);</span><br><span class="line"></span><br><span class="line">        //第四步：组织SOAP数据，发送请求  </span><br><span class="line">        String soapXML = getXML(&quot;15226466316&quot;);</span><br><span class="line">        OutputStream os = connection.getOutputStream();  </span><br><span class="line">        os.write(soapXML.getBytes()); </span><br><span class="line"></span><br><span class="line">        //第五步：接收服务端响应，打印（xml格式数据）</span><br><span class="line">        int responseCode = connection.getResponseCode();  </span><br><span class="line">        if(200 == responseCode)&#123;//表示服务端响应成功</span><br><span class="line">            InputStream is = null;</span><br><span class="line">            InputStreamReader isr = null;</span><br><span class="line">            BufferedReader br = null;</span><br><span class="line">            StringBuilder sb = null;</span><br><span class="line">            try &#123;</span><br><span class="line">                is = connection.getInputStream();  </span><br><span class="line">                isr = new InputStreamReader(is);  </span><br><span class="line">                br = new BufferedReader(isr);  </span><br><span class="line"></span><br><span class="line">                sb = new StringBuilder();  </span><br><span class="line">                String temp = null;  </span><br><span class="line">                while(null != (temp = br.readLine()))&#123;  </span><br><span class="line">                    sb.append(temp);  </span><br><span class="line">                &#125;</span><br><span class="line">                 System.out.println(sb.toString()); </span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                throw e;</span><br><span class="line">            &#125; finally &#123;</span><br><span class="line">                br.close();</span><br><span class="line">                isr.close();</span><br><span class="line">                is.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;  </span><br><span class="line"></span><br><span class="line">        os.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static String getXML(String phoneNum)&#123;  </span><br><span class="line">        String soapXML = &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;&quot;  </span><br><span class="line">        +&quot;&lt;soap:Envelope xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot; xmlns:xsd=\&quot;http://www.w3.org/2001/XMLSchema\&quot; xmlns:soap=\&quot;http://schemas.xmlsoap.org/soap/envelope/\&quot;&gt;&quot;  </span><br><span class="line">            +&quot;&lt;soap:Body&gt;&quot;  </span><br><span class="line">            +&quot;&lt;getMobileCodeInfo xmlns=\&quot;http://WebXml.com.cn/\&quot;&gt;&quot;  </span><br><span class="line">                +&quot;&lt;mobileCode&gt;&quot;+phoneNum+&quot;&lt;/mobileCode&gt;&quot;  </span><br><span class="line">              +&quot;&lt;userID&gt;&lt;/userID&gt;&quot;  </span><br><span class="line">            +&quot;&lt;/getMobileCodeInfo&gt;&quot;  </span><br><span class="line">          +&quot;&lt;/soap:Body&gt;&quot;  </span><br><span class="line">        +&quot;&lt;/soap:Envelope&gt;&quot;;  </span><br><span class="line">        return soapXML;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.4  Ajax调用方式</p>
+<blockquote>
+<p>jsonp无法实现跨域，因为webservice服务的响应格式为xml格式；</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;  </span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;  </span><br><span class="line"> &lt;head&gt;  </span><br><span class="line">  &lt;meta charset=&quot;UTF-8&quot;&gt;  </span><br><span class="line">  &lt;title&gt;Document&lt;/title&gt;  </span><br><span class="line">  &lt;script type=&quot;text/javascript&quot;&gt;  </span><br><span class="line">    function queryMobile()&#123;  </span><br><span class="line">        //创建XMLHttpRequest对象  </span><br><span class="line">        var xhr = new XMLHttpRequest();  </span><br><span class="line">        //打开连接  </span><br><span class="line">        xhr.open(&quot;post&quot;,&quot;http://webservice.webxml.com.cn/WebServices/MobileCodeWS.asmx&quot;,true);  </span><br><span class="line">        //设置数据类型  </span><br><span class="line">        xhr.setRequestHeader(&quot;content-type&quot;,&quot;text/xml;charset=utf-8&quot;);  </span><br><span class="line">        //设置回调函数  </span><br><span class="line">        xhr.onreadystatechange=function()&#123;  </span><br><span class="line">            //判断是否发送成功和判断服务端是否响应成功  </span><br><span class="line">            if(4 == xhr.readyState &amp;&amp; 200 == xhr.status)&#123;  </span><br><span class="line">                alert(xhr.responseText);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        //组织SOAP协议数据  </span><br><span class="line">        var soapXML = &quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;utf-8\&quot;?&gt;&quot;  </span><br><span class="line">        +&quot;&lt;soap:Envelope xmlns:xsi=\&quot;http://www.w3.org/2001/XMLSchema-instance\&quot; xmlns:xsd=\&quot;http://www.w3.org/2001/XMLSchema\&quot; xmlns:soap=\&quot;http://schemas.xmlsoap.org/soap/envelope/\&quot;&gt;&quot;  </span><br><span class="line">            +&quot;&lt;soap:Body&gt;&quot;  </span><br><span class="line">            +&quot;&lt;getMobileCodeInfo xmlns=\&quot;http://WebXml.com.cn/\&quot;&gt;&quot;  </span><br><span class="line">                +&quot;&lt;mobileCode&gt;&quot;+document.getElementById(&quot;phoneNum&quot;).value+&quot;&lt;/mobileCode&gt;&quot;  </span><br><span class="line">              +&quot;&lt;userID&gt;&lt;/userID&gt;&quot;  </span><br><span class="line">            +&quot;&lt;/getMobileCodeInfo&gt;&quot;  </span><br><span class="line">          +&quot;&lt;/soap:Body&gt;&quot;  </span><br><span class="line">        +&quot;&lt;/soap:Envelope&gt;&quot;;  </span><br><span class="line">        alert(soapXML);  </span><br><span class="line">        //发送数据  </span><br><span class="line">        xhr.send(soapXML);  </span><br><span class="line">    &#125;  </span><br><span class="line">  &lt;/script&gt;  </span><br><span class="line"> &lt;/head&gt;  </span><br><span class="line"> &lt;body&gt;  </span><br><span class="line">  手机号查询：&lt;input type=&quot;text&quot; id=&quot;phoneNum&quot;/&gt; &lt;input type=&quot;button&quot; value=&quot;查询&quot; onclick=&quot;javascript:queryMobile();&quot;/&gt;  </span><br><span class="line"> &lt;/body&gt;  </span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>下面图是展示wsdl文档中的关键字段，以及对服务方法的如何使用以及功能描述</p>
+</blockquote>
+<p><img src="/2018/10/25/webservice/1.png" alt="在这里插入图片描述"><br><img src="/2018/10/25/webservice/2.png" alt="在这里插入图片描述"></p>
+<p><img src="/2018/10/25/webservice/3.png" alt="在这里插入图片描述"></p>
+<p>3 .服务端的实现</p>
+<blockquote>
+<p>服务端使用cfx+spring和注解实现服务端发布</p>
+</blockquote>
+<p>pom文件添加jar包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 添加cxfwebservice依赖jar包  2018-07-05 --&gt;</span><br><span class="line">         &lt;dependency&gt;</span><br><span class="line">             &lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;</span><br><span class="line">             &lt;artifactId&gt;cxf-rt-frontend-jaxws&lt;/artifactId&gt;</span><br><span class="line">             &lt;version&gt;2.5.1&lt;/version&gt;</span><br><span class="line">         &lt;/dependency&gt;</span><br><span class="line">         &lt;dependency&gt;</span><br><span class="line">             &lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;</span><br><span class="line">             &lt;artifactId&gt;cxf-rt-transports-http&lt;/artifactId&gt;</span><br><span class="line">             &lt;version&gt;2.5.1&lt;/version&gt;</span><br><span class="line">         &lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<p>web.xml添加配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- cxf WEBSERVICE配置 --&gt;</span><br><span class="line"> &lt;servlet&gt;</span><br><span class="line">   &lt;servlet-name&gt;CXFServlet&lt;/servlet-name&gt;</span><br><span class="line">   &lt;servlet-class&gt;</span><br><span class="line">           org.apache.cxf.transport.servlet.CXFServlet</span><br><span class="line">       &lt;/servlet-class&gt;</span><br><span class="line">   &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</span><br><span class="line"> &lt;/servlet&gt;</span><br><span class="line"> &lt;servlet-mapping&gt;</span><br><span class="line">   &lt;servlet-name&gt;CXFServlet&lt;/servlet-name&gt;</span><br><span class="line">   &lt;url-pattern&gt;/renewal/*&lt;/url-pattern&gt;</span><br><span class="line"> &lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+<p>spring配置文件添加配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 添加cxfwebservice文件  --&gt;</span><br><span class="line">    &lt;import resource=&quot;classpath:META-INF/cxf/cxf.xml&quot; /&gt;</span><br><span class="line">    &lt;import resource=&quot;classpath:META-INF/cxf/cxf-extension-soap.xml&quot; /&gt;</span><br><span class="line">    &lt;import resource=&quot;classpath:META-INF/cxf/cxf-servlet.xml&quot; /&gt;</span><br><span class="line">    &lt;!--下面的class属性值一定要跟你项目中服务实现类的包路径完全一致 --&gt;</span><br><span class="line">    &lt;jaxws:endpoint id=&quot;renewalPaymentLock&quot; implementor=&quot;com.sinosoft.sinopay.web.weixinpay.biz.service.impl.RenewalPaymentLockServiceImpl&quot; address=&quot;/RenewalPaymentLock&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>最终生成是地址是：</strong> ip/renewal/RenewalPaymentLock?wsdl （web.xml+springd拼接而成的）</p>
+<p>接口中伪代码实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@WebService</span><br><span class="line">public interface RenewalPaymentLockService &#123;</span><br><span class="line">     @WebMethod</span><br><span class="line">     public String  RenewalPaymentLock(String renewalJson);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现类注解：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@WebService(endpointInterface = &quot;com.sinosoft.sinopay.web.weixinpay.biz.service.RenewalPaymentLockService&quot;)</span><br><span class="line">endpointInterface  是接口中的地址（包名）</span><br></pre></td></tr></table></figure>
+<p>参考文章：<a href="https://blog.csdn.net/menghuanzhiming/article/details/78475785" target="_blank" rel="noopener">https://blog.csdn.net/menghuanzhiming/article/details/78475785</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhi.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wei.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/20/关于解决WEB-INF的JSP文件引webRoot下的Js、css和图片的问题 /" class="archive-article-date">
-  	<time datetime="2018-09-20T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/20/关于解决WEB-INF的JSP文件引webRoot下的Js、css和图片的问题 /">WEB-INF的JSP文件引webRoot下的Js、css和图片的问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/18/log4j2日志保存/" class="archive-article-date">
-  	<time datetime="2018-09-18T13:26:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/18/log4j2日志保存/">logj2日志保存</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -250,75 +303,142 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">log4j2</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">webservice</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
 
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/10/25/webservice/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/09/06/spring集成kfka实现消息队列/" class="archive-article-date">
-  	<time datetime="2018-09-06T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-06</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/10/24/rabbitMq/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">原生rabbitMQ实现方式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/09/06/spring集成kfka实现消息队列/">spring 搭建kfkaTemlate实现消息发送</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">kafka</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/10/25/webservice/",
+  owner: 'p180j',
+  repo: 'p180j.github.io',
+  oauth: {
+    client_id: 'f08733074182ded4e7c9',
+    client_secret: '895c5e5cbe5c2b1a98371e8628457b5cc7f33707',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -350,8 +470,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
