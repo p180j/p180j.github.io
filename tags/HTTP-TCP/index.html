@@ -6,20 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>银联接口开发 | KeepGoing博客</title>
+  <title>Tag: HTTP/TCP | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 流程  准备 chainapay.jar 、商户交易证书（商户私钥）、上银联公钥 加载签名工具类">
-<meta name="keywords" content="博客,java,支付">
-<meta property="og:type" content="article">
-<meta property="og:title" content="银联接口开发">
-<meta property="og:url" content="http://yoursite.com/2018/07/21/上银联接口开发/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="KeepGoing博客">
+<meta property="og:url" content="http://yoursite.com/tags/HTTP-TCP/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="1. 流程  准备 chainapay.jar 、商户交易证书（商户私钥）、上银联公钥 加载签名工具类">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-08T14:45:34.561Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="银联接口开发">
-<meta name="twitter:description" content="1. 流程  准备 chainapay.jar 、商户交易证书（商户私钥）、上银联公钥 加载签名工具类">
+<meta name="twitter:title" content="KeepGoing博客">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -162,248 +157,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-上银联接口开发" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      银联接口开发
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/11/05/TCP/" class="archive-article-date">
+  	<time datetime="2018-11-05T14:52:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-05</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/11/05/TCP/">TCP实现长短连接</a>
     </h1>
   
 
-        
-        <a href="/2018/07/21/上银联接口开发/" class="archive-article-date">
-  	<time datetime="2018-07-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-21</time>
-</a>
-		
-		<span class="archive-article-date">
-			阅读量 <span id="busuanzi_value_page_pv"></span>
-		</span>
-        
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> <strong>1. 流程</strong></p>
-<ul>
-<li>准备 chainapay.jar 、商户交易证书（商户私钥）、上银联公钥</li>
-<li><p>加载签名工具类</p>
-<a id="more"></a>
-<blockquote>
-<p> 1 . 先配置上银联配置文件 security.properties（证书都是绝对路劲）</p>
-<h2 id="Security-properties-configuration-file"><a href="#Security-properties-configuration-file" class="headerlink" title="Security properties configuration file"></a>Security properties configuration file</h2><p>——–上银联公钥地址————<br>verify.file=/home/dianshang/sinoPay/paytrade/config/cp_test_verify_sign.cer<br>——–文件目录地址————<br>sign.filePath=/home/dianshang/sinoPay/paytrade/config<br>——–商户私钥地址————<br>sign.file=/home/dianshang/sinoPay/paytrade/config/cp_test_sign.pfx<br>——–商户私钥证书（交易证书）密码————<br>sign.file.password=1<br>——– 加密方式————<br>sign.cert.type=PKCS12<br>——– 不参与加密的字段————<br>sign.invalid.fields=Signature<br>——– 加密字段————<br>signature.field=Signature<br>——– 控制台————<br>log4j.name=CONSOLE</p>
-</blockquote>
-</li>
-<li><p>加载签名类</p>
-</li>
-</ul>
-<blockquote>
-<p>// 加载安全密钥<br>public SecssUtil getSecssUtil() {<br>    String tPath=”config/security.properties”;<br>    String rootPath = this.getClass().getResource(“/“).getPath().toString();<br>    SecssUtil secssUtil = new SecssUtil();<br>    logger.info(“安全文件路径”+rootPath+tPath);<br>    secssUtil.init(rootPath+tPath);   //服务器security路径<br>    secssUtil.init(“D:/security.properties”);  //本地security路径<br>    logger.info(“安全证书加载完成…………..”);<br>    return secssUtil;<br>}</p>
-</blockquote>
-<ul>
-<li>关于卡信息域处理，先进行转化json字符串，然后base64编码，再进行RSA加密<blockquote>
-<p>if (StringUtil.isNotEmpty(cardParamsjson)) {</p>
-<pre><code>byte[] CardTranDataByte = Base64.encodeBase64(cardParamsjson
-        .getBytes(CpayConstants.ENCODING));    //对卡信息域 base64编码
-CardTranDatapara = new String(CardTranDataByte,
-        CpayConstants.ENCODING);
-secssUtil.encryptData(CardTranDatapara);    //进行RSA加密
-CardTranDatapara = secssUtil.getEncValue();   //获得卡信息域加密信息
-</code></pre></blockquote>
-</li>
-</ul>
-<p> <strong>2.  上银联签约接口</strong></p>
-<ul>
-<li>查询地址：<br><a href="https://newpayment-test.chinapay.com/CTITS/service/rest/forward/syn/000000000017/0/0/0/0/0" target="_blank" rel="noopener">https://newpayment-test.chinapay.com/CTITS/service/rest/forward/syn/000000000017/0/0/0/0/0</a></li>
-</ul>
-<p>封装请求报文：</p>
-<pre><code>public ChinapaySigningQyResponseDTO chinapaySigningQuery(
-        ChinapaySigningQyRequestDTO chinapaySigningQyRequestDTO) {
-    logger.info(&quot;上银联签约查询查询开始---------------&quot;);
-    // 定义返回信息的的实体类
-    ChinapaySigningQyResponseDTO chinapaySigningQyResponseDTO = new ChinapaySigningQyResponseDTO();
-    // 读取配置文件
-    String tPath = &quot;/config/gneteConfig.properties&quot;;
-    Properties properties = PropertiesUtils.readProperties(tPath);
-    if (chinapaySigningQyRequestDTO == null) {
-        try {
-            throw new NullPointerException();
-        } catch (NullPointerException e) {
-            logger.error(&quot;========签约查询接口请求对象为空=========&quot;);
-            e.printStackTrace();
-        }
-    }
-    // 定义请求map
-    Map&lt;String, String&gt; sendMap = new TreeMap&lt;String, String&gt;();
-
-    Map&lt;String, String&gt; cardParamsMap = new TreeMap&lt;String, String&gt;();
-    cardParamsMap.put(&quot;CardNo&quot;, chinapaySigningQyRequestDTO.getCardNo());
-    String cardParamsjson = JSON.toJSONString(cardParamsMap);
-    logger.info(&quot;签约查询加密前卡信息域=&quot; + cardParamsjson);
-    // 从配置文件获得商户ID,封装业务参数到TreeMap(排序)中
-
-    String requestUrl = properties.getProperty(&quot;Chinapay_Url&quot;);
-    String merId = properties.getProperty(&quot;MER_ID&quot;);
-    sendMap.put(&quot;MerId&quot;, merId);
-    sendMap.put(&quot;Version&quot;, properties.getProperty(&quot;CPVERSION&quot;));
-    sendMap.put(&quot;BusiType&quot;, ChinapaySigningQyRequestDTO.BusiType);
-    sendMap.put(&quot;TranType&quot;, ChinapaySigningQyRequestDTO.TranType);
-    sendMap.put(&quot;OriTranType&quot;, ChinapaySigningQyRequestDTO.OriTranType);
-    SecssUtil secssUtil = cPSignedService.getSecssUtil();
-    // 构建卡信息保留域，对卡信息域进行 BASE64 编码，编码后采用 RSA(encryptData) 加密
-    String CardTranDatapara = null;
-
-    try {
-        System.out.println(&quot;cardParamsjson==&quot; + cardParamsjson);
-        if (StringUtil.isNotEmpty(cardParamsjson)) {
-            byte[] CardTranDataByte = Base64.encodeBase64(cardParamsjson
-                    .getBytes(&quot;UTF-8&quot;));
-            CardTranDatapara = new String(CardTranDataByte);
-            logger.info(&quot;加密前的卡信息域===&quot; + CardTranDatapara);
-            secssUtil.encryptData(CardTranDatapara);
-            CardTranDatapara = secssUtil.getEncValue();
-            logger.info(&quot;加密后的卡信息域===&quot; + CardTranDatapara);
-        } else {
-            logger.info(&quot;卡信息域为空，请重试！&quot;);
-            throw new NullPointerException(&quot;==卡信息保留域为空,请重新输入！==&quot;);
-        }
-    } catch (Exception e) {
-        e.getMessage();
-        e.printStackTrace();
-    }
-    logger.info(&quot;CardTranDatapara==&quot; + CardTranDatapara);
-    sendMap.put(&quot;CardTranData&quot;, CardTranDatapara);
-    secssUtil.sign(sendMap);
-    logger.info(&quot;参数签名返回===&quot; + secssUtil.getErrCode()
-            + secssUtil.getErrMsg());
-    if (secssUtil.getErrCode().equals(&quot;00&quot;)) {
-        logger.info(&quot;进行签名字段参数设置为==&quot; + secssUtil.getSign());
-        sendMap.put(&quot;Signature&quot;, secssUtil.getSign());
-        chinapaySigningQyResponseDTO.setSignature(secssUtil.getSign());
-    }
-    Set&lt;Map.Entry&lt;String, String&gt;&gt; entrySet = sendMap.entrySet();
-    for (Map.Entry&lt;String, String&gt; entry : entrySet) {
-        logger.info(&quot;签约查询接口上送数据&quot; + entry);
-    }
-    String response = null;
-    try {
-        response = HttpClientUtil.postData(requestUrl, sendMap,
-                CpayConstants.ENCODING);
-        if(response==null){
-            chinapaySigningQyResponseDTO.setRespCode(&quot;8888&quot;);
-            chinapaySigningQyResponseDTO.setRespMsg(&quot;请求上银联签约接口超时&quot;);
-            throw new HttpException(&quot;请求上银联签约接口超时&quot;);
-        }
-        String[] strs = response.split(&quot;&amp;&quot;, -1);
-        logger.info(&quot;银联返回字符串=&quot; + strs);
-        Map&lt;String, String&gt; resultMap = new TreeMap&lt;String, String&gt;();
-        for (String str : strs) {
-            String[] keyValues = str.split(&quot;=&quot;, -1);
-            if (keyValues.length &lt; 2) {
-                continue;
-            }
-            String key = keyValues[0];
-            String value = keyValues[1];
-            if (StringUtil.isEmpty(value)) {
-                continue;
-            }
-            value = URLDecoder.decode(value, &quot;UTF-8&quot;);
-            resultMap.put(key, value);
-
-        }
-        Set&lt;Map.Entry&lt;String, String&gt;&gt; entrySet1 = resultMap.entrySet();
-        for (Map.Entry&lt;String, String&gt; entry : entrySet1) {
-            logger.info(&quot;返回签约查询数据&quot; + entry);
-        }
-        // 验证返回来的参数
-        // String sign = resultMap.get(secssUtil.getSign());
-        secssUtil.verify(resultMap);
-        // 解析银联返回的数据
-        if (secssUtil.getErrCode().equals(&quot;00&quot;)) {
-            for (Map.Entry&lt;String, String&gt; entry : resultMap.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                if (StringUtil.isEmpty(value)) {
-                    continue;
-                }
-                // 解析卡保留域数据
-                if (CardTranDatapara.equals(key)) {
-                    secssUtil.decryptData(value);
-                    if (secssUtil.getErrCode().equals(&quot;00&quot;)) {
-                        value = secssUtil.getDecValue();
-                        // value = new String(Base64.decodeBase64(value),
-                        // Constants.ENCODING);
-                    } else {
-                        throw new Exception(&quot;签约查询接口返回卡信息保留域为空！&quot;);
-                    }
-                    resultMap.put(key, value);
-                }
-
-            }
-        } else {
-            logger.info(&quot;=============银联返回数据验签失败 ============&quot;);
-            chinapaySigningQyResponseDTO.setRespMsg(resultMap
-                    .get(&quot;respMsg&quot;));
-            chinapaySigningQyResponseDTO.setRespCode(resultMap
-                    .get(&quot;respCode&quot;));
-            throw new Exception(&quot;验签失败！&quot; + &quot;错误码是：&quot; + secssUtil.getErrCode()
-                    + &quot;错误信息是：&quot; + secssUtil.getErrMsg());
-        }
-    } catch (UnsupportedEncodingException e) {
-        logger.info(e.getMessage());
-        e.printStackTrace();
-    }catch (HttpException e) {
-        logger.info(e.getMessage());
-        e.printStackTrace();
-    } 
-    catch (Exception e) {
-        logger.info(e.getMessage());
-        e.printStackTrace();
-    }
-    return chinapaySigningQyResponseDTO;
-}
-</code></pre>
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/zhi.png">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/wei.png">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -417,151 +200,25 @@ CardTranDatapara = secssUtil.getEncValue();   //获得卡信息域加密信息
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">支付</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">HTTP/TCP</a>
         		</li>
       		
 		</ul>
 	</div>
 
+          
 
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/07/21/上银联接口开发/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/07/24/Maven_profiles/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          maven中利用profiles实现多环境打包
-        
-      </div>
-    </a>
   
   
-    <a href="/2018/05/24/aliPayMent/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">支付宝支付接口</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Security-properties-configuration-file"><span class="toc-number">1.</span> <span class="toc-text">Security properties configuration file</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
-<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  id: "http://yoursite.com/2018/07/21/上银联接口开发/",
-  owner: 'p180j',
-  repo: 'p180j.github.io',
-  oauth: {
-    client_id: 'f08733074182ded4e7c9',
-    client_secret: '895c5e5cbe5c2b1a98371e8628457b5cc7f33707',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
-  
+    
 
 
           </div>
@@ -593,9 +250,9 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
