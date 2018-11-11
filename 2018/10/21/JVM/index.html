@@ -17,7 +17,7 @@
 <meta property="og:description" content="虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2018/10/21/JVM/1.jpg">
-<meta property="og:updated_time" content="2018-10-21T11:23:40.553Z">
+<meta property="og:updated_time" content="2018-11-11T10:10:12.474Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM虚拟机概念描述">
 <meta name="twitter:description" content="虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
@@ -203,12 +203,12 @@
 <ul>
 <li><p>Java堆</p>
 <blockquote>
-<p>在java虚拟机启动时建立java堆，几乎所有对象实例都放在java堆中，它是县城共享的，Heap中的对象的内存需要等待GC进行回收。</p>
+<p>在java虚拟机启动时建立java堆，几乎所有对象实例都放在java堆中，它是线程共享的，Heap中的对象的内存需要等待GC进行回收。</p>
 </blockquote>
 </li>
 <li><p>Java栈</p>
 <blockquote>
-<p> 线程私有内存空间，有局部变量、操作数帧和帧数据区<br> 局部变量：报错函数的参数局部变量<br> 操作数帧：保存中间结果<br> 帧数据区：返回结果异常，异常处理表，方便异常时找到异常代码</p>
+<p> 线程私有内存空间，有局部变量、操作数帧和帧数据区<br> 局部变量：报错函数的参数局部变量<br> 操作数帧：保存中间结果<br> 帧数据区：返回结果异常，异常处理表，方便异常时找到异常代码<br>每个方法在执行时都会创建一个栈帧用于储存局部变量表、操作数帧、动态链接、方法出口等信息。每个方法从调用直至到执行完成的过程，就对应着一个栈帧在虚拟机栈中入栈到出栈的过程。<br>如果请求的栈的深度大于虚拟机所允许的深度就会抛出stackOverflowError异常(递归调用，递归不是马上返回而是一层层保存，满足添加后才一层层返回)，虚拟机栈在动态扩展无法申请到足够的内存就会报outOfMemoryError异常</p>
 </blockquote>
 </li>
 <li><p>方法区</p>
@@ -583,11 +583,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
+                <a href="javascript:void(0)" class="js-tag color4">HTTP/TCP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,15 +599,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HTTP/TCP</a>
+                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">log4j2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -619,11 +623,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
+                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -635,19 +643,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
+                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -659,11 +659,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
