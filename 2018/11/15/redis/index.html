@@ -6,20 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>springd的Quartz实现定时任务 | KeepGoing博客</title>
+  <title>redis缓存以及集群详解 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1、Job表示一个工作，要执行的具体内容。此接口中只有一个方法">
-<meta name="keywords" content="博客,spring,Quartz">
+  <meta name="description" content="redis的安装以及启动">
+<meta name="keywords" content="博客,java,redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="springd的Quartz实现定时任务">
-<meta property="og:url" content="http://yoursite.com/2018/04/21/spring的Quartz配置/index.html">
+<meta property="og:title" content="redis缓存以及集群详解">
+<meta property="og:url" content="http://yoursite.com/2018/11/15/redis/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="1、Job表示一个工作，要执行的具体内容。此接口中只有一个方法">
+<meta property="og:description" content="redis的安装以及启动">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-08T14:46:38.273Z">
+<meta property="og:image" content="http://yoursite.com/2018/11/15/redis/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/15/redis/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/15/redis/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/15/redis/4.png">
+<meta property="og:updated_time" content="2018-11-15T14:24:38.136Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="springd的Quartz实现定时任务">
-<meta name="twitter:description" content="1、Job表示一个工作，要执行的具体内容。此接口中只有一个方法">
+<meta name="twitter:title" content="redis缓存以及集群详解">
+<meta name="twitter:description" content="redis的安装以及启动">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/15/redis/1.png">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -162,20 +167,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-spring的Quartz配置" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-redis" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      springd的Quartz实现定时任务
+      redis缓存以及集群详解
     </h1>
   
 
         
-        <a href="/2018/04/21/spring的Quartz配置/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
+        <a href="/2018/11/15/redis/" class="archive-article-date">
+  	<time datetime="2018-11-15T14:13:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-15</time>
 </a>
 		
 		<span class="archive-article-date">
@@ -187,66 +192,277 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>1、Job<br>表示一个工作，要执行的具体内容。此接口中只有一个方法 <a id="more"></a><br><br>void execute(JobExecutionContext context)</p><p></p>
-<p>2、JobDetail <br><br>JobDetail表示一个具体的可执行的调度程序，Job是这个可执行程调度程序所要执行的内容，另外JobDetail还包含了这个任务调度的方案和策略。</p>
+        <ol>
+<li>redis的安装以及启动<a id="more"></a>
+</li>
+</ol>
+<ul>
+<li>windows环境</li>
+</ul>
+<blockquote>
+<pre><code>1.   到官网下载zip的安装包
+2.    如果不安装redis服务就需要启动redis-service.exe可执行文件
+3.   如果不想每次启动就安装redis服务
+4.   安装 ：redis-server --service-install --service-name redis2   （redis2是服务的名称）
+5.   安装并指定日志级别： redis-server --service-install redis.windows.conf  --service-name redis3 --loglevel verbose（指定配置文件,日志级别）
+6.  安装并指定端口：redis-server --service-install –service-name redisService1 –port 10001
+7.  卸载：redis-server --service-uninstall --service-name redis2
+8.  启动 :redis-server --service-start --service-name redis2 也可以到service.msc中鼠标操作
+</code></pre></blockquote>
+<ul>
+<li>linux环境</li>
+</ul>
+<blockquote>
+<pre><code>1. http://www.redis.io/下载tar.gz安装包 ，或是在线安装$ wget http://download.redis.io/releases/redis-2.8.3.tar.gz
+2.  解压 tar xzf redis-2.8.3.tar.gz
+3.  到解压的名录下使用 make命令实现编译
+4.  编译完成到安装目录下src目录下使用 make install命令安装文件
+5.  可以把redis配置文件和可执行文件(redis-service、redis-cli)放到比较上层的目录，这样就不需要每次都切换目录了。
+6.  把redis配置文（redis.conf）中 daemonize 设置成yes，实现后台启动redis；修改数据文件保存路劲；
+7.  查看redis端口 ps -ef|grep 6379
+8.  退出redis服务  pkill redis-server ；kill 进程号 ； 路径/redis-cli shutdown（后台启动）/ 前置启动就直接ctrl+c
+</code></pre></blockquote>
+<ol start="2">
+<li>redis数据类型命令使用详解</li>
+</ol>
+<ul>
+<li>String</li>
+</ul>
+<blockquote>
+<pre><code>set  name   value     设置值，多次设置会覆盖 
+get  name              根据name获得value
+del  name           删除值
+setnx （设置值的时候有返回0，设置失败） 设置返回1，设置成功
+setex    (设置时间)   set  name 10 value
+setrange (从第几个位置开始设置值，0开始，并返回长度)
+mset   name value  name2  value2 (批量设置值)  
+mget   name  name1 name2
+incr /decr   age   (对age进行递增或递减，返回执行结果的值)
+incrby /decby  age  [步长]（对age增加或减少多少，返回执行1结果的值）
+append  name value  (给name追加value，并返回长度)
+</code></pre></blockquote>
+<ul>
+<li>Hash</li>
+</ul>
+<blockquote>
+<pre><code>适合保存对象（hset user id 1、hset user name pwade、hset user age 20）此时user就相当于一个对象
+hset  myhash  name value    hget myhash name
+hincr /hdecr  递增递减
+hexists 判断key是否存在，有返回1无返回0
+hlen 返回 hash里所有的键值
+hdel hash name 删除
+hkeys  myhash 得到所有字段
+hmget myhash  name name1 name2 (redis属性名)
+hvals   得到所有value
+hgetall   得到字段和value
+</code></pre></blockquote>
+<ul>
+<li>List</li>
+</ul>
+<blockquote>
+<pre><code>list 是一个链表结构集合，其主要功能就是push和pop，list类型是双端链表的结构，可以在头部或尾部操作数据，既可以做栈，又可以做队列 
+lpush  从头部添加元素，先进后出（栈）
+rpush  从尾部添加元素  ，先进先出（队列）  
+flushdb 清空数据库 
+lrange list 0 -1 查找list中所有数据 
+linsert 插入元素  
+lrem list 下标位置     返回移除的个数 
+lpop 从头部删除元素，并返回删除元素  
+rpop 从尾部删除元素，并返回删除元素  
+rpoplpush 尾部删除数据，从头部添加数据
+lindex list 1 返回下边为1的元素值 
+llen list  返回元素个数
+</code></pre></blockquote>
+<ul>
+<li>Set 、Zset</li>
+</ul>
+<blockquote>
+<pre><code>set和String的无序集合，是通过hashtable实现的
+sadd set1 aaa  添加数据
+smembers set1  查看set1里面的数据
+srem set1  删除
+spop 随机返回删除的key
+sdiff  返回两个集合不同的元素
+sdiffstore  返回两个集合不同的元素，储存到set3集合里面、
+sinter 取交集
+sunion 取并集
+smove 将一个集合移动但另外一个集合
+scard 查看集合里面的元素个数
+sismember 是否为集合中的元素，是返回1，否返回0
+zadd zset1 5 aaa  向有序集合set1添加一个aa元素，位置下标在5
+zrange  zset1 0 -1 withscores
+zrem zset1  key 删除元素
+zincrby 元素递增或递减
+zrangebyscore  返回指定区间内的数据
+zremrangebyrank  只删除索引
+zremrangebyscore  删除指定序号
+zrank  根据从小到 排序
+</code></pre></blockquote>
+<ol start="3">
+<li>高级命令</li>
+</ol>
+<blockquote>
+<pre><code>exists key  key是否存在
+keys  name*  模糊查询
+expire name  time 设置过期时间   ttl name 查看过期时间
+persist name 取消过期时间
+select   选择数据库（0-15）  select 0
+move name [数据库下标] 移动数据到其他数据库
+rname name name1 修改name为name1
+echo 打印信息
+dbsize 数据数量
+info   redis数据库信息
+config get *    config配置文件
+flushdb  清除当前数据库 
+flushall 清除所有数据库
+monitor       #实时监控
+quit           退出连接
+</code></pre></blockquote>
+<ol start="4">
+<li>redis安全性</li>
+</ol>
+<blockquote>
+<pre><code>设置密码：
+auth 密码 /自启动redis-cli时 加上 -a 密码 
 
-<p>3、Trigger代表一个调度参数的配置，什么时候去调。</p>
-
-<p>4、Scheduler代表一个调度容器，一个调度容器中可以注册多个JobDetail和Trigger。当Trigger与JobDetail组合，就可以被Scheduler容器调度了。</p>
-
-<p></p><p>第一种：任务类继承QuartzJobBean <br><br>配置代码</p><p></p>
-<pre class="prettyprint" name="code"><code class="hljs xml has-numbering">   <span class="hljs-comment">&lt;!--方式一：使用JobDetailBean，任务类必须实现Job接口 --&gt;</span>     
-    <span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"myjob"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"org.springframework.scheduling.quartz.JobDetailBean"</span>&gt;</span>    
-     <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"name"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"exampleJob"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span>    
-     <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"jobClass"</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"com.ncs.hj.SpringQtz"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span>   
-     <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"jobDataAsMap"</span>&gt;</span>  
-       <span class="hljs-tag">&lt;<span class="hljs-title">map</span>&gt;</span>  
-         <span class="hljs-tag">&lt;<span class="hljs-title">entry</span> <span class="hljs-attribute">key</span>=<span class="hljs-value">"service"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">value</span>&gt;</span>simple is the beat<span class="hljs-tag">&lt;/<span class="hljs-title">value</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">entry</span>&gt;</span>  
-       <span class="hljs-tag">&lt;/<span class="hljs-title">map</span>&gt;</span>  
-      <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span>  
-    <span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span> </code></pre>
-
-
-
-<p></p><p><a href="http://lib.csdn.net/base/java" class="replace_word" title="Java 知识库" target="_blank" style="color:#df3434; font-weight:bold;">Java</a>代码： </p><p></p>
-<pre class="prettyprint" name="code"><code class="hljs java has-numbering"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpringQtz</span> <span class="hljs-keyword">extends</span> **<span class="hljs-title">QuartzJobBean</span>**{</span>  
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> counter = <span class="hljs-number">0</span>;  
-    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">executeInternal</span>(JobExecutionContext context) <span class="hljs-keyword">throws</span> JobExecutionException {  
-        <span class="hljs-keyword">long</span> ms = System.currentTimeMillis();  
-        System.out.println(<span class="hljs-string">"\t\t"</span> + <span class="hljs-keyword">new</span> Date(ms));  
-        System.out.println(ms);  
-        System.out.println(<span class="hljs-string">"("</span> + counter++ + <span class="hljs-string">")"</span>);  
-        String s = (String) context.getMergedJobDataMap().get(<span class="hljs-string">"service"</span>);  
-        System.out.println(s);  
-        System.out.println();  
-    }  
-
-<p></p><p>第二种：在配置文件里定义任务类和要执行的方法，类和方法仍然是普通类 <br><br>配置文件：</p><p></p>
-<pre class="prettyprint" name="code"><code class="hljs xml has-numbering"> <span class="hljs-comment">&lt;!-- 方式二：使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法--&gt;</span>    
-    <span class="hljs-comment">&lt;!-- 定义目标bean和bean中的方法 --&gt;</span>  
-    <span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"SpringQtzJob"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"com.ncs.hj.SpringQtz"</span>/&gt;</span>  
-    <span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"SpringQtzJobMethod"</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"</span>&gt;</span>  
-    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"targetObject"</span>&gt;</span>  
-        <span class="hljs-tag">&lt;<span class="hljs-title">ref</span> <span class="hljs-attribute">bean</span>=<span class="hljs-value">"SpringQtzJob"</span>/&gt;</span>  
-    <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span>  
-    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"targetMethod"</span>&gt;</span>  <span class="hljs-comment">&lt;!-- 要执行的方法名称 --&gt;</span>  
-        <span class="hljs-tag">&lt;<span class="hljs-title">value</span>&gt;</span>execute<span class="hljs-tag">&lt;/<span class="hljs-title">value</span>&gt;</span>  
-    <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span>  
-    <span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span> </code></pre>
-
-<p></p><p>JAVA代码： </p><p></p>
-<pre class="prettyprint" name="code"><code class="hljs cs has-numbering"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> SpringQtz {  
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> counter = <span class="hljs-number">0</span>;  
-    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">execute</span>()  {  
-        <span class="hljs-keyword">long</span> ms = System.currentTimeMillis();  
-        System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">"\t\t"</span> + <span class="hljs-keyword">new</span> Date(ms));  
-        System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">"("</span> + counter++ + <span class="hljs-string">")"</span>);  
-    }  
-   } </code></pre>
-
-<p></p><p> 共用的xml部分  ：</p><p></p>
-<p><pre class="prettyprint" name="code"><code class="hljs xml has-numbering"><span class="hljs-comment">&lt;!– ======================== 调度触发器============ –&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">“CronTriggerBean”</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">“org.springframework.scheduling.quartz.CronTriggerBean”</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“jobDetail”</span> <span class="hljs-attribute">ref</span>=<span class="hljs-value">“SpringQtzJobMethod”</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“cronExpression”</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">“0/5 <em> </em> <em> </em> ?”</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span>  </code></pre></p>
-<p><span class="hljs-comment">&lt;!– ======================== 调度工厂 ================ –&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-title">bean</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">“SpringJobSchedulerFactoryBean”</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">“org.springframework.scheduling.quartz.SchedulerFactoryBean”</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-title">property</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">“triggers”</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-title">list</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-title">ref</span> <span class="hljs-attribute">bean</span>=<span class="hljs-value">“CronTriggerBean”</span>/&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-title">list</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-title">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-title">bean</span>&gt;</span>   </p></code></pre><br><p></p>
+退出redis服务：
+netstat -tunpl |grep redis     
+kill  进程号    redis-cli shutdown
+</code></pre></blockquote>
+<ol start="5">
+<li>主从复制</li>
+</ol>
+<blockquote>
+<p>目的:：主要实现读写分离<br>实现 ：在从服务器配置文件中添加主服务器的IP以及端口号<br>    master可以拥有多个slave，slave还可以连接其他slave<br>    scp  -r   文件名  ip  远程文件copy<br>    slaveof 192.168.15.130  6379<br>    主服务器读写都可以，从服务器主能读</p>
+</blockquote>
+<ol start="6">
+<li>redis事务</li>
+</ol>
+<blockquote>
+<p>multi :开启事物<br>exec：执行<br>    multi 开启事物，所有操作多在队列中。若执行中有一个个错误，其中有一个操作错误，但是这个操作不影响其它操作的，也就是说只有它操作失败，其它是操作成功。</p>
+<pre><code>执行exec，将队列中的操作都执行
+</code></pre></blockquote>
+<ol start="7">
+<li>redis持久化</li>
+</ol>
+<blockquote>
+<p>snapshotting 快照方式</p>
+</blockquote>
+<blockquote>
+<pre><code>snapshotting 快照的方式将数据写入二进制文件中，默认是dump.rdb，这是默认方式 
+snapshotting设置格： save 900  1 在900秒内如果有一个key发生了改变，则发起快照保存
+</code></pre></blockquote>
+<blockquote>
+<p>append-only 模式（跟oracle日志一样的），启开appendonly  yes注解，启动aof模式  </p>
+<pre><code>appendfsync always  //收到命令就写入磁盘,速度慢
+appendfsync everysec  //每秒钟写入
+appendfsync  no  //完全依赖os，性能最好，持久化没保障
+</code></pre></blockquote>
+<blockquote>
+<p>选择：由于snapshotting是一定时间保存数据，可能会导致数据丢失，所以一般都是使用aop方式 always保存。</p>
+</blockquote>
+<ol start="8">
+<li>redis发布和订阅</li>
+</ol>
+<blockquote>
+<p>操作流程：现在监听的窗口输入 subscribe  需要监听频道—-》在需要发布的窗口使用publish  内容发布的频道  内容</p>
+<pre><code>subscribe  【频道】订阅、监听
+publish    【频道】【发布内容】进行发布消息广播
+</code></pre></blockquote>
+<ol start="9">
+<li>redis使用JavaApi</li>
+</ol>
+<blockquote>
+<p> 分片概念：3.0以前使用分片，3.0后使用集群 将数据分为固定的多个槽，根据下标取数据</p>
+<p>jedis使用：jedis操作redis和命令操作redis是一致的</p>
+<p>redis筛选： 多种数据类型配合使用</p>
+</blockquote>
+<ol start="10">
+<li>redis集群</li>
+</ol>
+<blockquote>
+<p>下面修改都是在redis配置文件中操作</p>
+<pre><code>修改redis端口号 (port)
+绑定当前服务器地址 (bind ip)，如果没有设置可能导致执行速度慢
+修改数据文件保存地址 (dir )
+cluster-enabled yes  注释放开，开启器群模式
+cluster-config-file nodes-7001.conf    与端口对应
+cluster-node-timeout 15000 
+开启appendonly 模式
+安装ruby  apt-get install ruby
+安装ruby gems: apt-get install rubygems-integration
+</code></pre></blockquote>
+<blockquote>
+<p>解决ruby版本过低：查看版本 ruby -v </p>
+<pre><code>安装apt-get  install curl 
+执行 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 ，
+安装curl -L get.rvm.io | bash -s stable，
+source  /etc/profile.d/rvm.sh
+rvm list known
+rvm autolibs disable（不然安装报错404）
+rvm install 2.4.1
+</code></pre></blockquote>
+<blockquote>
+<p>集群操作开始</p>
+<pre><code>启动6个实例
+查看redis服务是否启动  ps -ef|grep redis
+安装redis集群接口  gem install redis
+redis-trib.rb(redis 安装目录src下执行) create  --replicas(命令)   主节点数/从节点数 集群的多个服务器：端口号
+</code></pre><p><img src="/2018/11/15/redis/1.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<ol start="11">
+<li>redis集群了解，以及常用命令</li>
+</ol>
+<blockquote>
+<p>集群节点开启客户端：./redis-cli -c -h 【ip】 -p 【端口号】,数据存储到0-16383中随机槽，设置值后客户端自动自动跳转到槽所在的客户端。</p>
+<pre><code>图片展示的是主节点上分布的槽的下标：
+     节点7001覆盖0－5460;
+     节点7002覆盖5461－10922;
+     节点7003覆盖10923－16383.
+</code></pre></blockquote>
+<blockquote>
+<p>redis集群ruby命令：（集群的IP随意一个） </p>
+<pre><code>./redis-trib.rb create --replicas 创建集群  
+./redis-trib.rb check   【ip:端口】  查询节点状态  
+./redis-trib.rb add-node 【新节点ip:端口 +  集群中ip:端口】，新增主节点 ，刚加入的节点是没有槽的  
+./redis-trib.rb info 【ip:端口号】查看节点信息  或者是登录cli客户端查看  
+./redis-trib.rb set-timeout 【ip:端口】设置心跳时间   
+./redis-trib.rb reshard  【ip:端口号】-需要操作的节点，新增是：新节点id：端口    删除：删除的节点id：端口   
+./redis-trib.rb add-node --slave --master-id $[nodeid]   新节点ip:端口号  集群ip：端口号
+./redis-trib del-node 127.0.0.1:7001 ${node-id}
+</code></pre></blockquote>
+<p> 重新分配槽：    </p>
+<blockquote>
+<p>redis-trib.rb reshard 【ip:端口号】<br><img src="/2018/11/15/redis/2.png" alt="在这里插入图片描述"><br> 输入需要分配的槽：4096 ，需要刚加入集群节点id，ee3efb90e5ac0725f15238a64fc60a18a71205d7<br><img src="/2018/11/15/redis/3.png" alt="在这里插入图片描述"><br>询问你从哪里提取哈希槽：all /节点id<br><img src="/2018/11/15/redis/4.png" alt="在这里插入图片描述"><br>最后输入：done</p>
+</blockquote>
+<ol start="12">
+<li>集群操作JavaApi</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 集群JavaApi：</span><br><span class="line">Set &lt;HostAndPort&gt; jedisClusterNode=new HashSet&lt;HostAndPort&gt;();</span><br><span class="line">//定义集群中的</span><br><span class="line">HostAndPort hostAndPort=new HostAndPort (ip,port)</span><br><span class="line">jedisClusterNode.add( hostAndPort);</span><br><span class="line">jedisPoolConfig  cfg=new jedisPoolConfig ();</span><br><span class="line">//设置连接属性</span><br><span class="line">cfg.setMaxTotal(1000);</span><br><span class="line">//使用</span><br><span class="line">jedisCluster  jc=new  jedisCluster (jedisClusterNode,600,100.cfg);</span><br><span class="line">使用jc操作redis</span><br></pre></td></tr></table></figure>
+<ol start="13">
+<li>spring集成redis实现redisTemplate</li>
+</ol>
+<blockquote>
+<pre><code>redisTemplate.opsForValue();//操作字符串
+redisTemplate.opsForHash();//操作hash
+redisTemplate.opsForList();//操作list
+redisTemplate.opsForSet();//操作set
+redisTemplate.opsForZSet();//操作有序set
+</code></pre></blockquote>
+<blockquote>
+<p>redisTemplate缓存中数据乱码：</p>
+<pre><code>@Resource
+private RedisTemplate redisTemplate; 
+@Bean
+public RedisTemplate&lt;String, Object&gt; stringSerializerRedisTemplate() {
+RedisSerializer&lt;String&gt; = new StringRedisSerializer();
+redisTemplate.setKeySerializer(stringSerializer);
+redisTemplate.setValueSerializer(stringSerializer);
+redisTemplate.setHashKeySerializer(stringSerializer);
+redisTemplate.setHashValueSerializer(stringSerializer);
+return redisTemplate;
+}
+</code></pre></blockquote>
 
       
 
@@ -295,11 +511,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Quartz</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
         		</li>
       		
 		</ul>
@@ -356,7 +572,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/04/21/spring的Quartz配置/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/11/15/redis/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -370,18 +586,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/05/21/shiro框架详细配置及使用/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          shiro配置以及使用
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/04/21/poi工具类/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">poi导出excel工具类</div>
+    <a href="/2018/11/05/TCPConnection/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">TCP实现长短连接</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -433,7 +640,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2018/04/21/spring的Quartz配置/",
+  id: "http://yoursite.com/2018/11/15/redis/",
   owner: 'p180j',
   repo: 'p180j.github.io',
   oauth: {
