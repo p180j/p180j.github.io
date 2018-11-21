@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>JVM虚拟机概念描述 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
+  <meta name="description" content="1.虚拟机概念虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
 <meta name="keywords" content="博客,java,java虚拟机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM虚拟机概念描述">
 <meta property="og:url" content="http://yoursite.com/2018/10/21/JVM/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
+<meta property="og:description" content="1.虚拟机概念虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2018/10/21/JVM/1.jpg">
-<meta property="og:updated_time" content="2018-11-11T10:10:12.474Z">
+<meta property="og:updated_time" content="2018-11-21T12:58:23.187Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM虚拟机概念描述">
-<meta name="twitter:description" content="虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
+<meta name="twitter:description" content="1.虚拟机概念虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
 <meta name="twitter:image" content="http://yoursite.com/2018/10/21/JVM/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
@@ -189,11 +189,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li>虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。<a id="more"></a>
-</li>
-</ol>
+        <p><strong> 1.虚拟机概念</strong><br>虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。<br><a id="more"></a></p>
 <p><img src="/2018/10/21/JVM/1.jpg" alt="在这里插入图片描述"></p>
+<p><strong>2. JVM运行分区概念</strong></p>
 <ul>
 <li>类加载器：<blockquote>
 <p>负责从文件系统中或者网络中加载类和接口信息并赋予唯一的名字，加载的c信息都放到了方法区的空间，</p>
@@ -245,9 +243,7 @@
 <blockquote>
 <p> java的NIO库允许java使用直接内存从而提高性能，速度优于java堆。</p>
 </blockquote>
-<ol start="3">
-<li>内存溢出的原理以及处理：OutOfMemoryError</li>
-</ol>
+<p><strong>3.  内存溢出的原理以及处理：OutOfMemoryError</strong></p>
 </li>
 <li><p>OutOfMemoryError： PermGen space（方法区）</p>
 </li>
@@ -575,11 +571,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,11 +579,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
+                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -603,7 +595,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -611,27 +607,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -643,7 +627,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
+                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -655,7 +643,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -663,7 +651,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
+                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -671,11 +663,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>

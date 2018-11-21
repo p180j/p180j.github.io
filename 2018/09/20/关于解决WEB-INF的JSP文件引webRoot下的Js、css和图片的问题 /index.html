@@ -9,14 +9,14 @@
   <title>WEB-INF的JSP文件引webRoot下的Js、css和图片的问题 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="优雅REST风格的资源URL不希望带 .html 或 .do 等后缀.由于早期的Spring MVC不能很好地处理静态资源">
-<meta name="keywords" content="博客,maven,java">
+<meta name="keywords" content="博客,java,maven">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WEB-INF的JSP文件引webRoot下的Js、css和图片的问题">
 <meta property="og:url" content="http://yoursite.com/2018/09/20/关于解决WEB-INF的JSP文件引webRoot下的Js、css和图片的问题 /index.html">
 <meta property="og:site_name" content="KeepGoing博客">
 <meta property="og:description" content="优雅REST风格的资源URL不希望带 .html 或 .do 等后缀.由于早期的Spring MVC不能很好地处理静态资源">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-08T14:44:46.015Z">
+<meta property="og:updated_time" content="2018-11-21T12:59:27.177Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WEB-INF的JSP文件引webRoot下的Js、css和图片的问题">
 <meta name="twitter:description" content="优雅REST风格的资源URL不希望带 .html 或 .do 等后缀.由于早期的Spring MVC不能很好地处理静态资源">
@@ -191,23 +191,11 @@
 <p>优雅REST风格的资源URL不希望带 .html 或 .do 等后缀.由于早期的Spring MVC不能很好地处理静态资源<a id="more"></a>，所以在web.xml中配置DispatcherServlet的请求映射，往往使用 <em>.do 、 </em>.xhtml、*.hml等后缀方式进行区分。这就决定了请求URL必须是一个带后缀的URL，而无法采用真正的REST风格的URL。通俗说RESTf风格就是在Spring MVC 3.0新增的，它通过不带扩展名的URL来访问系统资源。</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">配置如下：</span><br><span class="line">&lt;servlet&gt;    </span><br><span class="line">    &lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;     </span><br><span class="line">    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;  </span><br><span class="line">     &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;   </span><br><span class="line">&lt;/servlet&gt;    </span><br><span class="line">&lt;servlet-mapping&gt;      </span><br><span class="line">     &lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;    </span><br><span class="line">     &lt;url-pattern&gt;/&lt;/url-pattern&gt; </span><br><span class="line"> &lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><blockquote>
-<ol>
-<li>引用绝对路径，在公共jsp设置路径其他jsp页面引用即可。</li>
-</ol>
-</blockquote>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p><strong>1.  引用绝对路径，在公共jsp设置路径其他jsp页面引用即可。</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> &lt;%  </span><br><span class="line"> String path = request.getContextPath();     </span><br><span class="line"> request.setAttribute(&quot;base&quot;, path);    </span><br><span class="line">  %&gt;</span><br><span class="line">&lt;img   src=&quot;&#123;base&#125;/static/img/500error.png&quot;&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ol start="2">
-<li>Tomcat的defaultServlet来处理静态文件</li>
-</ol>
-</blockquote>
+<p><strong>2. Tomcat的defaultServlet来处理静态文件</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;servlet-mapping&gt;    </span><br><span class="line">    &lt;servlet-name&gt;default&lt;/servlet-name&gt;   </span><br><span class="line">    &lt;url-pattern&gt;*.jpg&lt;/url-pattern&gt;</span><br><span class="line">&lt;/servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-mapping&gt;   </span><br><span class="line"> &lt;servlet-name&gt;default&lt;/servlet-name&gt;   </span><br><span class="line">    &lt;url-pattern&gt;*.js&lt;/url-pattern&gt;</span><br><span class="line">    &lt;/servlet-mapping&gt;</span><br><span class="line">&lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;default&lt;/servlet-name&gt;  </span><br><span class="line">    &lt;url-pattern&gt;*.css&lt;/url-pattern&gt;</span><br><span class="line">&lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ol start="3">
-<li>spring mvc对静态资源配置（spring3.0.5）</li>
-</ol>
-</blockquote>
+<p><strong> 3. spring mvc对静态资源配置（spring3.0.5）</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;</span><br><span class="line">xsi:schemaLocation=&quot;http://www.springframework.org/schema/mvch</span><br><span class="line">ttp://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd</span><br><span class="line"></span><br><span class="line">&lt;mvc:annotation-driven /&gt;</span><br><span class="line">&lt;mvc:default-servlet-handler /&gt;</span><br><span class="line"></span><br><span class="line">在  springMVC-servlet.xml 中配置 &lt;mvc:default-servlet-handler /&gt; 后，会在Spring MVC上下文中定一个org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler，</span><br><span class="line">它会像安检人员，对进入DispatcherServlet的URL进行过滤，如果发现是静态资源的URL请求，</span><br><span class="line">就将该请求转由Web应用服务器默认的Servlet处理，如果不是静态资源的请求</span><br><span class="line">，才DispatcherServlet继续处理</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;mvc:annotation-driven /&gt;</span><br><span class="line">&lt;!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the $&#123;webappRoot&#125;/resources directory --&gt;</span><br><span class="line">&lt;mvc:resources mapping=&quot;/static/**&quot; location=&quot;/static/&quot; /&gt;</span><br><span class="line">&lt;mvc:resources mapping=&quot;/resources/**&quot; location=&quot;/resources/&quot; /&gt;</span><br><span class="line">&lt;mvc:resources mapping=&quot;/images/**&quot; location=&quot;/images/&quot; /&gt;</span><br><span class="line">&lt;mvc:resources mapping=&quot;/js/**&quot; location=&quot;/js/&quot; /&gt;</span><br><span class="line">配置文件如果没有&lt;mvc:annotation-driven/&gt;，那么所有的Controller可能就没有解析，</span><br><span class="line">所有当有请求时候都没有匹配的处理请求类，就都去&lt;mvc:default-servlet-handler/&gt;</span><br><span class="line">即default servlet处理了。添加上&lt;mvc:annotation-driven/&gt;后，相应的url请求被Controller处理，</span><br><span class="line">而静态资源因为没有相应的Controller就会被default servlet处理;即没有相应的Controller就会</span><br><span class="line">被default servlet处理。</span><br></pre></td></tr></table></figure>
 
@@ -258,11 +246,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
         		</li>
       		
 		</ul>
@@ -512,11 +500,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -524,11 +508,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
+                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -540,7 +524,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -548,27 +536,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -580,7 +556,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
+                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -592,7 +572,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -600,7 +580,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
+                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -608,11 +592,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>

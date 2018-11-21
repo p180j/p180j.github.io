@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>jenkins自动化部署 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="安装jenkins">
+  <meta name="description" content="1. 安装jenkins">
 <meta name="keywords" content="博客,jenkins,自动化发布">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jenkins自动化部署">
 <meta property="og:url" content="http://yoursite.com/2018/10/17/jenkins/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="安装jenkins">
+<meta property="og:description" content="1. 安装jenkins">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2018/10/17/jenkins/1.png">
 <meta property="og:image" content="http://yoursite.com/2018/10/17/jenkins/2.png">
@@ -24,10 +24,10 @@
 <meta property="og:image" content="http://yoursite.com/2018/10/17/jenkins/6.png">
 <meta property="og:image" content="http://yoursite.com/2018/10/17/jenkins/7.png">
 <meta property="og:image" content="http://yoursite.com/2018/10/17/jenkins/8.png">
-<meta property="og:updated_time" content="2018-10-17T14:56:46.751Z">
+<meta property="og:updated_time" content="2018-11-21T13:00:21.552Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jenkins自动化部署">
-<meta name="twitter:description" content="安装jenkins">
+<meta name="twitter:description" content="1. 安装jenkins">
 <meta name="twitter:image" content="http://yoursite.com/2018/10/17/jenkins/1.png">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
@@ -196,17 +196,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
-<ol>
-<li>安装jenkins<a id="more"></a>
-下载地址：<a href="https://jenkins.io/download" target="_blank" rel="noopener">https://jenkins.io/download</a> ,执行下一步到安装完成，然后自动跳转到图一，根据提示的路径得到密码<br><img src="/2018/10/17/jenkins/1.png" alt="图一"></li>
-</ol>
-</blockquote>
+        <p><strong>  1. 安装jenkins</strong></p>
+<a id="more"></a>
 <blockquote>
-<ol start="2">
-<li>下载常用jenkins常用插件</li>
-</ol>
+<p>下载地址：<a href="https://jenkins.io/download" target="_blank" rel="noopener">https://jenkins.io/download</a> ,执行下一步到安装完成，然后自动跳转到图一，根据提示的路径得到密码<br><img src="/2018/10/17/jenkins/1.png" alt="图一"></p>
 </blockquote>
+<p><strong> 2. 下载常用jenkins常用插件</strong></p>
 <blockquote>
 <ul>
 <li>安装Deploy to container Plugin（自动化部署插件） <ul>
@@ -216,24 +211,15 @@
 </li>
 </ul>
 </blockquote>
-<blockquote>
-<ol start="3">
-<li>配置全局工具（maven、jdk、settings.xml）<br><img src="/2018/10/17/jenkins/2.png" alt=""></li>
-</ol>
-</blockquote>
-<blockquote>
-<ol start="4">
-<li>新建任务,需要发布的项目</li>
-</ol>
-</blockquote>
+<p><strong>  3. 配置全局工具（maven、jdk、settings.xml）</strong></p>
+<p><img src="/2018/10/17/jenkins/2.png" alt=""></p>
+<p><strong> 4. 新建任务,需要发布的项目</strong></p>
 <p><img src="/2018/10/17/jenkins/3.png" alt=""></p>
+<p><strong>5.配置并发布到tomcat（配置发布环境是需要在pom文件中设置profile属性的）</strong></p>
 <blockquote>
-<p>5.配置并发布到tomcat（配置发布环境是需要在pom文件中设置profile属性的）</p>
 </blockquote>
 <p><img src="/2018/10/17/jenkins/4.png" alt=""><br><img src="/2018/10/17/jenkins/5.png" alt=""><br><img src="/2018/10/17/jenkins/6.png" alt=""><br><img src="/2018/10/17/jenkins/7.png" alt=""><br><img src="/2018/10/17/jenkins/8.png" alt=""></p>
-<blockquote>
-<p>6.tomcat需要密码，在tomcat-users.xml中添加用户（manager-script权限才可以）</p>
-</blockquote>
+<p><strong> 6.tomcat需要密码，在tomcat-users.xml中添加用户（manager-script权限才可以）</strong></p>
 <p><role rolename="admin-gui"></role></p>
 <p><role rolename="manager-gui"></role></p>
 <p><role rolename="manager-script"></role></p>
@@ -544,11 +530,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -556,11 +538,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
+                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -572,7 +554,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -580,27 +566,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -612,7 +586,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
+                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -624,7 +602,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -632,7 +610,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
+                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -640,11 +622,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>

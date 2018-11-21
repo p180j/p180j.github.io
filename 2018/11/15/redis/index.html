@@ -8,22 +8,22 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>redis缓存以及集群详解 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="redis的安装以及启动">
+  <meta name="description" content="1. redis的安装以及启动">
 <meta name="keywords" content="博客,java,redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis缓存以及集群详解">
 <meta property="og:url" content="http://yoursite.com/2018/11/15/redis/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="redis的安装以及启动">
+<meta property="og:description" content="1. redis的安装以及启动">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/redis/1.png">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/redis/2.png">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/redis/3.png">
 <meta property="og:image" content="http://yoursite.com/2018/11/15/redis/4.png">
-<meta property="og:updated_time" content="2018-11-15T14:24:38.136Z">
+<meta property="og:updated_time" content="2018-11-21T12:53:18.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis缓存以及集群详解">
-<meta name="twitter:description" content="redis的安装以及启动">
+<meta name="twitter:description" content="1. redis的安装以及启动">
 <meta name="twitter:image" content="http://yoursite.com/2018/11/15/redis/1.png">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
@@ -192,10 +192,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li>redis的安装以及启动<a id="more"></a>
-</li>
-</ol>
+        <p><strong>1. redis的安装以及启动</strong><br> <a id="more"></a></p>
 <ul>
 <li>windows环境</li>
 </ul>
@@ -222,9 +219,7 @@
 7.  查看redis端口 ps -ef|grep 6379
 8.  退出redis服务  pkill redis-server ；kill 进程号 ； 路径/redis-cli shutdown（后台启动）/ 前置启动就直接ctrl+c
 </code></pre></blockquote>
-<ol start="2">
-<li>redis数据类型命令使用详解</li>
-</ol>
+<p><strong>2. redis数据类型命令使用详解</strong></p>
 <ul>
 <li>String</li>
 </ul>
@@ -298,9 +293,7 @@ zremrangebyrank  只删除索引
 zremrangebyscore  删除指定序号
 zrank  根据从小到 排序
 </code></pre></blockquote>
-<ol start="3">
-<li>高级命令</li>
-</ol>
+<p><strong>3. 高级命令</strong></p>
 <blockquote>
 <pre><code>exists key  key是否存在
 keys  name*  模糊查询
@@ -318,9 +311,7 @@ flushall 清除所有数据库
 monitor       #实时监控
 quit           退出连接
 </code></pre></blockquote>
-<ol start="4">
-<li>redis安全性</li>
-</ol>
+<p> <strong>4. redis安全性</strong></p>
 <blockquote>
 <pre><code>设置密码：
 auth 密码 /自启动redis-cli时 加上 -a 密码 
@@ -329,22 +320,16 @@ auth 密码 /自启动redis-cli时 加上 -a 密码
 netstat -tunpl |grep redis     
 kill  进程号    redis-cli shutdown
 </code></pre></blockquote>
-<ol start="5">
-<li>主从复制</li>
-</ol>
+<p> <strong>5. 主从复制</strong></p>
 <blockquote>
 <p>目的:：主要实现读写分离<br>实现 ：在从服务器配置文件中添加主服务器的IP以及端口号<br>    master可以拥有多个slave，slave还可以连接其他slave<br>    scp  -r   文件名  ip  远程文件copy<br>    slaveof 192.168.15.130  6379<br>    主服务器读写都可以，从服务器主能读</p>
 </blockquote>
-<ol start="6">
-<li>redis事务</li>
-</ol>
+<p> <strong>6. redis事务</strong></p>
 <blockquote>
 <p>multi :开启事物<br>exec：执行<br>    multi 开启事物，所有操作多在队列中。若执行中有一个个错误，其中有一个操作错误，但是这个操作不影响其它操作的，也就是说只有它操作失败，其它是操作成功。</p>
 <pre><code>执行exec，将队列中的操作都执行
 </code></pre></blockquote>
-<ol start="7">
-<li>redis持久化</li>
-</ol>
+<p> <strong>7. redis持久化</strong></p>
 <blockquote>
 <p>snapshotting 快照方式</p>
 </blockquote>
@@ -361,25 +346,19 @@ appendfsync  no  //完全依赖os，性能最好，持久化没保障
 <blockquote>
 <p>选择：由于snapshotting是一定时间保存数据，可能会导致数据丢失，所以一般都是使用aop方式 always保存。</p>
 </blockquote>
-<ol start="8">
-<li>redis发布和订阅</li>
-</ol>
+<p> <strong>8. redis发布和订阅</strong></p>
 <blockquote>
 <p>操作流程：现在监听的窗口输入 subscribe  需要监听频道—-》在需要发布的窗口使用publish  内容发布的频道  内容</p>
 <pre><code>subscribe  【频道】订阅、监听
 publish    【频道】【发布内容】进行发布消息广播
 </code></pre></blockquote>
-<ol start="9">
-<li>redis使用JavaApi</li>
-</ol>
+<p> <strong>9. redis使用JavaApi</strong></p>
 <blockquote>
 <p> 分片概念：3.0以前使用分片，3.0后使用集群 将数据分为固定的多个槽，根据下标取数据</p>
 <p>jedis使用：jedis操作redis和命令操作redis是一致的</p>
 <p>redis筛选： 多种数据类型配合使用</p>
 </blockquote>
-<ol start="10">
-<li>redis集群</li>
-</ol>
+<p> <strong>10.  redis集群</strong></p>
 <blockquote>
 <p>下面修改都是在redis配置文件中操作</p>
 <pre><code>修改redis端口号 (port)
@@ -410,9 +389,7 @@ rvm install 2.4.1
 redis-trib.rb(redis 安装目录src下执行) create  --replicas(命令)   主节点数/从节点数 集群的多个服务器：端口号
 </code></pre><p><img src="/2018/11/15/redis/1.png" alt="在这里插入图片描述"></p>
 </blockquote>
-<ol start="11">
-<li>redis集群了解，以及常用命令</li>
-</ol>
+<p><strong>11.  redis集群了解，以及常用命令</strong></p>
 <blockquote>
 <p>集群节点开启客户端：./redis-cli -c -h 【ip】 -p 【端口号】,数据存储到0-16383中随机槽，设置值后客户端自动自动跳转到槽所在的客户端。</p>
 <pre><code>图片展示的是主节点上分布的槽的下标：
@@ -435,13 +412,9 @@ redis-trib.rb(redis 安装目录src下执行) create  --replicas(命令)   主�
 <blockquote>
 <p>redis-trib.rb reshard 【ip:端口号】<br><img src="/2018/11/15/redis/2.png" alt="在这里插入图片描述"><br> 输入需要分配的槽：4096 ，需要刚加入集群节点id，ee3efb90e5ac0725f15238a64fc60a18a71205d7<br><img src="/2018/11/15/redis/3.png" alt="在这里插入图片描述"><br>询问你从哪里提取哈希槽：all /节点id<br><img src="/2018/11/15/redis/4.png" alt="在这里插入图片描述"><br>最后输入：done</p>
 </blockquote>
-<ol start="12">
-<li>集群操作JavaApi</li>
-</ol>
+<p><strong>12. 集群操作JavaApi</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 集群JavaApi：</span><br><span class="line">Set &lt;HostAndPort&gt; jedisClusterNode=new HashSet&lt;HostAndPort&gt;();</span><br><span class="line">//定义集群中的</span><br><span class="line">HostAndPort hostAndPort=new HostAndPort (ip,port)</span><br><span class="line">jedisClusterNode.add( hostAndPort);</span><br><span class="line">jedisPoolConfig  cfg=new jedisPoolConfig ();</span><br><span class="line">//设置连接属性</span><br><span class="line">cfg.setMaxTotal(1000);</span><br><span class="line">//使用</span><br><span class="line">jedisCluster  jc=new  jedisCluster (jedisClusterNode,600,100.cfg);</span><br><span class="line">使用jc操作redis</span><br></pre></td></tr></table></figure>
-<ol start="13">
-<li>spring集成redis实现redisTemplate</li>
-</ol>
+<p><strong>13. spring集成redis实现redisTemplate</strong></p>
 <blockquote>
 <pre><code>redisTemplate.opsForValue();//操作字符串
 redisTemplate.opsForHash();//操作hash
@@ -765,11 +738,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -777,11 +746,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
+                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -793,7 +762,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -801,27 +774,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -833,7 +794,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
+                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -845,7 +810,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -853,7 +818,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
+                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -861,11 +830,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>

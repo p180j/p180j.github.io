@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Spring集成rabbit实现RabbitTemplate | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="RabbitTemplate概念了解  RabbitMQ是由Erlang(爱立信公司)语言开发，实现Advanced Message Queuing Protocol (AMQP高级消息队列协议)的消息中间件。消息中间件主要用于组件之间的解耦，消息的发送者无需知道消息使用者的存在，反之亦然。">
+  <meta name="description" content="1. RabbitTemplate概念了解 RabbitMQ是由Erlang(爱立信公司)语言开发，实现Advanced Message Queuing Protocol (AMQP高级消息队列协议)的消息中间件。消息中间件主要用于组件之间的解耦，消息的发送者无需知道消息使用者的存在，反之亦然。">
 <meta name="keywords" content="博客,maven,RabbitTemplate">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring集成rabbit实现RabbitTemplate">
 <meta property="og:url" content="http://yoursite.com/2018/10/30/spring集成rabbitmq实现消息队列/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="RabbitTemplate概念了解  RabbitMQ是由Erlang(爱立信公司)语言开发，实现Advanced Message Queuing Protocol (AMQP高级消息队列协议)的消息中间件。消息中间件主要用于组件之间的解耦，消息的发送者无需知道消息使用者的存在，反之亦然。">
+<meta property="og:description" content="1. RabbitTemplate概念了解 RabbitMQ是由Erlang(爱立信公司)语言开发，实现Advanced Message Queuing Protocol (AMQP高级消息队列协议)的消息中间件。消息中间件主要用于组件之间的解耦，消息的发送者无需知道消息使用者的存在，反之亦然。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-30T15:10:49.079Z">
+<meta property="og:updated_time" content="2018-11-21T12:55:12.921Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring集成rabbit实现RabbitTemplate">
-<meta name="twitter:description" content="RabbitTemplate概念了解  RabbitMQ是由Erlang(爱立信公司)语言开发，实现Advanced Message Queuing Protocol (AMQP高级消息队列协议)的消息中间件。消息中间件主要用于组件之间的解耦，消息的发送者无需知道消息使用者的存在，反之亦然。">
+<meta name="twitter:description" content="1. RabbitTemplate概念了解 RabbitMQ是由Erlang(爱立信公司)语言开发，实现Advanced Message Queuing Protocol (AMQP高级消息队列协议)的消息中间件。消息中间件主要用于组件之间的解耦，消息的发送者无需知道消息使用者的存在，反之亦然。">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -187,28 +187,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li>RabbitTemplate概念了解</li>
-</ol>
+        <p><strong> 1. RabbitTemplate概念了解</strong></p>
 <p>RabbitMQ是由Erlang(爱立信公司)语言开发，实现Advanced Message Queuing Protocol (AMQP高级消息队列协议)的消息中间件。消息中间件主要用于组件之间的解耦，消息的发送者无需知道消息使用者的存在，反之亦然。<br><a id="more"></a></p>
 <blockquote>
 <p>• Broker：消息队列服务器实体，例如RabbitMQ服务<br>• Vhost：虚拟主机，默认为“/”，一个broker里可以有多个vhost，区分不同用户权限，类似java的命令空间<br>• Connection：应用程序与broker连接，可有多个连接<br>• Channel：消息通道，connection中可建立多个channel，每个channel代表一个会话任   务，所有操作都在channel中进行。<br>• Exchange：消息交换机，channel中可有多个，用于投递消息。应用程序发送消息时先把消息给交换机，由交换机投递给队列，不是直接给队列。<br>类型有三种：fanout(广播)、Direct（处理路由键，轮播实现）、Topic（支持消息模糊匹配）<br>• Queue：队列，用于存放消息<br>• Message：消息，应用程序需要发送的数据<br>• Bind：根据routingKey绑定exchange与queue规则，决定消息发送的方向</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">需要添加的jar包</span><br><span class="line">        &lt;!--rabbit --&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;com.rabbitmq&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;amqp-client&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;3.5.1&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.amqp&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-rabbit&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.4.6.RELEASE&lt;/version&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>生产者</li>
-</ol>
+<p><strong>2. 生产者</strong></p>
 <blockquote>
 <p>spring集成rabbitMQ后实现的工具类，只需要在spring配置文件中配置即可<br>思路： 1. 配置连接工厂(与原生实现一样)  —&gt;  2. 配置spring的admin —&gt;    3.创建队列 —&gt;  4.创建交换器，并绑定队列  —&gt;  5.配置连接模板 ，这样就完成了生产者的配置了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- rabbitMQ配置 --&gt;</span><br><span class="line">	&lt;bean id=&quot;rabbitConnectionFactory&quot;</span><br><span class="line">        class=&quot;org.springframework.amqp.rabbit.connection.CachingConnectionFactory&quot;&gt;</span><br><span class="line">        &lt;constructor-arg value=&quot;127.0.0.1&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;username&quot; value=&quot;guest&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;password&quot; value=&quot;guest&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;channelCacheSize&quot; value=&quot;8&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;port&quot; value=&quot;5672&quot;&gt;&lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">    &lt;!--Spring的rabbitmq admin--&gt;</span><br><span class="line">    &lt;!-- 创建rabbitAdmin 代理类 --&gt;</span><br><span class="line">    &lt;rabbit:admin connection-factory=&quot;rabbitConnectionFactory&quot;/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	&lt;!--配置队列queue, Exchange, 以及将他们结合在一起的binding--&gt;</span><br><span class="line">    &lt;!--在queue以及exchange中, 有一个重要的属性durable, 默认为true, 可以防止宕机后数据丢失。--&gt;</span><br><span class="line">    &lt;!--在listener-container中, 有acknowledge属性, 默认为auto, 即消费者成功处理消息后必须有个应答, 如果消费者程序发生异常或者宕机, 消息会被重新放回队列--&gt;</span><br><span class="line">    </span><br><span class="line">   &lt;!--生产者创建队列--&gt;</span><br><span class="line">    &lt;rabbit:queue name=&quot;p_create_queue&quot; durable=&quot;false&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--标准的AMQP Exchange有4种: Direct, Topic, Headers, Fanout, 根据实际需要选择。--&gt;</span><br><span class="line">    &lt;!--Direct: 如果消息的routing key与bingding的routing key直接匹配的话, 消息将会路由到该队列上。--&gt;</span><br><span class="line">    &lt;!--Topic: 如果消息的routing key与bingding的routing key符合通配符匹配的话, 消息将会路由到该队列上。--&gt;</span><br><span class="line">    &lt;!--Headers: 如果消息参数表中的头信息和值都与binding参数表中相匹配, 消息将会路由到该队列上。--&gt;</span><br><span class="line">    &lt;!--Fanout: 不管消息的routing key和参数表的头信息/值是什么, 消息将会路由到该队列上。--&gt;</span><br><span class="line">    </span><br><span class="line">	&lt;!--fanout交换器--&gt;</span><br><span class="line">    &lt;rabbit:fanout-exchange name=&quot;fanout-exchange&quot;</span><br><span class="line">        xmlns=&quot;http://www.springframework.org/schema/rabbit&quot; durable=&quot;false&quot;&gt;</span><br><span class="line">        &lt;rabbit:bindings&gt;</span><br><span class="line">            &lt;rabbit:binding queue=&quot;p_create_queue&quot;&gt;&lt;/rabbit:binding&gt;</span><br><span class="line">        &lt;/rabbit:bindings&gt;</span><br><span class="line">    &lt;/rabbit:fanout-exchange&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!--topic交换器--&gt;</span><br><span class="line">    &lt;rabbit:topic-exchange name=&quot;topic-exchange&quot;</span><br><span class="line">         xmlns=&quot;http://www.springframework.org/schema/rabbit&quot; durable=&quot;false&quot;&gt;</span><br><span class="line">    &lt;/rabbit:topic-exchange&gt;</span><br><span class="line">	&lt;!-- rabbitTemplate 消息模板类 --&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 消息发送重试 ,可选项--&gt;</span><br><span class="line">    &lt;bean id=&quot;retryTemplate&quot; class=&quot;org.springframework.retry.support.RetryTemplate&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;backOffPolicy&quot;&gt;</span><br><span class="line">            &lt;bean class=&quot;org.springframework.retry.backoff.ExponentialBackOffPolicy&quot;&gt;</span><br><span class="line">                &lt;property name=&quot;initialInterval&quot; value=&quot;500&quot; /&gt;</span><br><span class="line">                &lt;property name=&quot;multiplier&quot; value=&quot;10.0&quot; /&gt;</span><br><span class="line">                &lt;property name=&quot;maxInterval&quot; value=&quot;10000&quot; /&gt;</span><br><span class="line">            &lt;/bean&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--定义Spring的RabbitMQ的连接模板  --&gt;</span><br><span class="line">    &lt;bean id=&quot;rabbitTemplate&quot; class=&quot;org.springframework.amqp.rabbit.core.RabbitTemplate&quot;&gt;</span><br><span class="line">        &lt;constructor-arg ref=&quot;rabbitConnectionFactory&quot;&gt;&lt;/constructor-arg&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <p>代码中实现发送消息</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@ResponseBody</span><br><span class="line">   @RequestMapping(&quot;/topicSender&quot;)</span><br><span class="line">   public String topicSender(@RequestParam(&quot;message&quot;)String message)&#123;</span><br><span class="line">       String opt=&quot;&quot;;</span><br><span class="line">       try &#123;</span><br><span class="line">           String[] severities=&#123;&quot;error&quot;,&quot;info&quot;,&quot;warning&quot;&#125;;</span><br><span class="line">           String[] modules=&#123;&quot;email&quot;,&quot;order&quot;,&quot;user&quot;&#125;;</span><br><span class="line">           for(int i=0;i&lt;severities.length;i++)&#123;</span><br><span class="line">               for(int j=0;j&lt;modules.length;j++)&#123;</span><br><span class="line">                   String routeKey = severities[i]+&quot;.&quot;+modules[j];</span><br><span class="line">                   String str = &quot;the message is [rk:&quot;+routeKey+&quot;][&quot;+message+&quot;]&quot;;</span><br><span class="line">                   rabbitTemplate.send(&quot;topic-exchange&quot;,routeKey,</span><br><span class="line">                    new Message(str.getBytes(),new MessageProperties()))；</span><br><span class="line">                  &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           opt = &quot;suc&quot;;</span><br><span class="line">       &#125; catch (Exception e) &#123;</span><br><span class="line">           opt = e.getCause().toString();</span><br><span class="line">       &#125;</span><br><span class="line">       return opt;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<ol start="3">
-<li>消费者<blockquote>
+<p><strong>3. 消费者</strong></p>
+<blockquote>
 <p>spring配置文件和生产者其实差不多，可能差点的就是需要配置监听容器 ，生产者和消费者是根据路由键匹配的，只有路由键匹配才能接收到生产者的消息。<br>思路： 1. 配置连接工厂(与原生实现一样)  —&gt;  2. 配置spring的admin —&gt;    3.创建队列 —&gt;  4.创建交换器，并绑定队列 ，topic声明匹配模式（pattern、key） —&gt;设置监听容器 。<br>监听容器类必须实现MessageListener类</p>
 </blockquote>
-</li>
-</ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- rabbitMQ配置 --&gt;</span><br><span class="line">	&lt;bean id=&quot;rabbitConnectionFactory&quot;</span><br><span class="line">		  class=&quot;org.springframework.amqp.rabbit.connection.CachingConnectionFactory&quot;&gt;</span><br><span class="line">		&lt;constructor-arg value=&quot;127.0.0.1&quot;/&gt;</span><br><span class="line">		&lt;property name=&quot;username&quot; value=&quot;guest&quot;/&gt;</span><br><span class="line">		&lt;property name=&quot;password&quot; value=&quot;guest&quot;/&gt;</span><br><span class="line">		&lt;property name=&quot;channelCacheSize&quot; value=&quot;8&quot;/&gt;</span><br><span class="line">		&lt;property name=&quot;port&quot; value=&quot;5672&quot;&gt;&lt;/property&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">	&lt;rabbit:admin connection-factory=&quot;rabbitConnectionFactory&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- fanout交换器 begin--&gt;</span><br><span class="line">    &lt;!-- 定义队列 --&gt;</span><br><span class="line">   &lt;!--配置队列queue, Exchange, 以及将他们结合在一起的binding--&gt;</span><br><span class="line">    &lt;!--在queue以及exchange中, 有一个重要的属性durable, 默认为true, 可以防止宕机后数据丢失。--&gt;</span><br><span class="line">    &lt;!--在listener-container中, 有acknowledge属性, 默认为auto, 即消费者成功处理消息后必须有个应答, 如果消费者程序发生异常或者宕机, 消息会被重新放回队列--&gt;</span><br><span class="line">    </span><br><span class="line">	&lt;rabbit:queue name=&quot;h1_queue&quot; durable=&quot;false&quot;/&gt;</span><br><span class="line">	&lt;rabbit:queue name=&quot;h2_queue&quot; durable=&quot;false&quot;/&gt;</span><br><span class="line">	&lt;rabbit:queue name=&quot;h3_queue&quot; durable=&quot;false&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 把需要数据的队列与交换器绑定一起 --&gt;</span><br><span class="line">    &lt;!--标准的AMQP Exchange有4种: Direct, Topic, Headers, Fanout, 根据实际需要选择。--&gt;</span><br><span class="line">    &lt;!--Direct: 如果消息的routing key与bingding的routing key直接匹配的话, 消息将会路由到该队列上。--&gt;</span><br><span class="line">    &lt;!--Topic: 如果消息的routing key与bingding的routing key符合通配符匹配的话, 消息将会路由到该队列上。--&gt;</span><br><span class="line">    &lt;!--Headers: 如果消息参数表中的头信息和值都与binding参数表中相匹配, 消息将会路由到该队列上。--&gt;</span><br><span class="line">    &lt;!--Fanout: 不管消息的routing key和参数表的头信息/值是什么, 消息将会路由到该队列上。--&gt;</span><br><span class="line">    </span><br><span class="line">	&lt;rabbit:fanout-exchange name=&quot;fanout-exchange&quot;</span><br><span class="line">							xmlns=&quot;http://www.springframework.org/schema/rabbit&quot;</span><br><span class="line">							durable=&quot;false&quot;&gt;</span><br><span class="line">		&lt;rabbit:bindings&gt;</span><br><span class="line">			&lt;rabbit:binding queue=&quot;h1_queue&quot;&gt;&lt;/rabbit:binding&gt;</span><br><span class="line">			&lt;rabbit:binding queue=&quot;h2_queue&quot;&gt;&lt;/rabbit:binding&gt;</span><br><span class="line">			&lt;rabbit:binding queue=&quot;h3_queue&quot;&gt;&lt;/rabbit:binding&gt;</span><br><span class="line">		&lt;/rabbit:bindings&gt;</span><br><span class="line">	&lt;/rabbit:fanout-exchange&gt;</span><br><span class="line">    &lt;!-- fanout交换器 end--&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;!-- topic交换器 begin--&gt;</span><br><span class="line">    &lt;!-- 定义队列 --&gt;</span><br><span class="line">    &lt;rabbit:queue name=&quot;all_log_queue&quot; durable=&quot;false&quot;/&gt;</span><br><span class="line">    &lt;rabbit:queue name=&quot;email_all_queue&quot; durable=&quot;false&quot;/&gt;</span><br><span class="line">    &lt;rabbit:queue name=&quot;email_error_queue&quot; durable=&quot;false&quot;/&gt;</span><br><span class="line">    &lt;rabbit:queue name=&quot;all_error_queue&quot; durable=&quot;false&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- 把需要数据的队列通过路由键与交换器绑定一起 --&gt;</span><br><span class="line">    &lt;rabbit:topic-exchange name=&quot;topic-exchange&quot;</span><br><span class="line">                           xmlns=&quot;http://www.springframework.org/schema/rabbit&quot;</span><br><span class="line">                           durable=&quot;false&quot;&gt;</span><br><span class="line">        &lt;rabbit:bindings&gt;</span><br><span class="line">            &lt;rabbit:binding queue=&quot;all_log_queue&quot; pattern=&quot;#&quot;&gt;&lt;/rabbit:binding&gt;</span><br><span class="line">            &lt;rabbit:binding queue=&quot;email_all_queue&quot; pattern=&quot;*.email&quot;&gt;&lt;/rabbit:binding&gt;</span><br><span class="line">            &lt;rabbit:binding queue=&quot;email_error_queue&quot;  pattern=&quot;error.email&quot;&gt;&lt;/rabbit:binding&gt;</span><br><span class="line">            &lt;rabbit:binding queue=&quot;all_error_queue&quot;  pattern=&quot;error.*&quot;&gt;&lt;/rabbit:binding&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/rabbit:bindings&gt;</span><br><span class="line">    &lt;/rabbit:topic-exchange&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!-- topic交换器 end--&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;!--监听容器--&gt;</span><br><span class="line">      &lt;!--  ref=&quot;fanoutService是bean监听实体类，在xml定义或注解并扫描包  --&gt;</span><br><span class="line">    &lt;rabbit:listener-container connection-factory=&quot;rabbitConnectionFactory&quot;&gt;</span><br><span class="line">        &lt;rabbit:listener ref=&quot;fanoutService_H1&quot; queues=&quot;h1_queue&quot; method=&quot;onMessage&quot; /&gt;</span><br><span class="line">        &lt;rabbit:listener ref=&quot;fanoutService_H2&quot; queues=&quot;h2_queue&quot; method=&quot;onMessage&quot; /&gt;</span><br><span class="line">        &lt;rabbit:listener ref=&quot;fanoutService_H3&quot; queues=&quot;h3_queue&quot; method=&quot;onMessage&quot; /&gt;</span><br><span class="line">        &lt;rabbit:listener ref=&quot;allLogTopicService&quot; queues=&quot;all_log_queue&quot; method=&quot;onMessage&quot; /&gt;</span><br><span class="line">        &lt;rabbit:listener ref=&quot;emailAllTopicService&quot; queues=&quot;email_all_queue&quot; method=&quot;onMessage&quot; /&gt;</span><br><span class="line">        &lt;rabbit:listener ref=&quot;emailErrorTopicService&quot; queues=&quot;email_error_queue&quot; method=&quot;onMessage&quot; /&gt;v</span><br><span class="line">        &lt;rabbit:listener ref=&quot;allErrorTopicService&quot; queues=&quot;all_error_queue&quot; method=&quot;onMessage&quot; /&gt;</span><br><span class="line">    &lt;/rabbit:listener-container&gt;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class AllLogTopicService implements MessageListener&#123;</span><br><span class="line">    private Logger logger = LoggerFactory.getLogger(AllLogTopicService.class);</span><br><span class="line">    public void onMessage(Message message) &#123;</span><br><span class="line">        logger.info(&quot;Get message:&quot;+new String(message.getBody()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -513,11 +507,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -525,11 +515,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
+                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -541,7 +531,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
+                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -549,27 +543,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -581,7 +563,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
+                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -593,7 +579,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+                <a href="javascript:void(0)" class="js-tag color1">shiro</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -601,7 +587,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
+                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -609,11 +599,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
             
             <div class="clearfix"></div>
