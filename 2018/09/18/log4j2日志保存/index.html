@@ -9,14 +9,14 @@
   <title>logj2日志保存 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1. log4j和log4j2格式区别  log4j2是log4j的升级版，log4j 2.0与以往的1.x有一个明显的不同，其配置文件只能采用.xml, .json或者 .jsn。在默认情况下">
-<meta name="keywords" content="博客,java,maven,log4j2">
+<meta name="keywords" content="博客,maven,java,log4j2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="logj2日志保存">
 <meta property="og:url" content="http://yoursite.com/2018/09/18/log4j2日志保存/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
 <meta property="og:description" content="1. log4j和log4j2格式区别  log4j2是log4j的升级版，log4j 2.0与以往的1.x有一个明显的不同，其配置文件只能采用.xml, .json或者 .jsn。在默认情况下">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-21T13:11:57.664Z">
+<meta property="og:updated_time" content="2018-11-21T13:12:38.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="logj2日志保存">
 <meta name="twitter:description" content="1. log4j和log4j2格式区别  log4j2是log4j的升级版，log4j 2.0与以往的1.x有一个明显的不同，其配置文件只能采用.xml, .json或者 .jsn。在默认情况下">
@@ -208,10 +208,8 @@
 <blockquote>
 <p><strong>2. lo4j2 具体配置（resource 路径下）</strong></p>
 <ul>
-<li>java项目<ul>
+<li>java项目</li>
 <li>web项目 （${sys:catalina.home} 是tomcat下的根目录）</li>
-</ul>
-</li>
 </ul>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!--  级别：OFF &gt; FATAL &gt; ERROR &gt; WARN &gt; INFO &gt; DEBUG &gt; TRACE &gt; ALL --&gt;</span><br><span class="line">&lt;configuration status=&quot;OFF&quot;&gt;</span><br><span class="line">	&lt;appenders&gt;</span><br><span class="line">		&lt;Console name=&quot;Console&quot; target=&quot;SYSTEM_OUT&quot;&gt;</span><br><span class="line">			&lt;ThresholdFilter level=&quot;trace&quot; onMatch=&quot;ACCEPT&quot;</span><br><span class="line">				onMismatch=&quot;DENY&quot; /&gt;</span><br><span class="line">			&lt;PatternLayout</span><br><span class="line">				pattern=&quot;%d&#123;HH:mm:ss.SSS&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot; /&gt;</span><br><span class="line">		&lt;/Console&gt;</span><br><span class="line">		&lt;File name=&quot;log&quot; fileName=&quot;target/test.log&quot; append=&quot;false&quot;&gt;</span><br><span class="line">			&lt;PatternLayout</span><br><span class="line">				pattern=&quot;%d&#123;HH:mm:ss.SSS&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot; /&gt;</span><br><span class="line">		&lt;/File&gt;</span><br><span class="line">		&lt;File name=&quot;requestReport&quot; fileName=&quot;target/report_request.log&quot;</span><br><span class="line">			append=&quot;false&quot;&gt;</span><br><span class="line">			&lt;PatternLayout</span><br><span class="line">				pattern=&quot;%d&#123;HH:mm:ss.SSS&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot; /&gt;</span><br><span class="line">		&lt;/File&gt;</span><br><span class="line">		&lt;RollingFile name=&quot;RollingFile&quot; fileName=&quot;logs/payrule.log&quot;</span><br><span class="line">			filePattern=&quot;logs/$$&#123;date:yyyy-MM&#125;/payrule-%d&#123;yyyy-MM-dd&#125;.log&quot;&gt;</span><br><span class="line">			&lt;PatternLayout</span><br><span class="line">				pattern=&quot;%d&#123;yyyy.MM.dd &apos;at&apos; HH:mm:ss z&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot; /&gt;</span><br><span class="line">			&lt;!-- 按天生成日志文件 --&gt;</span><br><span class="line">			&lt;Policies&gt;</span><br><span class="line">				&lt;TimeBasedTriggeringPolicy modulate=&quot;true&quot;</span><br><span class="line">					interval=&quot;1&quot; /&gt;</span><br><span class="line">			&lt;/Policies&gt;</span><br><span class="line">		&lt;/RollingFile&gt;</span><br><span class="line">	&lt;/appenders&gt;</span><br><span class="line">	&lt;loggers&gt;</span><br><span class="line">		&lt;root level=&quot;info&quot;&gt;</span><br><span class="line">			&lt;appender-ref ref=&quot;RollingFile&quot; /&gt;</span><br><span class="line">			&lt;appender-ref ref=&quot;Console&quot; /&gt;</span><br><span class="line">		&lt;/root&gt;</span><br><span class="line">		&lt;logger name=&quot;report&quot; level=&quot;trace&quot; additivity=&quot;false&quot;&gt;</span><br><span class="line">			&lt;appender-ref ref=&quot;requestReport&quot;&gt;&lt;/appender-ref&gt;</span><br><span class="line">		&lt;/logger&gt;</span><br><span class="line">	&lt;/loggers&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
@@ -268,11 +266,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -526,19 +524,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">profiles</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -558,7 +552,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">log4j2</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -566,19 +560,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
+                <a href="javascript:void(0)" class="js-tag color2">log4j2</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,6 +569,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -606,6 +596,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
               </li>
              
@@ -622,11 +620,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">github</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
               </li>
             
             <div class="clearfix"></div>

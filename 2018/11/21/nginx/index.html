@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/11/21/nginx/6.png">
 <meta property="og:image" content="http://yoursite.com/2018/11/21/nginx/7.png">
 <meta property="og:image" content="http://yoursite.com/2018/11/21/nginx/8.png">
-<meta property="og:updated_time" content="2018-11-21T12:49:08.271Z">
+<meta property="og:updated_time" content="2018-11-21T13:15:36.311Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx详解">
 <meta name="twitter:description" content="1. Xshell使用管理员连接Ubuntu   由于没有服务器，所以使用虚拟机，所有操作都是在ubuntu14中操作的，在操作前需克隆多个虚拟机。">
@@ -316,7 +316,176 @@
 <blockquote>
 <p>location中开启错误页面拦截（proxy_intercept_errors on）–》定义错误页面（ error_page ）–》定义location拦截规则，拦截后到指定的目录寻找页面，如下图定义的 /usr/local/nginx/html/<br><img src="/2018/11/21/nginx/8.png" alt="在这里插入图片描述"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//代码实现</span><br><span class="line">location ~* /demo/(index.jsp)$ &#123;</span><br><span class="line">               #这里配置代理是指上面定义的两个被代理目标，blank名字必须一致</span><br><span class="line">              # proxy_pass http://blank;</span><br><span class="line">               rewrite ^/demo/index.jsp$  /demo/second.jsp break;</span><br><span class="line">               #rewrite ^/demo/index.jsp  /demo/second.jsp last;  </span><br><span class="line">               #proxy_redirect          off;</span><br><span class="line">               #这个变量开启后，我们才能自定义错误页面，当后端返回404，nginx拦截错误定义错误页面</span><br><span class="line">               proxy_intercept_errors on;</span><br><span class="line">               #如果是非80端口，配置为Host $host：端口号，目的是将代理服务器收到的用户的信息传到真实服务器上</span><br><span class="line">               proxy_set_header        Host $host;</span><br><span class="line">               proxy_set_header        X-Real-IP $remote_addr;</span><br><span class="line">               proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">               client_max_body_size    10m;</span><br><span class="line">               client_body_buffer_size 128k;</span><br><span class="line">               proxy_connect_timeout   300;</span><br><span class="line">               proxy_send_timeout      300;</span><br><span class="line">               proxy_read_timeout      300;</span><br><span class="line">               proxy_buffer_size       4k;</span><br><span class="line">               proxy_buffers           4 32k;</span><br><span class="line">               proxy_busy_buffers_size 64k;</span><br><span class="line">               proxy_temp_file_write_size 64k;</span><br><span class="line">               add_header Access-Control-Allow-Origin *;</span><br><span class="line">           &#125;</span><br><span class="line">             #此处定义500 502 503 504的错误页面</span><br><span class="line">           error_page   500 502 503 504  /404.html;</span><br><span class="line">           #错误页面位置，与上面路径需要对应。</span><br><span class="line">           location = /404.html &#123;</span><br><span class="line">           #root表示路径 html为nginx安装目录中的html文件夹</span><br><span class="line">           #位于/usr/local/nginx/html/下</span><br><span class="line">              root  /usr/local/nginx/html/;</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
+<p> <strong>11.  nginx  配置</strong></p>
+<pre><code>user www-data;
 
+#配置nginx线程数
+worker_processes 4;
+
+#nginx进程标志
+pid /var/run/nginx.pid;
+
+events {
+        #连接数
+    worker_connections 768;
+    # multi_accept on;
+}
+
+http {
+
+    ##
+    # Basic Settings
+    ##
+
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+    types_hash_max_size 2048;
+    # server_tokens off;
+
+   #负载均衡
+   upstream blank {
+        #ip_hash;
+        server 192.168.170.134:8080;
+        server 192.168.170.135:8080;
+    }
+       server {
+            #nginx监听80端口，请求该端口时转发到真实目标
+            listen       80;
+            #配置访问域名，其实就是域名负载均衡
+            server_name  localhost;                  
+             # ^~ 不是正则表达式匹配url开头
+             #规则：匹配以jsp结尾的文件(~* \.(jsp)$) 、只匹配index和second页面 (~* /demo/(index.jsp|second.jsp)$)、匹配以demo开头的url路径 (^~ /demo/)
+            location ~* /demo/(index.jsp)$ {
+                #这里配置代理是指上面定义的两个被代理目标，blank名字必须一致
+               # proxy_pass http://blank;
+                rewrite ^/demo/index.jsp$  /demo/second.jsp break;
+                #rewrite ^/demo/index.jsp  /demo/second.jsp last;  
+                #proxy_redirect          off;
+                #这个变量开启后，我们才能自定义错误页面，当后端返回404，nginx拦截错误定义错误页面
+                proxy_intercept_errors on;
+                #如果是非80端口，配置为Host $host：端口号，目的是将代理服务器收到的用户的信息传到真实服务器上
+                proxy_set_header        Host $host;
+                proxy_set_header        X-Real-IP $remote_addr;
+                proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+                client_max_body_size    10m;
+                client_body_buffer_size 128k;
+                proxy_connect_timeout   300;
+                proxy_send_timeout      300;
+                proxy_read_timeout      300;
+                proxy_buffer_size       4k;
+                proxy_buffers           4 32k;
+                proxy_busy_buffers_size 64k;
+                proxy_temp_file_write_size 64k;
+                add_header Access-Control-Allow-Origin *;
+            }
+               location = /demo/second.jsp {
+                #这里配置代理是指上面定义的两个被代理目标，blank名字必须一致
+               # proxy_pass http://blank;
+                rewrite ^/demo/second.jsp$  http://192.168.170.134:8080/demo/index.jsp ;
+                #rewrite ^/demo/index.jsp /demo/index.jsp last;  
+                #proxy_redirect          off;
+                #如果是非80端口，配置为Host $host：端口号，目的是将代理服务器收到的用户的信息传到真实服务器上
+                proxy_set_header        Host $host;
+                proxy_set_header        X-Real-IP $remote_addr;
+                proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+                client_max_body_size    10m;
+                client_body_buffer_size 128k;
+                proxy_connect_timeout   300;
+                proxy_send_timeout      300;
+                proxy_read_timeout      300;
+                proxy_buffer_size       4k;
+                proxy_buffers           4 32k;
+                proxy_busy_buffers_size 64k;
+                proxy_temp_file_write_size 64k;
+                add_header Access-Control-Allow-Origin *;
+            } 
+
+            #此处定义500 502 503 504的错误页面
+            error_page   500 502 503 504  /50x.html;
+            #错误页面位置
+            location = /404.html {
+            #root表示路径 html为nginx安装目录中的html文件夹
+            #位于/usr/local/nginx/html/下
+               root  /usr/local/nginx/html/;
+            }        
+    }
+    # server_names_hash_bucket_size 64;
+    # server_name_in_redirect off;
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    ##
+    # Logging Settings
+    ##
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    ##
+    # Gzip Settings
+    ##
+
+    gzip on;
+    gzip_disable &quot;msie6&quot;;
+
+    # gzip_vary on;
+    # gzip_proxied any;
+    # gzip_comp_level 6;
+    # gzip_buffers 16 8k;
+    # gzip_http_version 1.1;
+    # gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+    ##
+    # nginx-naxsi config
+    ##
+    # Uncomment it if you installed nginx-naxsi
+    ##
+
+    #include /etc/nginx/naxsi_core.rules;
+
+    ##
+    # nginx-passenger config
+    ##
+    # Uncomment it if you installed nginx-passenger
+    ##
+
+    #passenger_root /usr;
+    #passenger_ruby /usr/bin/ruby;
+
+    ##
+    # Virtual Host Configs
+    ##
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+}
+
+
+#mail {
+#    # See sample authentication script at:
+#    # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+# 
+#    # auth_http localhost/auth.php;
+#    # pop3_capabilities &quot;TOP&quot; &quot;USER&quot;;
+#    # imap_capabilities &quot;IMAP4rev1&quot; &quot;UIDPLUS&quot;;
+# 
+#    server {
+#        listen     localhost:110;
+#        protocol   pop3;
+#        proxy      on;
+#    }
+# 
+#    server {
+#        listen     localhost:143;
+#        protocol   imap;
+#        proxy      on;
+#    }
+#}
+
+</code></pre>
       
 
       
@@ -609,19 +778,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">profiles</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -641,7 +806,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">log4j2</a>
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -649,19 +814,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
+                <a href="javascript:void(0)" class="js-tag color2">log4j2</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -670,6 +823,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -689,6 +850,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">servlet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ajax</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
               </li>
              
@@ -705,11 +874,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">github</a>
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">github</a>
               </li>
             
             <div class="clearfix"></div>
