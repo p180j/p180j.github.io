@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>shiro配置以及使用 | KeepGoing博客</title>
+  <title>spring JavaMailSender 发送邮件 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="shiro配置以及使用">
-<meta name="keywords" content="博客,java,shiro">
+  <meta name="description" content="1. JavaMailSenderImpl">
+<meta name="keywords" content="博客,spring,JavaMailSender">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shiro配置以及使用">
-<meta property="og:url" content="http://yoursite.com/2018/05/21/shiro框架详细配置及使用/index.html">
+<meta property="og:title" content="spring JavaMailSender 发送邮件">
+<meta property="og:url" content="http://yoursite.com/2018/04/21/spring JavaMailSender邮件/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="shiro配置以及使用">
+<meta property="og:description" content="1. JavaMailSenderImpl">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-10-08T14:36:59.953Z">
+<meta property="og:updated_time" content="2018-12-03T14:02:25.164Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shiro配置以及使用">
-<meta name="twitter:description" content="shiro配置以及使用">
+<meta name="twitter:title" content="spring JavaMailSender 发送邮件">
+<meta name="twitter:description" content="1. JavaMailSenderImpl">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -162,20 +162,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-shiro框架详细配置及使用" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-spring JavaMailSender邮件" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      shiro配置以及使用
+      spring JavaMailSender 发送邮件
     </h1>
   
 
         
-        <a href="/2018/05/21/shiro框架详细配置及使用/" class="archive-article-date">
-  	<time datetime="2018-05-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-21</time>
+        <a href="/2018/04/21/spring JavaMailSender邮件/" class="archive-article-date">
+  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
 </a>
 		
 		<span class="archive-article-date">
@@ -187,27 +187,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>shiro配置以及使用<br><a id="more"></a></p>
-<blockquote>
-<p><strong>1.web.xml文件的配置</strong></p>
-</blockquote>
-<p>&lt;!-Shiro过滤器 –&gt;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;</span><br><span class="line">&lt;init-param&gt;</span><br><span class="line">&lt;param-name&gt;targetFilterLifecycle&lt;/param-name&gt;</span><br><span class="line">&lt;param-value&gt;true&lt;/param-value&gt;</span><br><span class="line">&lt;/init-param&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">&lt;filter-name&gt;shiroFilter&lt;/filter-name&gt;</span><br><span class="line">&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span><br><span class="line">&lt;dispatcher&gt;REQUEST&lt;/dispatcher&gt;</span><br><span class="line">&lt;dispatcher&gt;FORWARD&lt;/dispatcher&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p><strong>2.applicationContext-shiro.xml 实现</strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd&quot;</span><br><span class="line">default-lazy-init=&quot;true&quot;&gt;</span><br><span class="line">&lt;description&gt;Shiro Configuration&lt;/description&gt;</span><br><span class="line">    &lt;!--安全管理器--&gt;</span><br><span class="line">    &lt;bean id=&quot;securityManager&quot; class=&quot;org.apache.shiro.web.mgt.DefaultWebSecurityManager&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;realm&quot; ref=&quot;shiroDbRealm&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;cacheManager&quot; ref=&quot;cacheManager&quot;/&gt;</span><br><span class="line">       &lt;!--  &lt;property name=&quot;sessionManager&quot; ref=&quot;sessionManager&quot;/&gt; --&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">    &lt;!-- 項目自定义的Realm --&gt;</span><br><span class="line">    &lt;bean id=&quot;shiroDbRealm&quot; class=&quot;com.huaxia.security.shiro.ShiroDbRealm&quot;/&gt;   =========  自己写的域==============</span><br><span class="line">    &lt;!-- Shiro Filter --&gt;</span><br><span class="line">    &lt;bean id=&quot;shiroFilter&quot; class=&quot;org.apache.shiro.spring.web.ShiroFilterFactoryBean&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;loginUrl&quot; value=&quot;/login&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;successUrl&quot; value=&quot;/index&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;unauthorizedUrl&quot; value=&quot;/unauth&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;filterChainDefinitions&quot;&gt;</span><br><span class="line">            &lt;value&gt;</span><br><span class="line">                /commons/** = anon</span><br><span class="line">                /plugins/** = anon</span><br><span class="line">                /assets/** = anon</span><br><span class="line">                /css/** = anon</span><br><span class="line">                /js/** = anon</span><br><span class="line">                /img/** = anon</span><br><span class="line">                /fonts/** = anon</span><br><span class="line">                /bootstrap/** = anon</span><br><span class="line">                /login = anon</span><br><span class="line">                /interface/** = anon</span><br><span class="line">                /** = user</span><br><span class="line">                </span><br><span class="line">            &lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">    &lt;/b  &lt;!-- 用户授权信息Cache --&gt;</span><br><span class="line">&lt;bean id=&quot;cacheManager&quot; class=&quot;org.apache.shiro.cache.MemoryConstrainedCacheManager&quot; /&gt;</span><br><span class="line">    &lt;!-- 会话管理器 --&gt;</span><br><span class="line">&lt;bean id=&quot;sessionManager&quot; class=&quot;org.apache.shiro.web.session.mgt.DefaultWebSessionManager&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;globalSessionTimeout&quot; value=&quot;#&#123;30 * 60 * 1000&#125;&quot;/&gt;</span><br><span class="line">        &lt;property name=&quot;sessionIdUrlRewritingEnabled&quot; value=&quot;false&quot;/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">    &lt;!-- 在方法中 注入  securityManager ，进行代理控制 --&gt;</span><br><span class="line">    &lt;bean class=&quot;org.springframework.beans.factory.config.MethodInvokingFactoryBean&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;staticMethod&quot; value=&quot;org.apache.shiro.SecurityUtils.setSecurityManager&quot;/&gt;</span><br><span class="line">      &lt;property name=&quot;arguments&quot; ref=&quot;securityManager&quot;/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">    &lt;!-- 保证实现了Shiro内部lifecycle函数的bean执行 --&gt;</span><br><span class="line">    &lt;bean id=&quot;lifecycleBeanPostProcessor&quot; class=&quot;org.apache.shiro.spring.LifecycleBeanPostProcessor&quot;/&gt;</span><br><span class="line">&lt;!-- AOP式方法级权限检查 --&gt;</span><br><span class="line">&lt;bean</span><br><span class="line">class=&quot;org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator&quot;</span><br><span class="line">depends-on=&quot;lifecycleBeanPostProcessor&quot;&gt;</span><br><span class="line">&lt;property name=&quot;proxyTargetClass&quot; value=&quot;false&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line">    &lt;!-- 启用shrio授权注解拦截方式 --&gt;</span><br><span class="line">    &lt;bean class=&quot;org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor&quot;&gt;</span><br><span class="line">        &lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot;/&gt;</span><br><span class="line">    &lt;/bean&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p> <strong>3. shiroUser 实体类</strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class ShiroUser implements Serializable  &#123;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* </span><br><span class="line">*/</span><br><span class="line">private static final long serialVersionUID = 1L;</span><br><span class="line">private Long id;</span><br><span class="line">    private String username;</span><br><span class="line">    </span><br><span class="line">public ShiroUser(Long id, String username) &#123;</span><br><span class="line">super();</span><br><span class="line">this.id = id;</span><br><span class="line">this.username = username;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public Long getId() &#123;</span><br><span class="line">return id;</span><br><span class="line">&#125;</span><br><span class="line">public void setId(Long id) &#123;</span><br><span class="line">this.id = id;</span><br><span class="line">&#125;</span><br><span class="line">public String getUsername() &#123;</span><br><span class="line">return username;</span><br><span class="line">&#125;</span><br><span class="line">public void setUsername(String username) &#123;</span><br><span class="line">this.username = username;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>4. ShiroDbRealm  实现</strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class ShiroDbRealm  extends AuthorizingRealm&#123;</span><br><span class="line">    private static final Logger LOGGER = LogManager.getLogger(ShiroDbRealm.class);</span><br><span class="line">    @Autowired</span><br><span class="line">    private ILoginService loginService;</span><br><span class="line">    </span><br><span class="line">    @Override</span><br><span class="line">    protected AuthenticationInfo doGetAuthenticationInfo(</span><br><span class="line">            AuthenticationToken authcToken) throws AuthenticationException &#123;</span><br><span class="line">        LOGGER.info(&quot;Shiro开始登录认证&quot;);</span><br><span class="line">        UsernamePasswordToken token = (UsernamePasswordToken) authcToken;</span><br><span class="line">        User un = loginService.selectByUsername(token.getUsername());</span><br><span class="line">       </span><br><span class="line">        // 账号不存在</span><br><span class="line">   if (un == null) &#123;</span><br><span class="line">         return null;</span><br><span class="line">   &#125;</span><br><span class="line">   ShiroUser shiroUser = new ShiroUser(un.getId(), un.getUsername());</span><br><span class="line">   // 认证缓存信息</span><br><span class="line">        return new SimpleAuthenticationInfo(shiroUser, un.getPassword().toCharArray(), getName());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">@Override</span><br><span class="line">protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) &#123;</span><br><span class="line">// TODO Auto-generated method stub</span><br><span class="line">return null;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>5. controllerd 的实现</strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">@SystemControllerLog(operatePoint=OperatePointConstants.LOGIN, operateType=OperateTypeConstants.LOGIN)</span><br><span class="line">   @PostMapping(&quot;/login&quot;)</span><br><span class="line">   @CsrfToken(remove = true)</span><br><span class="line">   @ResponseBody</span><br><span class="line">   public Object loginPost(String username, String password) &#123;</span><br><span class="line">       logger.info(&quot;POST请求登录&quot;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       if (StringUtils.isBlank(username)) &#123;</span><br><span class="line">           return renderError(&quot;用户名不能为空&quot;);</span><br><span class="line">       &#125;</span><br><span class="line">       if (StringUtils.isBlank(password)) &#123;</span><br><span class="line">           return renderError(&quot;密码不能为空&quot;);</span><br><span class="line">       &#125;else&#123;</span><br><span class="line">       password = SymmetricEncoder.encryptStr(secretkey, password);</span><br><span class="line">        LOGGER.info(password);</span><br><span class="line">       &#125;</span><br><span class="line">       Subject user = SecurityUtils.getSubject();</span><br><span class="line">       UsernamePasswordToken token = new UsernamePasswordToken(username,password);</span><br><span class="line">       Result result=new Result();</span><br><span class="line">       try &#123;</span><br><span class="line">           user.login(token);                                                                                                                                                          //在这一步跳入入自己实现的域即shiroDbRealm中验证</span><br><span class="line">           return renderSuccess();</span><br><span class="line">       &#125; catch (UnknownAccountException e) &#123;</span><br><span class="line">       result.setMsg(&quot;账号不存在&quot;);</span><br><span class="line">       return result;</span><br><span class="line">           /*throw new RuntimeException(&quot;账号不存在！&quot;, e);*/</span><br><span class="line">       &#125; catch (DisabledAccountException e) &#123;</span><br><span class="line">       result.setMsg(&quot;账号未启用&quot;);</span><br><span class="line">       return result;</span><br><span class="line">           /*throw new RuntimeException(&quot;账号未启用&quot;, e);*/</span><br><span class="line">       &#125; catch (IncorrectCredentialsException e) &#123;</span><br><span class="line">       result.setMsg(&quot;密码错误,请重试&quot;);</span><br><span class="line">       return result;</span><br><span class="line">           /*throw new RuntimeException(&quot;密码错误,请重试&quot;, e);*/</span><br><span class="line">       &#125; catch (Throwable e) &#123;</span><br><span class="line">       result.setMsg(&quot;未知错误,请联系管理员&quot;);</span><br><span class="line">       return result;</span><br><span class="line">          throw new RuntimeException(&quot;未知错误,请联系管理员&quot;, e);</span><br><span class="line">       &#125;</span><br><span class="line">      </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+        <p><strong>1. JavaMailSenderImpl</strong><br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">**</span><br><span class="line"> * @Configuration 表示是配置类</span><br><span class="line"> * @ComponentScan(&quot;com&quot;) 需要扫描的包路径</span><br><span class="line"> * @PropertySource(&quot;classpath:mail.properties&quot;) 需要加载的配置文件</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan(&quot;com&quot;)</span><br><span class="line">@PropertySource(&quot;classpath:mail.properties&quot;)</span><br><span class="line">public class MailConfig &#123;</span><br><span class="line">    /**</span><br><span class="line">     * 配置发送邮件核心类 JavaMailSenderImpl</span><br><span class="line">     * @param env</span><br><span class="line">     * @return  发送邮件核心类</span><br><span class="line">     */</span><br><span class="line">    @Bean</span><br><span class="line">    public JavaMailSenderImpl mailSender(Environment env)&#123;</span><br><span class="line">        JavaMailSenderImpl mailSender=new JavaMailSenderImpl();</span><br><span class="line">        mailSender.setHost(env.getProperty(&quot;mailserver.host&quot;));</span><br><span class="line">        mailSender.setPort(Integer.parseInt(env.getProperty(&quot;mailserver.port&quot;)));</span><br><span class="line">        mailSender.setUsername(env.getProperty(&quot;mailserver.username&quot;));</span><br><span class="line">        //密码，这里不是邮箱的密码，而是开启服务器后，生成的授权码pgfvqmnnczrggfae env.getProperty(&quot;mailserver.password&quot;)</span><br><span class="line">        mailSender.setPassword(&quot;uajdyjpnrvxejcae&quot;);</span><br><span class="line">        //ssl加密，需要加，否则无法运行</span><br><span class="line">        final String SSL_FACTORY = &quot;javax.net.ssl.SSLSocketFactory&quot;;</span><br><span class="line">        Properties props = System.getProperties();</span><br><span class="line">        //开启授权,否则报535错误</span><br><span class="line">        props.put(&quot;mail.smtp.auth&quot;, &quot;true&quot;);</span><br><span class="line">        props.setProperty(&quot;mail.smtp.socketFactory.class&quot;, SSL_FACTORY);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        mailSender.setJavaMailProperties(props );</span><br><span class="line">        return mailSender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     *配置发送邮件的模板</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @Bean</span><br><span class="line">    public VelocityEngineFactoryBean velocityEngineFactoryBean()&#123;</span><br><span class="line">        VelocityEngineFactoryBean velocityEngine=new VelocityEngineFactoryBean();</span><br><span class="line">        Properties properties=new Properties();</span><br><span class="line">            properties.setProperty(&quot;resource.loader&quot;,&quot;class&quot;);</span><br><span class="line">            properties.setProperty(&quot;class.resource.loader.class&quot;,ClasspathResourceLoader.class.getName());</span><br><span class="line">        velocityEngine.setVelocityProperties(properties);</span><br><span class="line">        return velocityEngine;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>2.实现发送邮件功能实现类</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> *  注入 JavaMailSender类，会自动去寻找配置发送邮件的核心类</span><br><span class="line"> */</span><br><span class="line">@Service(&quot;MailService&quot;)</span><br><span class="line">public class MailServiceImpl  implements MailService&#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    private JavaMailSender mailSender; //发送邮件功能</span><br><span class="line">    @Autowired</span><br><span class="line">    VelocityEngine velocityEngine;  //配置模板</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     *  发送简单邮件</span><br><span class="line">     * @param to</span><br><span class="line">     * @param spittle</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void sendSimpleSpittleEmail(String to, Spittle spittle) &#123;</span><br><span class="line">           //通过这个对象封装信息，相当于信封</span><br><span class="line">        SimpleMailMessage message = new SimpleMailMessage();</span><br><span class="line">           //获取spittle对象中的收件人名字</span><br><span class="line">        String spitterName = spittle.getSpitter().getFullName();</span><br><span class="line">           //发件人</span><br><span class="line">        message.setFrom(&quot;1505742009@qq.com&quot;);</span><br><span class="line">          //收件人</span><br><span class="line">        message.setTo(to);</span><br><span class="line">            //邮件主题</span><br><span class="line">        message.setSubject(&quot;New spittle from &quot; + spitterName);</span><br><span class="line">            //邮件内容</span><br><span class="line">        message.setText(spitterName + &quot; says: &quot; + spittle.getText());</span><br><span class="line">             //发送邮件</span><br><span class="line">        mailSender.send(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     *  发送有附件的邮件</span><br><span class="line">     * @param to</span><br><span class="line">     * @param spittle</span><br><span class="line">     * @throws MessagingException</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void sendSpittleEmailWithAttachment(String to, Spittle spittle) throws MessagingException &#123;</span><br><span class="line">          //通过邮件发送器的createMimeMessage方法构建可含附件的邮件</span><br><span class="line">        MimeMessage message = mailSender.createMimeMessage();</span><br><span class="line">            // 第一个参数是邮件的对象</span><br><span class="line">            // 第二个参数为true表示这个消息是multipart类型的消息（表示是带有附件的邮件）</span><br><span class="line">           // 第三个参数是防止中文乱码</span><br><span class="line">        MimeMessageHelper helper = new MimeMessageHelper(message,true,&quot;utf-8&quot;);</span><br><span class="line">           //获取收件人名，用于后面发送邮件做主题</span><br><span class="line">        String spitterName = spittle.getSpitter().getFullName();</span><br><span class="line">           //寄件人</span><br><span class="line">        helper.setFrom(&quot;1505742009@qq.com&quot;);</span><br><span class="line">           //收件人</span><br><span class="line">        helper.setTo(to);</span><br><span class="line">           //邮件的主题内容</span><br><span class="line">        helper.setSubject(&quot;JavaMail Test&quot;);</span><br><span class="line">        Map&lt;String,Object&gt; model=new HashMap&lt;String,Object &gt;();</span><br><span class="line">        model.put(&quot;spitterName&quot;,spitterName);</span><br><span class="line">        model.put(&quot;spittleText&quot;,spittle.getText());</span><br><span class="line">        String emailTest= VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,&quot;/templates/emailTemplate.vm&quot;,model);</span><br><span class="line">        //邮件的发送内容emailTest 是模板</span><br><span class="line">        helper.setText(emailTest,true); //发送模板邮件</span><br><span class="line">         // helper.setText(spitterName + &quot; says: &quot; + spittle.getText()); //简单信息</span><br><span class="line">         //通过路径获取图片附件</span><br><span class="line">        ClassPathResource couponImage = new ClassPathResource(&quot;/document/new1.txt&quot;);</span><br><span class="line">         //第一个参数是图片的名称，到时候收件人收到的附件名</span><br><span class="line">         //第二个参数是图片附件的资源</span><br><span class="line">        helper.addAttachment(&quot;new1.txt&quot;, couponImage);</span><br><span class="line">         //send方法是发送邮件的方法</span><br><span class="line">        mailSender.send(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 发送有内联图片的邮件</span><br><span class="line">     * @param to</span><br><span class="line">     * @param spittle</span><br><span class="line">     * @throws MessagingException</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void sendRichSpitterEmail(String to, Spittle spittle) throws MessagingException &#123;</span><br><span class="line"></span><br><span class="line">              //创建一封富文本邮件</span><br><span class="line">            MimeMessage message=mailSender.createMimeMessage();</span><br><span class="line">              //第二个参数表明传递进来的第一个参数是html文本</span><br><span class="line">            MimeMessageHelper helper=new MimeMessageHelper(message,true,&quot;utf-8&quot;);</span><br><span class="line">               //发件人</span><br><span class="line">            helper.setFrom(&quot;1505742009@qq.com&quot;);</span><br><span class="line">               //收件人</span><br><span class="line">            helper.setTo(to);</span><br><span class="line">               //发送的邮件主题</span><br><span class="line">            helper.setSubject(&quot;New spittle from &quot; + spittle.getSpitter().getFullName());</span><br><span class="line">              //cid：spitterLogo，标记一个变量，后面为这个变量添加一张图片</span><br><span class="line">              //第二个参数表示传递的第一个参数是html</span><br><span class="line">            helper.setText(&quot;&lt;html&gt;&lt;body&gt;&lt;img src=&apos;cid:spittleLogo&apos;&gt;&quot;+&quot;&lt;h4&gt;&quot;+</span><br><span class="line">                    spittle.getSpitter().getFullName()+&quot;says...&lt;/h4&gt;&quot;+&quot;&lt;i&gt;&quot;+spittle.getText()+</span><br><span class="line">                    &quot;&lt;/i&gt;&quot;+&quot;&lt;/body&gt;&lt;/html&gt;&quot;,true);</span><br><span class="line">             //创建一个变量存放图片</span><br><span class="line">            ClassPathResource image=new ClassPathResource(&quot;/img/coupon.jpg&quot;);</span><br><span class="line">             //为消息添加嵌入式的图片</span><br><span class="line">            helper.addInline(&quot;spittleLogo&quot;, image);</span><br><span class="line">             //发送邮件</span><br><span class="line">            mailSender.send(message);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>3.配置文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#qq的服务器名</span><br><span class="line">mailserver.host=smtp.qq.com</span><br><span class="line">#端口号</span><br><span class="line">mailserver.port=465</span><br><span class="line">#你的邮箱号</span><br><span class="line">mailserver.username=1505742009@qq.com</span><br><span class="line">#第一步获取到的授权码</span><br><span class="line">mailserver.password=altfwaxzpvkwifda</span><br></pre></td></tr></table></figure>
+<p><strong>4.模板类</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;img src=&quot;&quot;&gt;</span><br><span class="line">&lt;h4&gt;</span><br><span class="line">    $&#123;spitterName&#125;  你好啊，这是模板邮件啊！</span><br><span class="line">&lt;/h4&gt;</span><br><span class="line">&lt;i&gt;</span><br><span class="line">    $&#123;spittleText&#125;</span><br><span class="line">&lt;/i&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>5. 测试类</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * @ContextConfiguration 加載配置类</span><br><span class="line"> */</span><br><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@ContextConfiguration(classes=MailConfig.class)</span><br><span class="line">public class TestMail &#123;</span><br><span class="line">@Autowired</span><br><span class="line">private MailService mailService;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void sendSimpleSpittleEmail() throws Exception &#123;</span><br><span class="line">/*        ApplicationContext ctx = new ClassPathXmlApplicationContext(&quot;classpath:config/spring.xml&quot;);</span><br><span class="line">        MailService mailService=(MailService) ctx.getBean(&quot;MailService&quot;);*/</span><br><span class="line">        Spitter spitter = new Spitter(&quot;周瑞珣&quot;, null, &quot;pipi&quot;, &quot;1551124145@qq.com&quot;, true);</span><br><span class="line">        Spittle spittle = new Spittle(spitter);</span><br><span class="line">        //第一个参数是收件人，第二个参数是邮件</span><br><span class="line">        //普通邮件</span><br><span class="line">        //mailService.sendSimpleSpittleEmail(spitter.getEmail(), spittle);</span><br><span class="line">        //携带附件</span><br><span class="line">        mailService.sendSpittleEmailWithAttachment(spitter.getEmail(), spittle);</span><br><span class="line">        //内联图片</span><br><span class="line">        // mailService.sendRichSpitterEmail(spitter.getEmail(),spittle);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
       
 
       
@@ -255,11 +244,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">shiro</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JavaMailSender</a>
         		</li>
       		
 		</ul>
@@ -316,7 +305,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/05/21/shiro框架详细配置及使用/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/04/21/spring JavaMailSender邮件/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -330,11 +319,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/05/24/aliPayMent/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/04/21/poi工具类/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          支付宝支付接口
+          poi导出excel工具类
         
       </div>
     </a>
@@ -393,7 +382,7 @@
 <script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
 var gitment = new Gitment({
-  id: "http://yoursite.com/2018/05/21/shiro框架详细配置及使用/",
+  id: "http://yoursite.com/2018/04/21/spring JavaMailSender邮件/",
   owner: 'p180j',
   repo: 'p180j.github.io',
   oauth: {
@@ -521,6 +510,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
@@ -533,27 +530,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jenkins</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">自动化发布</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -561,7 +538,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JavaMailSender</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -577,27 +570,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JavaMailSender</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -605,11 +586,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
+                <a href="javascript:void(0)" class="js-tag color1">kafka</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">微信登录</a>
               </li>
              
               <li class="article-tag-list-item">
