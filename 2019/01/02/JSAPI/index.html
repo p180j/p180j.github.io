@@ -9,7 +9,7 @@
   <title>微信公众号支付 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1. JSAPI支付申请和配置">
-<meta name="keywords" content="博客,java,JSAPI,支付">
+<meta name="keywords" content="JSAPI,博客,java,支付">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微信公众号支付">
 <meta property="og:url" content="http://yoursite.com/2019/01/02/JSAPI/index.html">
@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/01/02/JSAPI/4.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/01/02/JSAPI/5.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/01/02/JSAPI/6.png">
-<meta property="og:updated_time" content="2019-01-02T12:54:52.496Z">
+<meta property="og:updated_time" content="2019-01-02T13:09:21.929Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信公众号支付">
 <meta name="twitter:description" content="1. JSAPI支付申请和配置">
@@ -198,11 +198,12 @@
       
         <p> <strong>1. JSAPI支付申请和配置</strong><br>  <a id="more"></a></p>
 <blockquote>
-<p>申请商户号和公众号 ，获取四大支付要素： merchant_id、key、appid、appSecret</p>
+<p>刚做完jsapi支付，在此做个总结。 申请商户号和公众号 ，获取四大支付要素： merchant_id、key、appid、appSecret</p>
 </blockquote>
-<p> 公众号： appid和appSecret以及配置授权回调地址（否则会报：redirect_uri与后台配置不一致的错误）<br><img src="/2019/01/02/JSAPI/1.jpg" alt="在这里插入图片描述"></p>
+<p> 公众号配置： appid和appSecret以及配置授权回调地址（否则会报：redirect_uri与后台配置不一致的错误）<br><img src="/2019/01/02/JSAPI/1.jpg" alt="在这里插入图片描述"></p>
 <p><img src="/2019/01/02/JSAPI/2.jpg" alt="在这里插入图片描述"><br> 公众号授权地址填写规则：(需要将txt文件下载并安装到容器中，例如：Tomcat)<br><img src="/2019/01/02/JSAPI/8.png" alt="在这里插入图片描述"></p>
-<p>商户号：mch_id和key以及授权目录（否则再拉起支付的时候报当前URL未注册）<br><img src="/2019/01/02/JSAPI/3.jpg" alt="在这里插入图片描述"><br>  授权目录填写规则：<br> 访问url为：<a href="http://www.a.com/recharge/index" target="_blank" rel="noopener">http://www.a.com/recharge/index</a><br> 授权目录应为：<a href="http://www.a.com/recharge/" target="_blank" rel="noopener">http://www.a.com/recharge/</a><br><img src="/2019/01/02/JSAPI/7.png" alt="在这里插入图片描述"></p>
+<p>商户号配置：mch_id和key以及授权目录（否则再拉起支付的时候报当前URL未注册）<br><img src="/2019/01/02/JSAPI/3.jpg" alt="在这里插入图片描述"></p>
+<p> 授权目录填写规则：<br> 访问url为：<a href="http://www.a.com/recharge/index" target="_blank" rel="noopener">http://www.a.com/recharge/index</a><br> 授权目录应为：<a href="http://www.a.com/recharge/" target="_blank" rel="noopener">http://www.a.com/recharge/</a><br><img src="/2019/01/02/JSAPI/7.png" alt="在这里插入图片描述"></p>
 <p><img src="/2019/01/02/JSAPI/4.jpg" alt="在这里插入图片描述"></p>
 <p><strong>2.  支付流程梳理</strong></p>
 <ul>
@@ -281,15 +282,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JSAPI</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">JSAPI</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
@@ -530,11 +531,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+                <a href="javascript:void(0)" class="js-tag color1">JSAPI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">java虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -542,11 +543,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JSAPI</a>
+                <a href="javascript:void(0)" class="js-tag color3">支付</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+                <a href="javascript:void(0)" class="js-tag color3">java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -555,10 +556,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">profiles</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -575,6 +572,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">log4j2</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -602,11 +603,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">shiro</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -614,11 +619,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JavaMailSender</a>
+                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
+                <a href="javascript:void(0)" class="js-tag color5">JavaMailSender</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -627,10 +632,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">webservice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
               </li>
              
               <li class="article-tag-list-item">
