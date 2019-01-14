@@ -9,7 +9,7 @@
   <title>JVM虚拟机概念描述 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="1.虚拟机概念虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
-<meta name="keywords" content="博客,java虚拟机,java">
+<meta name="keywords" content="博客,java,java虚拟机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM虚拟机概念描述">
 <meta property="og:url" content="http://yoursite.com/2018/10/21/JVM/index.html">
@@ -17,7 +17,7 @@
 <meta property="og:description" content="1.虚拟机概念虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2018/10/21/JVM/1.jpg">
-<meta property="og:updated_time" content="2018-11-21T12:58:23.187Z">
+<meta property="og:updated_time" content="2019-01-14T12:04:10.900Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM虚拟机概念描述">
 <meta name="twitter:description" content="1.虚拟机概念虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。">
@@ -190,66 +190,69 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><strong> 1.虚拟机概念</strong><br>虚拟机就是一台虚拟的机器，可以分为系统虚拟机和程序虚拟机两种，系统虚拟机是一个完成的操作系统的软件平台; 程序虚拟机就是为 执行单个计算机程序而设计的，比较著名的就是java虚拟机。 常用的系统虚拟机 ：visual Box、vmware； 常用的 java程序虚拟机： classic、hotsport等。<br><a id="more"></a></p>
-<p><img src="/2018/10/21/JVM/1.jpg" alt="在这里插入图片描述"></p>
-<p><strong>2. JVM运行分区概念</strong></p>
+<p><strong>2. java虚拟机基本概念了解（基于JDK1.7）</strong><br><img src="/2018/10/21/JVM/1.jpg" alt="在这里插入图片描述"></p>
 <ul>
-<li>类加载器：<blockquote>
+<li><p>类加载器：</p>
+<blockquote>
 <p>负责从文件系统中或者网络中加载类和接口信息并赋予唯一的名字，加载的c信息都放到了方法区的空间，</p>
+</blockquote>
+<ul>
+<li>Java堆<blockquote>
+<p>在java虚拟机启动时建立java堆，几乎所有对象实例都放在java堆中，它是线程共享的，Heap中的对象的内存需要等待GC进行回收。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Java虚拟机栈</p>
+<blockquote>
+<p> 线程私有内存空间，有局部变量、操作数帧和帧数据区<br> 局部变量：报错函数的参数局部变量<br> 操作数帧：保存中间结果<br> 帧数据区：返回结果异常，异常处理表，方便异常时找到异常代码<br> 每个方法在执行时都会创建一个栈帧用于储存局部变量表、操作数帧、动态链接、方法出口等信息。每个方法从调用直至到执行完成的过程，就对应着一个栈帧在虚拟机栈中入栈到出栈的过程。如果请求的栈的深度大于虚拟机所允许的深度就会抛出stackOverflowError异常(递归调用，递归不是马上返回而是一层层保存，满足添加后才一层层返回)，虚拟机栈在动态扩展无法申请到足够的内存就会报outOfMemoryError异常</p>
 </blockquote>
 </li>
 </ul>
 <ul>
-<li><p>Java堆</p>
-<blockquote>
-<p>在java虚拟机启动时建立java堆，几乎所有对象实例都放在java堆中，它是线程共享的，Heap中的对象的内存需要等待GC进行回收。</p>
-</blockquote>
-</li>
-<li><p>Java栈</p>
-<blockquote>
-<p> 线程私有内存空间，有局部变量、操作数帧和帧数据区<br> 局部变量：报错函数的参数局部变量<br> 操作数帧：保存中间结果<br> 帧数据区：返回结果异常，异常处理表，方便异常时找到异常代码<br>每个方法在执行时都会创建一个栈帧用于储存局部变量表、操作数帧、动态链接、方法出口等信息。每个方法从调用直至到执行完成的过程，就对应着一个栈帧在虚拟机栈中入栈到出栈的过程。<br>如果请求的栈的深度大于虚拟机所允许的深度就会抛出stackOverflowError异常(递归调用，递归不是马上返回而是一层层保存，满足添加后才一层层返回)，虚拟机栈在动态扩展无法申请到足够的内存就会报outOfMemoryError异常</p>
-</blockquote>
-</li>
-<li><p>方法区</p>
+<li><p>方法区(永久代，1.8被元数据区替换)</p>
 <blockquote>
 <p> 存放类信息、类的方法、常量信息、常量池信息还有字符串和数字常量，在一定的条件下它也会被GC，当方法区域需要使用的内存超过其允许的大小时，会抛出OutOfMemory的错误信息。方法区理解为永久区时线程共享的区域。</p>
 </blockquote>
-</li>
+<ul>
 <li><p>本地方法栈</p>
 <blockquote>
 <p>  依赖于本地方法的实现，如某个JVM实现的本地方法借口使用C连接模型，则本地方法栈就是C栈，可以说某线程在调用本地方法时，就进入了一个不受JVM限制的领域，也就是JVM可以利用本地方法来动态扩展本身。</p>
 </blockquote>
 </li>
-</ul>
-<ul>
-<li>pc寄存器<blockquote>
+<li><p>pc寄存器</p>
+<blockquote>
 <p>每一个线程都有它自己的PC寄存器，也是该线程启动时创建的。PC寄存器的内容总是指向下一条将被执行指令的饿地址，这里的地址可以是一个本地指针，也可以是在方法区中相对应于该方法起始指令的偏移量。<br>若thread执行Java方法，则PC保存下一条执行指令的地址。若thread执行native方法，则Pc的值为undefined</p>
 </blockquote>
 </li>
+<li><p>回收系统</p>
+</li>
 </ul>
-<ul>
-<li>回收系统</li>
+</li>
 </ul>
 <blockquote>
 <p>通常我们说的JVM内存回收总是在指堆内存回收，确实只有堆中的内容是动态申请分配的，所以以上对象的年轻代和年老代都是指的JVM的Heap空间，而持久代则是之前提到的MethodArea，不属于Heap。<br>GC的基本原理：将内存中不再被使用的对象进行回收，GC中用于回收的方法称为收集器，由于GC需要消耗一些资源和时间，Java在对对象的生命周期特征进行分析后，按照新生代、旧生代的方式来对对象进行收集，以尽可能的缩短GC对应用造成的暂停</p>
-</blockquote>
 <ul>
 <li>执行引擎</li>
 </ul>
+</blockquote>
 <blockquote>
 <p>虚拟机的核心就是执行引擎，它负责处理虚拟机的字节码文件，一般是先编译成机器码在执行</p>
 </blockquote>
 <ul>
-<li><p>直接内存</p>
-<blockquote>
+<li>直接内存<blockquote>
 <p> java的NIO库允许java使用直接内存从而提高性能，速度优于java堆。</p>
 </blockquote>
-<p><strong>3.  内存溢出的原理以及处理：OutOfMemoryError</strong></p>
-</li>
-<li><p>OutOfMemoryError： PermGen space（方法区）</p>
 </li>
 </ul>
+<ol start="3">
+<li>内存溢出的原理以及处理：OutOfMemoryError</li>
+</ol>
+<ul>
+<li>OutOfMemoryError： PermGen space（方法区）</li>
+</ul>
 <blockquote>
-<p>【原因】发生这种问题的原意是程序中使用了大量的jar或class，使java虚拟机装载类的空间不够，与Permanent Generation space有关。<br>【解决】解决办法 ：增加java虚拟机中的XX:PermSize和XX:MaxPermSize参数的大小，其中XX:PermSize是初始永久保存区域大 小，XX:MaxPermSize是最大永久保存区域大小。如针对tomcat6.0，在catalina.sh 或catalina.bat文件中一系列环境变量名说明结束处（大约在70行左右） 增加一行： JAVA_OPTS=” -XX:PermSize=64M -XX:MaxPermSize=128m” </p>
+<p>【原因】发生这种问题的原意是程序中使用了大量的jar或class，使java虚拟机装载类的空间不够，与Permanent Generation space有关。<br>【解决】解决办法 ：增加java虚拟机中的XX:PermSize和XX:MaxPermSize参数的大小，其中XX:PermSize是初始永久保存区域大 小，XX:MaxPermSize是最大永久保存区域大小。如针对tomcat6.0，在catalina.sh 或catalina.bat文件中一系列环境变量名说明结束处（大约在70行左右） 增加一行： JAVA_OPTS=” -XX:PermSize=64M -XX:MaxPermSize=128m”<br>//Jdk1.8 元数据区设置：<br>-XX:MetaspaceSize=8m<br>-XX:MaxMetaspaceSize=50m</p>
 </blockquote>
 <ul>
 <li>OutOfMemoryError：Java heap space（堆内存）</li>
@@ -268,6 +271,13 @@
 </ul>
 <blockquote>
 <p>【原因】：这也内存溢出错误的一种，即线程栈的溢出，要么是方法调用层次过多（比如存在无限递归调用），要么是线程栈太小。<br>【解决】：优化程序设计，减少方法调用层次；调整-Xss参数增加线程栈大小。</p>
+</blockquote>
+<p><strong>3.元空间</strong></p>
+<blockquote>
+<p>在jdk1.8中，永久代已经不存在，存储的类信息、编译后的代码数据等已经移动到了元空间（MetaSpace）中，元空间并没有处于堆内存上，而是直接占用的本地内存（NativeMemory）。</p>
+</blockquote>
+<blockquote>
+<p>元空间的本质和永久代类似，都是对JVM规范中方法区的实现。不过元空间与永久代之间最大的区别在于：元空间并不在虚拟机中，而是使用本地内存。因此，默认情况下，元空间的大小仅受本地内存限制，但可以通过以下参数来指定元空间的大小：<br>　　-XX:MetaspaceSize，初始空间大小，达到该值就会触发垃圾收集进行类型卸载，同时GC会对该值进行调整：如果释放了大量的空间，就适当降低该值；如果释放了很少的空间，那么在不超过MaxMetaspaceSize时，适当提高该值。<br>　　-XX:MaxMetaspaceSize，最大空间，默认是没有限制的。<br>　　除了上面两个指定大小的选项以外，还有两个与 GC 相关的属性：<br>　　-XX:MinMetaspaceFreeRatio，在GC之后，最小的Metaspace剩余空间容量的百分比，减少为分配空间所导致的垃圾收集<br>　　-XX:MaxMetaspaceFreeRatio，在GC之后，最大的Metaspace剩余空间容量的百分比，减少为释放空间所导致的垃圾收集 </p>
 </blockquote>
 
       
@@ -317,11 +327,11 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">java虚拟机</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">java虚拟机</a>
         		</li>
       		
 		</ul>
@@ -571,7 +581,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">java虚拟机</a>
+                <a href="javascript:void(0)" class="js-tag color1">maven</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,19 +601,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">HTTP/TCP</a>
+                <a href="javascript:void(0)" class="js-tag color3">java虚拟机</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">httpClient</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">maven</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">profiles</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -615,6 +625,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">poi</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
@@ -627,7 +641,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">poi</a>
+                <a href="javascript:void(0)" class="js-tag color4">HTTP/TCP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -655,7 +669,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
+                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -663,7 +677,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -675,7 +693,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
+                <a href="javascript:void(0)" class="js-tag color2">线程同步工具</a>
               </li>
              
               <li class="article-tag-list-item">

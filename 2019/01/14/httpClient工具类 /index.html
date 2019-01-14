@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: nginx | KeepGoing博客</title>
+  <title>httpClient请求工具类 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="KeepGoing博客">
-<meta property="og:url" content="http://yoursite.com/tags/nginx/index.html">
+  <meta name="description" content="概念 httpClient区分">
+<meta name="keywords" content="博客,java,httpClient">
+<meta property="og:type" content="article">
+<meta property="og:title" content="httpClient请求工具类">
+<meta property="og:url" content="http://yoursite.com/2019/01/14/httpClient工具类 /index.html">
 <meta property="og:site_name" content="KeepGoing博客">
+<meta property="og:description" content="概念 httpClient区分">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-14T12:06:45.125Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KeepGoing博客">
+<meta name="twitter:title" content="httpClient请求工具类">
+<meta name="twitter:description" content="概念 httpClient区分">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -157,36 +162,93 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-httpClient工具类 " class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/21/nginx/" class="archive-article-date">
-  	<time datetime="2018-11-21T12:31:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-21</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/21/nginx/">nginx详解</a>
+    <h1 class="article-title" itemprop="name">
+      httpClient请求工具类
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2019/01/14/httpClient工具类 /" class="archive-article-date">
+  	<time datetime="2019-01-14T11:54:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-14</time>
+</a>
+		
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+        
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>  <strong> 概念 httpClient区分</strong><br>   <a id="more"></a><br>HttpComponent 是 apache-commons区别：在apache的官网上下载httpclient的jar包时，会发现它是在一个叫HttpComponent的项目下，这个HttpComponent是apache的顶级项目。而以前的commons的那三个包都是commons的项目下，原来，commons-httpclient 是 apache-commons 项目下的一个子项目，后来被 HttpComponents 取代.<br><strong>2. HttpComponents 各个版本使用方法</strong></p>
+<blockquote>
+<p>2.使用流程：</p>
+<ol>
+<li>创建HttpClient对象。</li>
+<li>创建请求方法的实例，并指定请求URL。如果需要发送GET请求，创建HttpGet对象；如果需要发送POST请求，创建HttpPost对象。</li>
+<li>如果需要发送请求参数，可调用HttpGet、HttpPost共同的setParams(HetpParams params)方法来添加请求参数；对于HttpPost对象而言，也可调用setEntity(HttpEntity entity)方法来设置请求参数。</li>
+<li>调用HttpClient对象的execute(HttpUriRequest request)发送请求，该方法返回一个HttpResponse。</li>
+<li>调用HttpResponse的getAllHeaders()、getHeaders(String name)等方法可获取服务器的响应头；调用HttpResponse的getEntity()方法可获取HttpEntity对象，该对象包装了服务器的响应内容。程序可通过该对象获取服务器的响应内容。</li>
+<li>释放连接。无论执行方法是否成功，都必须释放连接</li>
+</ol>
+</blockquote>
+<p>httpclient3.x<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">HttpClient client = new HttpClient();</span><br><span class="line">// 设置代理服务器地址和端口</span><br><span class="line">// client.getHostConfiguration().setProxy(&quot;proxy_host_addr&quot;,proxy_port);</span><br><span class="line">// 使用 GET 方法 ，如果服务器需要通过 HTTPS 连接，那只需要将下面 URL 中的 http 换成 https</span><br><span class="line">HttpMethodmethod = new GetMethod(&quot;http://java.sun.com&quot;);</span><br><span class="line">// 使用POST方法</span><br><span class="line">// HttpMethod method = new PostMethod(&quot;http://java.sun.com&quot;);</span><br><span class="line">client.executeMethod(method);</span><br><span class="line">// 打印服务器返回的状态</span><br><span class="line">System.out.println(method.getStatusLine());</span><br><span class="line">// 打印返回的信息</span><br><span class="line">System.out.println(method.getResponseBodyAsString());</span><br><span class="line">// 释放连接</span><br><span class="line">method.releaseConnection();</span><br></pre></td></tr></table></figure></p>
+<p>httpclient4.x到httpclient4.3以下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> public void getUrl(String url, String encoding) throws ClientProtocolException, IOException &#123;</span><br><span class="line">HttpClient client = new DefaultHttpClient();</span><br><span class="line">HttpGet get = new HttpGet(url);</span><br><span class="line">HttpResponse response = client.execute(get);</span><br><span class="line">HttpEntity entity = response.getEntity();</span><br><span class="line">if (entity != null) &#123;</span><br><span class="line">InputStream instream = entity.getContent();</span><br><span class="line">try &#123;</span><br><span class="line">BufferedReader reader = new BufferedReader(new InputStreamReader(instream, encoding));</span><br><span class="line">System.out.println(reader.readLine());</span><br><span class="line">&#125; catch (Exception e) &#123;</span><br><span class="line">e.printStackTrace();</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">instream.close();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">// 关闭连接.</span><br><span class="line">client.getConnectionManager().shutdown();</span><br></pre></td></tr></table></figure></p>
+<p>httpclient4.3以上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">import org.apache.http.HttpEntity;</span><br><span class="line">import org.apache.http.HttpResponse;</span><br><span class="line">import org.apache.http.client.methods.HttpGet;</span><br><span class="line">import org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line">import org.apache.http.impl.client.HttpClients;</span><br><span class="line">import org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public static String getResult(String urlStr) &#123;</span><br><span class="line">CloseableHttpClient httpClient = HttpClients.createDefault();</span><br><span class="line">// HTTP Get请求</span><br><span class="line">HttpGet httpGet = new HttpGet(urlStr);</span><br><span class="line">// 设置请求和传输超时时间</span><br><span class="line">// RequestConfig requestConfig =</span><br><span class="line">// RequestConfig.custom().setSocketTimeout(TIME_OUT).setConnectTimeout(TIME_OUT).build();</span><br><span class="line">// httpGet.setConfig(requestConfig);</span><br><span class="line">String res = &quot;&quot;;</span><br><span class="line">try &#123;</span><br><span class="line">// 执行请求</span><br><span class="line">HttpResponse getAddrResp = httpClient.execute(httpGet);</span><br><span class="line">HttpEntity entity = getAddrResp.getEntity();</span><br><span class="line">if (entity != null) &#123;</span><br><span class="line">res = EntityUtils.toString(entity);</span><br><span class="line">&#125;</span><br><span class="line">log.info(&quot;响应&quot; + getAddrResp.getStatusLine());</span><br><span class="line">&#125; catch (Exception e) &#123;</span><br><span class="line">log.error(e.getMessage(), e);</span><br><span class="line">return res;</span><br><span class="line">&#125; finally &#123;</span><br><span class="line">try &#123;</span><br><span class="line">httpClient.close();</span><br><span class="line">&#125; catch (IOException e) &#123;</span><br><span class="line">log.error(e.getMessage(), e);</span><br><span class="line">return res;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>3.commons-httpclient 用法（线程安全）</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">//改完后多线程请求方式</span><br><span class="line">          connectionManager = new MultiThreadedHttpConnectionManager();</span><br><span class="line">          HttpConnectionManagerParams params = connectionManager.getParams();</span><br><span class="line">          params.setConnectionTimeout(60000);</span><br><span class="line">          params.setSoTimeout(60000);</span><br><span class="line">          params.setDefaultMaxConnectionsPerHost(32);</span><br><span class="line">        httpClient = new HttpClient(connectionManager);</span><br><span class="line">        httpClient.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, &quot;UTF-8&quot;);</span><br><span class="line">        //设置http版本协议</span><br><span class="line">        httpClient.getParams().setVersion(HttpVersion.HTTP_1_0);</span><br><span class="line">        //现在使用的请求方式</span><br><span class="line">          //HttpClientParams httpClientParams = new HttpClientParams();</span><br><span class="line">          //httpClientParams.setVersion(HttpVersion.HTTP_1_0);</span><br><span class="line">          /*if (httpClient == null) &#123;</span><br><span class="line">               httpClient = new HttpClient(httpClientParams);</span><br><span class="line">          &#125;*/</span><br><span class="line">          //httpClient.getHostConfiguration().setProxy(&quot;127.0.0.1&quot;, 8888);</span><br><span class="line">          /*httpClient.getHttpConnectionManager().getParams()</span><br><span class="line">                   .setConnectionTimeout(60000);</span><br><span class="line">          httpClient.getHttpConnectionManager().getParams().setSoTimeout(60000);*/</span><br><span class="line">          //在使用httpClient客户端工具时，需要设置标红颜色的属性，否则就会出现Connection is not open 这个异</span><br><span class="line">          httpClient.getHttpConnectionManager().getParams().setDefaultMaxConnectionsPerHost(32);</span><br><span class="line">          httpClient.getHttpConnectionManager().getParams().setMaxTotalConnections(256);</span><br><span class="line">          logger.info(&quot;HTTP 发送请求开始&quot;);</span><br><span class="line">          PostMethodUtil tProcPost = new PostMethodUtil(cUrlStr);</span><br><span class="line">          tProcPost.setRequestHeader(&quot;Connection&quot;, &quot;close&quot;);</span><br><span class="line">          Set tKeySet = cParamMap.keySet();</span><br><span class="line">          for (Iterator i$ = tKeySet.iterator(); i$.hasNext();) &#123;</span><br><span class="line">              Object tKey = i$.next();</span><br><span class="line">              String tKeyValue = String.valueOf(tKey);</span><br><span class="line">              String tValue = (String) cParamMap.get(tKeyValue);</span><br><span class="line">              if (tValue == null) &#123;</span><br><span class="line">                   tValue = &quot;&quot;;</span><br><span class="line">              &#125;</span><br><span class="line">              tProcPost.addParameter(tKeyValue, tValue);</span><br><span class="line">          &#125;</span><br><span class="line">          logger.info(&quot;HTTP 请求开始&quot;);</span><br><span class="line">          int tStatusCode = httpClient.executeMethod(tProcPost);</span><br><span class="line">          logger.info(new StringBuilder().append(&quot;HTTP 返回状态码：&quot;)</span><br><span class="line">                   .append(tStatusCode).toString());</span><br><span class="line">          InputStream tResInputStream = null;</span><br><span class="line">          StringBuffer tHtml = new StringBuffer();</span><br><span class="line">          try &#123;</span><br><span class="line">              tResInputStream = tProcPost.getResponseBodyAsStream();</span><br><span class="line">              BufferedReader tReader = new BufferedReader(new InputStreamReader(</span><br><span class="line">                        tResInputStream, cCharsetType));</span><br><span class="line">              String tTempBf = null;</span><br><span class="line">              while ((tTempBf = tReader.readLine()) != null) &#123;</span><br><span class="line">                   tHtml.append(tTempBf);</span><br><span class="line">              &#125;</span><br><span class="line">          &#125; catch (IOException e) &#123;</span><br><span class="line">              e.printStackTrace();</span><br><span class="line">          &#125; finally &#123;</span><br><span class="line">              if (tResInputStream != null) &#123;</span><br><span class="line">                   tResInputStream.close();</span><br><span class="line">              &#125;</span><br><span class="line">              if (tProcPost != null) &#123;</span><br><span class="line">                   tProcPost.releaseConnection();</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          logger.info(&quot;HTTP 请求结束&quot;);</span><br><span class="line">          logger.info(&quot;http请求消息头=&quot; + tProcPost.getRequestHeaders());</span><br><span class="line">          return new String(tHtml.toString().getBytes(cCharsetType), cCharsetType);</span><br></pre></td></tr></table></figure>
+<p><strong>4. HttpComponent 用法（线程安全）</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">public static  String httpPostMap(String Url, Map&lt;String,String&gt; map)&#123;</span><br><span class="line">         //创建线程安全的链接管理</span><br><span class="line">         PoolingHttpClientConnectionManager poolConnectionManager = new PoolingHttpClientConnectionManager();</span><br><span class="line">         poolConnectionManager.setMaxTotal(1000);</span><br><span class="line">         //使用httpClient创建实例 CloseableHttpClient</span><br><span class="line">        CloseableHttpClient httpClient = HttpClients.custom()</span><br><span class="line">                .setConnectionManager(poolConnectionManager)</span><br><span class="line">                .build();</span><br><span class="line">        //获取httpClient连接实例</span><br><span class="line">        //CloseableHttpClient httpClient= HttpClients.createDefault();</span><br><span class="line">        //初始化请求方式</span><br><span class="line">        HttpPost httpPost=new HttpPost(Url);</span><br><span class="line">        //设置协议号</span><br><span class="line">        httpPost.setProtocolVersion(HttpVersion.HTTP_1_0);</span><br><span class="line">        //设置参数发送</span><br><span class="line">         List&lt;NameValuePair&gt; pairs = new ArrayList&lt;NameValuePair&gt;();</span><br><span class="line">         for(Map.Entry&lt;String,String&gt; entry : map.entrySet())             &#123;</span><br><span class="line">             pairs.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));</span><br><span class="line">         &#125;</span><br><span class="line">        //转换参数并设置编码格式</span><br><span class="line">        httpPost.setEntity(new UrlEncodedFormEntity(pairs, Consts.UTF_8));</span><br><span class="line">        //设置超时间</span><br><span class="line">        RequestConfig requestConfig=RequestConfig.custom().setSocketTimeout(6000).setConnectTimeout(60000).build();</span><br><span class="line">        httpPost.setConfig(requestConfig);</span><br><span class="line">        String res=&quot;&quot;;</span><br><span class="line">        CloseableHttpResponse resp=null;</span><br><span class="line">        try &#123;</span><br><span class="line">            //开始请求</span><br><span class="line">           resp=httpClient.execute(httpPost);</span><br><span class="line">            HttpEntity httpEntity= resp.getEntity();</span><br><span class="line">            if(httpEntity!=null)&#123;</span><br><span class="line">                 res= EntityUtils.toString(httpEntity);</span><br><span class="line">                System.out.println(&quot;响应码：&quot;+resp.getStatusLine()+&quot; 响应信息：&quot;+res);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;finally &#123;</span><br><span class="line">            //释放连接</span><br><span class="line">            try &#123;</span><br><span class="line">                if(resp!=null)&#123;</span><br><span class="line">                    resp.close();</span><br><span class="line">                &#125;</span><br><span class="line">                if(httpPost!=null)&#123;</span><br><span class="line">                    httpPost.releaseConnection();</span><br><span class="line">                &#125;</span><br><span class="line">                httpClient.close();</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>4. Content-Type</strong> </p>
+<blockquote>
+<p>Http Header里的Content-Type一般有这三种：<br>application/x-www-form-urlencoded：数据被编码为名称/值对。这是标准的编码格式。<br>multipart/form-data： 数据被编码为一条消息，页上的每个控件对应消息中的一个部分。<br>text/plain： 数据以纯文本形式(text/json/xml/html)进行编码，其中不含任何控件或格式字符。postman软件里标的是RAW。<br>form的enctype属性为编码方式，常用有两种：application/x-www-form-urlencoded和multipart/form-data，默认为application/x-www-form-urlencoded。<br>当action为get时候，浏览器用x-www-form-urlencoded的编码方式把form数据转换成一个字串（name1=value1&amp;name2=value2…），然后把这个字串追加到url后面，用?分割，加载这个新的url。<br>当action为post时候，浏览器把form数据封装到http body中，然后发送到server。 如果没有type=file的控件，用默认的application/x-www-form-urlencoded就可以了。 但是如果有type=file的话，就要用到multipart/form-data了。<br>当action为post且Content-Type类型是multipart/form-data，浏览器会把整个表单以控件为单位分割，并为每个部分加上Content-Disposition(form-data或者file),Content-Type(默认为text/plain),name(控件name)等信息，并加上分割符(boundary)。</p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhi.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wei.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -200,25 +262,142 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nginx</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">httpClient</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
 
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/01/14/httpClient工具类 /" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/01/02/JSAPI/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">微信公众号支付</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2019/01/14/httpClient工具类 /",
+  owner: 'p180j',
+  repo: 'p180j.github.io',
+  oauth: {
+    client_id: 'f08733074182ded4e7c9',
+    client_secret: '895c5e5cbe5c2b1a98371e8628457b5cc7f33707',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -250,9 +429,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

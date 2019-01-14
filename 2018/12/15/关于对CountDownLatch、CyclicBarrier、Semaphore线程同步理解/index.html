@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: nginx | KeepGoing博客</title>
+  <title>线程同步工具详解 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="KeepGoing博客">
-<meta property="og:url" content="http://yoursite.com/tags/nginx/index.html">
+  <meta name="description" content="概念描述以及代码理解">
+<meta name="keywords" content="博客,java,线程同步工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程同步工具详解">
+<meta property="og:url" content="http://yoursite.com/2018/12/15/关于对CountDownLatch、CyclicBarrier、Semaphore线程同步理解/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
+<meta property="og:description" content="概念描述以及代码理解">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-14T12:06:52.434Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KeepGoing博客">
+<meta name="twitter:title" content="线程同步工具详解">
+<meta name="twitter:description" content="概念描述以及代码理解">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -157,36 +162,109 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-关于对CountDownLatch、CyclicBarrier、Semaphore线程同步理解" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/11/21/nginx/" class="archive-article-date">
-  	<time datetime="2018-11-21T12:31:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-21</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/11/21/nginx/">nginx详解</a>
+    <h1 class="article-title" itemprop="name">
+      线程同步工具详解
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/12/15/关于对CountDownLatch、CyclicBarrier、Semaphore线程同步理解/" class="archive-article-date">
+  	<time datetime="2018-12-15T14:13:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-15</time>
+</a>
+		
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+        
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>  概念描述以及代码理解</strong><br>   <a id="more"></a></p>
+<p> <strong>1. CountDownLatch（闭锁）</strong></p>
+<blockquote>
+<p>出现再JDK1.5中，主要是使一个线程A或是组线程A等待其它线程执行完毕后，一个线程A或是组线程A才继续执行，可以实现线程组同步运行，并在所有线程组结束后再运行等待的线程，闭锁的状态是一次性。 例如：主线程等待线程组运行完毕后再执行，是线程组之间的等待。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">public class CountDownLatchTest &#123;</span><br><span class="line"></span><br><span class="line">    // 模拟了100米赛跑，10名选手已经准备就绪，只等裁判一声令下。当所有人都到达终点时，比赛结束。</span><br><span class="line">    public static void main(String[] args) throws InterruptedException &#123;</span><br><span class="line"></span><br><span class="line">        // 开始的倒数锁 </span><br><span class="line">        final CountDownLatch begin = new CountDownLatch(1);  </span><br><span class="line"></span><br><span class="line">        // 结束的倒数锁 </span><br><span class="line">        final CountDownLatch end = new CountDownLatch(10);  </span><br><span class="line"></span><br><span class="line">        // 十名选手 </span><br><span class="line">        final ExecutorService exec = Executors.newFixedThreadPool(10);  </span><br><span class="line"></span><br><span class="line">        for (int index = 0; index &lt; 10; index++) &#123;</span><br><span class="line">            final int NO = index + 1;  </span><br><span class="line">            Runnable run = new Runnable() &#123;</span><br><span class="line">                public void run() &#123;  </span><br><span class="line">                    try &#123;  </span><br><span class="line">                        // 如果当前计数为零，则此方法立即返回。</span><br><span class="line">                        // 等待</span><br><span class="line">                        begin.await();  </span><br><span class="line">                        Thread.sleep((long) (Math.random() * 10000));  </span><br><span class="line">                        System.out.println(&quot;No.&quot; + NO + &quot; arrived&quot;);  </span><br><span class="line">                    &#125; catch (InterruptedException e) &#123;  </span><br><span class="line">                    &#125; finally &#123;  </span><br><span class="line">                        // 每个选手到达终点时，end就减一</span><br><span class="line">                        end.countDown();</span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;;  </span><br><span class="line">            exec.submit(run);</span><br><span class="line">        &#125;  </span><br><span class="line">        System.out.println(&quot;Game Start&quot;);  </span><br><span class="line">        // begin减一，开始游戏</span><br><span class="line">        begin.countDown();  </span><br><span class="line">        // 等待end变为0，即所有选手到达终点</span><br><span class="line">        end.await();  </span><br><span class="line">        System.out.println(&quot;Game Over&quot;);  </span><br><span class="line">        exec.shutdown();  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>  <strong>wait还有一个超时的方法</strong><br>public boolean await(long timeout,<br>                     TimeUnit unit)<br>              throws InterruptedException<br>    使当前线程在锁存器倒计数至零之前一直等待，除非线程被中断或超出了指定的等待时间。如果当前计数为零，则此方法立刻返回 </p>
+<pre><code>1. 在进入此方法时已经设置了该线程的中断状态；或者
+在等待时被中断，则抛出 InterruptedException，并且清除当前线程的已中断状态。
+2. 如果超出了指定的等待时间，则返回值为 false
+</code></pre></blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Game Start</span><br><span class="line">No.9 arrived</span><br><span class="line">No.6 arrived</span><br><span class="line">No.8 arrived</span><br><span class="line">No.7 arrived</span><br><span class="line">No.10 arrived</span><br><span class="line">No.1 arrived</span><br><span class="line">No.5 arrived</span><br><span class="line">No.4 arrived</span><br><span class="line">No.2 arrived</span><br><span class="line">No.3 arrived</span><br><span class="line">Game Over</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>执行过程理解：一共有11个线程，主线程创建并启动10个子线程，然后子线程组再运行的时候被  begin.await()都阻塞了，主线程继续运行到  begin.countDown()时，begin 计数器变成0，  end.await()阻塞主线程，10个子线程继续运行，因为begin 计数器成0，就不会被阻塞了，等10个子线程执行完毕（end计数器减一），end为0时，end.await()执行后面的代码，执行流程结束。</p>
+</blockquote>
+<p> <strong>2.CyclicBarrier（循环屏障）</strong></p>
+<blockquote>
+<p>主要是一组线程使用await()方法之后，线程就处于barrier状态了，当所有线程都到达各自的barrier后，再同时执行各自barrier下面的代码，是线程之间的互相等待。例如：团队旅游，一个团队通常分为几组，每组人走的路线可能不同，但都需要到达某一地点等待团队其它成员到达后才能进行下一站，是线程组内间的等待。</p>
+</blockquote>
+<ul>
+<li>CyclicBarrier提供的方法有：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">——CyclicBarrier(parties)</span><br><span class="line"></span><br><span class="line">初始化相互等待的线程数量的构造方法。</span><br><span class="line"></span><br><span class="line">——CyclicBarrier(parties,Runnable barrierAction)</span><br><span class="line"></span><br><span class="line">初始化相互等待的线程数量以及屏障线程的构造方法。</span><br><span class="line"></span><br><span class="line">屏障线程的运行时机：等待的线程数量=parties之后，CyclicBarrier打开屏障之前。</span><br><span class="line"></span><br><span class="line">举例：在分组计算中，每个线程负责一部分计算，最终这些线程计算结束之后，交由屏障线程进行汇总计算。</span><br><span class="line"></span><br><span class="line">——getParties()</span><br><span class="line"></span><br><span class="line">获取CyclicBarrier打开屏障的线程数量，也成为方数。</span><br><span class="line"></span><br><span class="line">——getNumberWaiting()</span><br><span class="line"></span><br><span class="line">获取正在CyclicBarrier上等待的线程数量。</span><br><span class="line"></span><br><span class="line">——await()</span><br><span class="line"></span><br><span class="line">在CyclicBarrier上进行阻塞等待，直到发生以下情形之一：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在CyclicBarrier上等待的线程数量达到parties，则所有线程被释放，继续执行。</span><br><span class="line">当前线程被中断，则抛出InterruptedException异常，并停止等待，继续执行。</span><br><span class="line">其他等待的线程被中断，则当前线程抛出BrokenBarrierException异常，并停止等待，继续执行。</span><br><span class="line">其他等待的线程超时，则当前线程抛出BrokenBarrierException异常，并停止等待，继续执行。</span><br><span class="line">其他线程调用CyclicBarrier.reset()方法，则当前线程抛出BrokenBarrierException异常，并停止等待，继续执行。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"> //构造函数1：初始化-开启屏障的方数</span><br><span class="line">CyclicBarrier barrier0 = new CyclicBarrier(2);</span><br><span class="line">//通过barrier.getParties()获取开启屏障的方数</span><br><span class="line">LOGGER.info(&quot;barrier.getParties()获取开启屏障的方数：&quot; + barrier0.getParties());</span><br><span class="line">System.out.println();</span><br><span class="line">//通过barrier.getNumberWaiting()获取正在等待的线程数</span><br><span class="line">LOGGER.info(&quot;通过barrier.getNumberWaiting()获取正在等待的线程数：初始----&quot; + barrier0.getNumberWaiting());</span><br><span class="line">System.out.println();</span><br><span class="line">new Thread(() -&gt; &#123;</span><br><span class="line">    //添加一个等待线程</span><br><span class="line">    LOGGER.info(&quot;添加第1个等待线程----&quot; + Thread.currentThread().getName());</span><br><span class="line">    try &#123;</span><br><span class="line">        barrier0.await();</span><br><span class="line">        LOGGER.info(Thread.currentThread().getName() + &quot; is running...&quot;);</span><br><span class="line">    &#125; catch (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; catch (BrokenBarrierException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    LOGGER.info(Thread.currentThread().getName() + &quot; is terminated.&quot;);</span><br><span class="line">&#125;).start();</span><br><span class="line">Thread.sleep(10);</span><br><span class="line">//通过barrier.getNumberWaiting()获取正在等待的线程数</span><br><span class="line">LOGGER.info(&quot;通过barrier.getNumberWaiting()获取正在等待的线程数：添加第1个等待线程---&quot; + barrier0.getNumberWaiting());</span><br><span class="line">Thread.sleep(10);</span><br><span class="line">System.out.println();</span><br><span class="line">new Thread(() -&gt; &#123;</span><br><span class="line">    //添加一个等待线程</span><br><span class="line">    LOGGER.info(&quot;添加第2个等待线程----&quot; + Thread.currentThread().getName());</span><br><span class="line">    try &#123;</span><br><span class="line">        barrier0.await();</span><br><span class="line">        LOGGER.info(Thread.currentThread().getName() + &quot; is running...&quot;);</span><br><span class="line">    &#125; catch (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; catch (BrokenBarrierException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    LOGGER.info(Thread.currentThread().getName() + &quot; is terminated.&quot;);</span><br><span class="line">&#125;).start();</span><br><span class="line">Thread.sleep(100);</span><br><span class="line">System.out.println();</span><br><span class="line">//通过barrier.getNumberWaiting()获取正在等待的线程数</span><br><span class="line">LOGGER.info(&quot;通过barrier.getNumberWaiting()获取正在等待的线程数：打开屏障之后---&quot; + barrier0.getNumberWaiting());</span><br><span class="line"></span><br><span class="line">//已经打开的屏障，再次有线程等待的话，还会重新生效--视为循环</span><br><span class="line">new Thread(() -&gt; &#123;</span><br><span class="line">    LOGGER.info(&quot;屏障打开之后，再有线程加入等待：&quot; + Thread.currentThread().getName());</span><br><span class="line">    try &#123;</span><br><span class="line">        //BrokenBarrierException</span><br><span class="line">        barrier0.await();</span><br><span class="line">    &#125; catch (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; catch (BrokenBarrierException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    LOGGER.info(Thread.currentThread().getName() + &quot; is terminated.&quot;);</span><br><span class="line"></span><br><span class="line">&#125;).start();</span><br><span class="line">System.out.println();</span><br><span class="line">Thread.sleep(10);</span><br><span class="line">LOGGER.info(&quot;通过barrier.getNumberWaiting()获取正在等待的线程数：打开屏障之后---&quot; + barrier0.getNumberWaiting());</span><br><span class="line">Thread.sleep(10);</span><br><span class="line">new Thread(() -&gt; &#123;</span><br><span class="line">    LOGGER.info(&quot;屏障打开之后，再有线程加入等待：&quot; + Thread.currentThread().getName());</span><br><span class="line">    try &#123;</span><br><span class="line">        //BrokenBarrierException</span><br><span class="line">        barrier0.await();</span><br><span class="line">    &#125; catch (InterruptedException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125; catch (BrokenBarrierException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    LOGGER.info(Thread.currentThread().getName() + &quot; is terminated.&quot;);</span><br><span class="line"></span><br><span class="line">&#125;).start();</span><br><span class="line">Thread.sleep(10);</span><br><span class="line">LOGGER.info(&quot;通过barrier.getNumberWaiting()获取正在等待的线程数：打开屏障之后---&quot; + barrier0.getNumber</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">2018-04-01 13:27:55 INFO - barrier.getParties()获取开启屏障的方数：2</span><br><span class="line"></span><br><span class="line">2018-04-01 13:27:55 INFO - 通过barrier.getNumberWaiting()获取正在等待的线程数：初始----0</span><br><span class="line"></span><br><span class="line">2018-04-01 13:27:55 INFO - 添加第1个等待线程----Thread-0</span><br><span class="line">2018-04-01 13:27:55 INFO - 通过barrier.getNumberWaiting()获取正在等待的线程数：添加第1个等待线程---1</span><br><span class="line"></span><br><span class="line">2018-04-01 13:27:55 INFO - 添加第2个等待线程----Thread-1</span><br><span class="line">2018-04-01 13:27:55 INFO - Thread-1 is running...</span><br><span class="line">2018-04-01 13:27:55 INFO - Thread-0 is running...</span><br><span class="line">2018-04-01 13:27:55 INFO - Thread-1 is terminated.</span><br><span class="line">2018-04-01 13:27:55 INFO - Thread-0 is terminated.</span><br><span class="line"></span><br><span class="line">2018-04-01 13:27:55 INFO - 通过barrier.getNumberWaiting()获取正在等待的线程数：打开屏障之后---0</span><br><span class="line"></span><br><span class="line">2018-04-01 13:27:55 INFO - 屏障打开之后，再有线程加入等待：Thread-2</span><br><span class="line">2018-04-01 13:27:55 INFO - 通过barrier.getNumberWaiting()获取正在等待的线程数：打开屏障之后---1</span><br><span class="line">2018-04-01 13:27:55 INFO - 屏障打开之后，再有线程加入等待：Thread-3</span><br><span class="line">2018-04-01 13:27:55 INFO - Thread-3 is terminated.</span><br><span class="line">2018-04-01 13:27:55 INFO - Thread-2 is terminated.</span><br><span class="line">2018-04-01 13:27:55 INFO - 通过barrier.getNumberWaiting()获取正在等待的线程数：打开屏障之后---0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>熟悉reset()的用法</li>
+</ul>
+<blockquote>
+<p>如果是一个初始的CyclicBarrier，则reset()之后，什么也不会发生，如果在等待过程中，执行reset()方法，等待的线程跑出BrokenBarrierException异常，并不再等待。</p>
+</blockquote>
+<p> <strong>3. Semaphore （信号量）</strong></p>
+<blockquote>
+<p>是用来控制同时访问特定资源的线程数量，它通过协调各个线程，以保证合理的使用公共资源，这个理解应该不难。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">package javalearning;</span><br><span class="line"></span><br><span class="line">import java.util.Random;</span><br><span class="line">import java.util.concurrent.ExecutorService;</span><br><span class="line">import java.util.concurrent.Executors;</span><br><span class="line">import java.util.concurrent.Semaphore;</span><br><span class="line"></span><br><span class="line">public class SemaphoreDemo &#123;</span><br><span class="line">	private Semaphore smp = new Semaphore(3); </span><br><span class="line">	private Random rnd = new Random();</span><br><span class="line">	</span><br><span class="line">	class TaskDemo implements Runnable&#123;</span><br><span class="line">		private String id;</span><br><span class="line">		TaskDemo(String id)&#123;</span><br><span class="line">			this.id = id;</span><br><span class="line">		&#125;</span><br><span class="line">		@Override</span><br><span class="line">		public void run()&#123;</span><br><span class="line">			try &#123;</span><br><span class="line">				smp.acquire();       //获取锁</span><br><span class="line">				System.out.println(&quot;Thread &quot; + id + &quot; is working&quot;);</span><br><span class="line">				Thread.sleep(rnd.nextInt(1000));</span><br><span class="line">				smp.release();       //释放锁</span><br><span class="line">				System.out.println(&quot;Thread &quot; + id + &quot; is over&quot;);</span><br><span class="line">			&#125; catch (InterruptedException e) &#123;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		SemaphoreDemo semaphoreDemo = new SemaphoreDemo();</span><br><span class="line">		//注意我创建的线程池类型，</span><br><span class="line">		ExecutorService se = Executors.newCachedThreadPool();</span><br><span class="line">		se.submit(semaphoreDemo.new TaskDemo(&quot;a&quot;));</span><br><span class="line">		se.submit(semaphoreDemo.new TaskDemo(&quot;b&quot;));</span><br><span class="line">		se.submit(semaphoreDemo.new TaskDemo(&quot;c&quot;));</span><br><span class="line">		se.submit(semaphoreDemo.new TaskDemo(&quot;d&quot;));</span><br><span class="line">		se.submit(semaphoreDemo.new TaskDemo(&quot;e&quot;));</span><br><span class="line">		se.submit(semaphoreDemo.new TaskDemo(&quot;f&quot;));</span><br><span class="line">		se.shutdown();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">运行结果</span><br><span class="line"></span><br><span class="line">Thread c is working</span><br><span class="line"></span><br><span class="line">Thread b is working</span><br><span class="line"></span><br><span class="line">Thread a is working</span><br><span class="line"></span><br><span class="line">Thread c is over</span><br><span class="line"></span><br><span class="line">Thread d is working</span><br><span class="line"></span><br><span class="line">Thread b is over</span><br><span class="line"></span><br><span class="line">Thread e is working</span><br><span class="line"></span><br><span class="line">Thread a is over</span><br><span class="line"></span><br><span class="line">Thread f is working</span><br><span class="line"></span><br><span class="line">Thread d is over</span><br><span class="line"></span><br><span class="line">Thread e is over</span><br><span class="line"></span><br><span class="line">Thread f is over</span><br></pre></td></tr></table></figure>
+<p> 可以看出，最多同时有三个线程并发执行，也可以认为有三个公共资源</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhi.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wei.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -200,25 +278,151 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nginx</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">线程同步工具</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
 
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/12/15/关于对CountDownLatch、CyclicBarrier、Semaphore线程同步理解/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2019/01/02/JSAPI/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          微信公众号支付
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2018/12/15/shiro/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">shiro框架</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    目录，不存在的…
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2018/12/15/关于对CountDownLatch、CyclicBarrier、Semaphore线程同步理解/",
+  owner: 'p180j',
+  repo: 'p180j.github.io',
+  oauth: {
+    client_id: 'f08733074182ded4e7c9',
+    client_secret: '895c5e5cbe5c2b1a98371e8628457b5cc7f33707',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
+  
 
 
           </div>
@@ -250,9 +454,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
