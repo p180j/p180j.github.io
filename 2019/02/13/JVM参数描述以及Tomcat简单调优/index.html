@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2018/4 | KeepGoing博客</title>
+  <title>JVM运行区参数详解 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="KeepGoing博客">
-<meta property="og:url" content="http://yoursite.com/archives/2018/04/index.html">
+  <meta name="description" content="1. 堆内存参数">
+<meta name="keywords" content="博客,java,jvm参数详解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM运行区参数详解">
+<meta property="og:url" content="http://yoursite.com/2019/02/13/JVM参数描述以及Tomcat简单调优/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
+<meta property="og:description" content="1. 堆内存参数">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190121212630248.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190212112548854.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190212112605669.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-02-13T12:00:11.206Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KeepGoing博客">
+<meta name="twitter:title" content="JVM运行区参数详解">
+<meta name="twitter:description" content="1. 堆内存参数">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190121212630248.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -157,74 +166,170 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-JVM参数描述以及Tomcat简单调优" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JVM运行区参数详解
+    </h1>
+  
+
+        
+        <a href="/2019/02/13/JVM参数描述以及Tomcat简单调优/" class="archive-article-date">
+  	<time datetime="2019-02-13T11:51:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-13</time>
+</a>
+		
+		<span class="archive-article-date">
+			阅读量 <span id="busuanzi_value_page_pv"></span>
+		</span>
+        
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-堆内存参数"><a href="#1-堆内存参数" class="headerlink" title="1. 堆内存参数"></a>1. 堆内存参数</h2><a id="more"></a>
+<blockquote>
+<p>在 写参数前，先了解 + 在JVM中表示启用一个功能，— 表示禁用一个功能 ；-XX 对于系统级别的配置，而非 -XX基本对于应用层面上的配置<br><strong>1.1 GC常用参数</strong></p>
+</blockquote>
+<blockquote>
+<p>-XX：+PrintGC  虚拟机启动后，GC打印日志<br>-XX：+UserSerialGC 配置串行回收器<br>-XX：+PrintGCDetails  显示各区的详细日志信息<br>-XX:  +PrintCommandLineFlags  隐性或显性传给虚拟机参数的输出<br><img src="https://img-blog.csdnimg.cn/20190121212630248.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+<p><strong>1.2堆常用参数</strong></p>
+<blockquote>
+<p>-xms   设置JAVA堆启动初始化参数<br>-xmx   JAVA堆最大化内存</p>
+</blockquote>
+<p>新生代的配置：</p>
+<blockquote>
+<p>-xmn 设置新生代的大小，一般为堆得1/3、1/4<br>-XX：SurviorRatio 设置新eden/from 比值 例：-XX：SurviorRatio=2<br>-XX：+NewRatio 老年代/新生代的比值</p>
+</blockquote>
+<p>堆内存溢出日志配置参数(配合使用)：</p>
+<blockquote>
+<p>-XX：+HeapDumpOnOutOfMemorryError<br>-XX：HeapDumpPath=路径/文件名称.dump</p>
+</blockquote>
+<p><strong>1.3 GC回收器描述</strong></p>
+<ul>
+<li>-XX:+UseSerialGC:设置串行收集器<blockquote>
+<p>开启串行回收器:<br>-XX:+UseSerialGC</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>-XX:+UseParallelGC:设置年轻代并行收集器</li>
+</ul>
+<blockquote>
+<p>开启并行回收器：<br>XX:+UseParallelGC<br>此配置仅对年轻代有效。即上述配置下，年轻代使用并发收集，而年老代仍旧使用串行收集。<br>配置并行收集器的线程数：<br>-XX:ParallelGCThreads=20<br>配置并行收集器的线程数，即：同时多少个线程一起进行垃圾回收。此值最好配置与处理器数目相等<br>设置年轻代回收垃圾的最长时间（系统暂停时间）：<br>-XX:MaxGCPauseMillis=100<br>设置每次年轻代垃圾回收的最长时间，如果无法满足此时间，JVM会自动调整年轻代大小，以满足此值<br>自动选择年轻代区大小和相应的Survivor区比例<br>-XX:+UseAdaptiveSizePolicy<br>自动选择年轻代区大小和相应的Survivor区比例， 建议使用并行收集器时，一直打开<br>参数配置例如：<br>java -Xmx3800m -Xms3800m -Xmn2g -Xss128k -XX:+UseParallelGC -XX:ParallelGCThreads=20<br>-XX:MaxGCPauseMillis=100</p>
+</blockquote>
+<ul>
+<li>-XX:+UseParalledlOldGC:设置并行年老代收集器</li>
+</ul>
+<blockquote>
+<p>开启老年代并行回收器:<br>-XX:+UseParallelOldGC<br>配置年老代垃圾收集方式为并行收集。JDK6.0支持对年老代并行收集<br>例如：<br>java -Xmx3550m -Xms3550m -Xmn2g -Xss128k -XX:+UseParallelGC -XX:ParallelGCThreads=20 -XX:+UseParallelOldGC</p>
+</blockquote>
+<ul>
+<li>-XX:+UseConcMarkSweepGC:设置并发收集器<blockquote>
+<p>开启老年代并发收集器：<br>-XX:+UseConcMarkSweepGC<br>开启年轻代回收器:<br>-XX:+UseParNewGC:<br>设置年轻代为并行收集。可与CMS收集同时使用。JDK5.0以上，JVM会根据系统配置自行设置，所以无需再设置此值<br>消除空间碎片：<br>-XX:CMSFullGCsBeforeCompaction  内存空间压缩<br>-XX:+UseCMSCompactAtFullCollection  老年代压缩<br>值设置运行多少次GC以后对内存空间进行压缩、整理。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="2-栈内存配置"><a href="#2-栈内存配置" class="headerlink" title="2.栈内存配置"></a>2.栈内存配置</h2><blockquote>
+<p>JAVA虚拟机是提供了参数，-Xss指定线程的最大栈空间，也直接决定了函数调用的最大深度。</p>
+</blockquote>
+<h2 id="3-方法区和直接内存"><a href="#3-方法区和直接内存" class="headerlink" title="3.方法区和直接内存"></a>3.方法区和直接内存</h2><p>方法区：</p>
+<blockquote>
+<p>-XX：PermSize          设置初始化内存<br>-XX：MaxPermSize   设置最大内存</p>
+</blockquote>
+<p>直接内存（不必设置）：</p>
+<blockquote>
+<p>-XX：MaxDirectMemorySize  设置最大内存</p>
+</blockquote>
+<h2 id="4-垃圾回收和算法"><a href="#4-垃圾回收和算法" class="headerlink" title="4.垃圾回收和算法"></a>4.垃圾回收和算法</h2><p>概念：</p>
+<blockquote>
+<p>垃圾回收（Grabage Collection Gc）,而GC垃圾是指存于内存中的不会在使用的对象。而回收就是相当于把垃圾清空。垃圾回收有很多算法：引用计数器法、标记压缩法、复制算法、分代、分区等。</p>
+</blockquote>
+<p><strong>4.1引用计数法</strong></p>
+<blockquote>
+<p>核心就是在对象被其它所引用时计数器加1，而医用失效时就减一，但是这种古老的算法无法处理循环医用，比较浪费系统性能</p>
+</blockquote>
+<p><strong>4.2标记清除法</strong></p>
+<blockquote>
+<p>就是分成标记和清除两个阶段进行处理内存中的对象，当然弊端非常大，就是空间碎片问题，不连续的内存空间的工作效率要低于连续的内存空间。</p>
+</blockquote>
+<p><strong>4.3 复制算法</strong></p>
+<blockquote>
+<p>应用在新生代 S0、S1，核心思想就是在内存中空间分成两块，每次只使用其中一块，在垃圾回收时，将正在使用的内存中的对象复制到到未被使用的内存，之后清除原先块中的所有对象</p>
+</blockquote>
+<p><strong>4.4标记压缩法</strong></p>
+<blockquote>
+<p>在标记清除法基础上做了一个优化，把存活的对象压缩到内存中的一端，而后进行垃圾清理（JAVA中老年代就是使用这个算法）<br>问：新生代为啥和老年代算法不一样<br>答：新生代GC回收频率高，对象死亡高</p>
+</blockquote>
+<p><strong>4.5分代算法</strong></p>
+<blockquote>
+<p>根据对象的特点吧内存分成N块，而后根据每个内存的特点使用不同的算法。对于新生代和老年代来说，新生代频率高，没每次耗时间很短，老年代频率低但是耗时长，应该减少GC的次数</p>
+</blockquote>
+<p><strong>4.6分区算法</strong></p>
+<blockquote>
+<p>将内存分成N个小的空间，每个空间都可以独立使用，这样的细粒度的控制一次回收小空间而不是整个空间GC,从而提供性能，并减少停顿时间</p>
+</blockquote>
+<p><strong>4.7 垃圾回收和停顿现象</strong></p>
+<blockquote>
+<p>识别和回收垃圾对象进行内存清理，为了垃圾回收器可以高效的应用，大部分情况下，会要求系统进行一个停顿，终止所有线程没这样才不会产生新的垃圾，同时停顿保持了系统状态在某一瞬间的一致性，更有益的标记垃圾对象</p>
+</blockquote>
+<p><strong>4.8TLAB本地分配缓存</strong></p>
+<blockquote>
+<p>线程专用的分配区域，线程独享，用来避免线程冲突，提高对象分配的效率，对象太大就会直接分配到堆中。<br>-XX：+UseTLAB  启用TLAB<br>-XX：+TLABSize  设置TLAB大小<br>-XX：TLABReFillWasteFraction<br>-XX：+PrintTLAB  查询TLAB<br>-XX：ReSizeTLAB 自调整TLABReFillWasteFraction 大小</p>
+</blockquote>
+<h2 id="5-Tomcat调优"><a href="#5-Tomcat调优" class="headerlink" title="5.Tomcat调优"></a>5.Tomcat调优</h2><p><strong>5.1 jvm层次调优</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">修改TOMCAT_HOME/bin/catalina.sh, 一定加在catalina.bat最前面。</span><br><span class="line">JAVA_OPTS=&quot;-server -Xms800m -Xmx800m -XX:PermSize=512m -XX:MaxPermSize=1024m -XX:MaxNewSize=512m&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="https://img-blog.csdnimg.cn/20190212112548854.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20190212112605669.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>5.2 配置优化</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">修改TOMCAT_HOME/conf/server.xml</span><br><span class="line">原生：</span><br><span class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;  </span><br><span class="line">           connectionTimeout=&quot;20000&quot;  </span><br><span class="line">           redirectPort=&quot;8443&quot; /&gt;  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//1、-----打开Tomcat默认被注释的连接池配置-------------------------</span><br><span class="line">&lt;!--</span><br><span class="line">&lt;Executor name=&quot;tomcatThreadPool&quot; namePrefix=&quot;catalina-exec-&quot;</span><br><span class="line">maxThreads=&quot;150&quot; minSpareThreads=&quot;4&quot;/&gt;</span><br><span class="line">--&gt;</span><br><span class="line"></span><br><span class="line">//2、-----配置Tomcat连接参数------------------------</span><br><span class="line">在Connector中指定使用共享线程池</span><br><span class="line">&lt;Connector port=&quot;8080&quot;   </span><br><span class="line">          protocol=&quot;org.apache.coyote.http11.Http11NioProtocol&quot;   </span><br><span class="line">          maxThreads=&quot;1000&quot;   </span><br><span class="line">          minSpareThreads=&quot;100&quot;   </span><br><span class="line">          acceptCount=&quot;1000&quot;  </span><br><span class="line">          maxConnections=&quot;1000&quot;  </span><br><span class="line">          connectionTimeout=&quot;20000&quot;   </span><br><span class="line">          maxHttpHeaderSize=&quot;8192&quot;  </span><br><span class="line">          tcpNoDelay=&quot;true&quot;  </span><br><span class="line">          compression=&quot;on&quot;  </span><br><span class="line">          compressionMinSize=&quot;2048&quot;  </span><br><span class="line">          disableUploadTimeout=&quot;true&quot;  </span><br><span class="line">          redirectPort=&quot;8443&quot;  </span><br><span class="line">      enableLookups=&quot;false&quot;  </span><br><span class="line">          URIEncoding=&quot;UTF-8&quot; /&gt;  </span><br><span class="line"></span><br><span class="line">protocol设置：</span><br><span class="line">Tomcat 8 设置 nio2 更好：org.apache.coyote.http11.Http11Nio2Protocol（无用则配置下面方式）</span><br><span class="line">Tomcat 6、7 设置 nio 更好：org.apache.coyote.http11.Http11NioProtocol</span><br><span class="line"></span><br><span class="line">enableLookups： 是否反查域名【禁用DNS查询】，默认值为true。为了提高处理能力，应配置为false</span><br><span class="line"></span><br><span class="line">connnectionTimeout：  通常可配置为30000毫秒。</span><br><span class="line"></span><br><span class="line">maxKeepAliveRequests：maxKeepAliveRequests=&quot;1&quot;， 避免tomcat产生大量的TIME_WAIT连接，从而从一定程度上避免tomcat假死</span><br><span class="line"></span><br><span class="line">在Nginx+tomcat的架构中，禁用AJP连接器   注释代码即可</span><br></pre></td></tr></table></figure>
+<p><strong>5.3组件优化（不了解）</strong></p>
+<blockquote>
+<p>Tomcat 连接器的三种方式： bio、nio 和 apr，三种方式性能差别很大，apr 的性能最优， bio 的性能最差。而 Tomcat 7 使用的 Connector  默认就启用的 Apr 协议，但需要系统安装 Apr 库，否则就会使用 bio 方式</p>
+</blockquote>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/zhi.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wei.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/21/随笔-生活/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/21/随笔-生活/">随笔-生活</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/21/servlet与ajax json数据交互/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/21/servlet与ajax json数据交互/">servlet与ajax交互</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -238,251 +343,142 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">servlet</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">ajax</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">jvm参数详解</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
 
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/02/13/JVM参数描述以及Tomcat简单调优/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/21/poi工具类/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/14/httpClient工具类 /" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">httpClient工具类</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/21/poi工具类/">poi导出excel工具类</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">poi</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-堆内存参数"><span class="toc-number">1.</span> <span class="toc-text">1. 堆内存参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-栈内存配置"><span class="toc-number">2.</span> <span class="toc-text">2.栈内存配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-方法区和直接内存"><span class="toc-number">3.</span> <span class="toc-text">3.方法区和直接内存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-垃圾回收和算法"><span class="toc-number">4.</span> <span class="toc-text">4.垃圾回收和算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Tomcat调优"><span class="toc-number">5.</span> <span class="toc-text">5.Tomcat调优</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/21/微信第三方登录App或者网站/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/21/微信第三方登录App或者网站/">java微信授权登录</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">微信登录</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/21/（Git的应用）本地库项目上传到github/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/21/（Git的应用）本地库项目上传到github/">git上传项目到git社区</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">github</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/21/spring的Quartz配置/" class="archive-article-date">
-  	<time datetime="2018-04-21T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/21/spring的Quartz配置/">springd的Quartz实现定时任务</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Quartz</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/18/你好，欢迎访问我的博客/" class="archive-article-date">
-  	<time datetime="2018-04-18T14:54:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-18</time>
-</a>
-        </div>
-    	 
+  <div id="gitment-ctn"></div> 
+<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
+<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://yoursite.com/2019/02/13/JVM参数描述以及Tomcat简单调优/",
+  owner: 'p180j',
+  repo: 'p180j.github.io',
+  oauth: {
+    client_id: 'f08733074182ded4e7c9',
+    client_secret: '895c5e5cbe5c2b1a98371e8628457b5cc7f33707',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/18/你好，欢迎访问我的博客/">你好，欢迎访问我的第一个博客</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -514,8 +510,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
