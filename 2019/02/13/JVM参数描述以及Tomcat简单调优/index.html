@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="KeepGoing博客">
 <meta property="og:description" content="1. 堆内存参数">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190121212630248.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190212112548854.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190212112605669.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-02-13T12:00:11.206Z">
+<meta property="og:image" content="http://yoursite.com/2019/02/13/JVM参数描述以及Tomcat简单调优/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/13/JVM参数描述以及Tomcat简单调优/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/13/JVM参数描述以及Tomcat简单调优/3.png">
+<meta property="og:updated_time" content="2019-02-27T13:28:59.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM运行区参数详解">
 <meta name="twitter:description" content="1. 堆内存参数">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190121212630248.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/13/JVM参数描述以及Tomcat简单调优/1.png">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -196,7 +196,7 @@
 <p>在 写参数前，先了解 + 在JVM中表示启用一个功能，— 表示禁用一个功能 ；-XX 对于系统级别的配置，而非 -XX基本对于应用层面上的配置<br><strong>1.1 GC常用参数</strong></p>
 </blockquote>
 <blockquote>
-<p>-XX：+PrintGC  虚拟机启动后，GC打印日志<br>-XX：+UserSerialGC 配置串行回收器<br>-XX：+PrintGCDetails  显示各区的详细日志信息<br>-XX:  +PrintCommandLineFlags  隐性或显性传给虚拟机参数的输出<br><img src="https://img-blog.csdnimg.cn/20190121212630248.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>-XX：+PrintGC  虚拟机启动后，GC打印日志<br>-XX：+UserSerialGC 配置串行回收器<br>-XX：+PrintGCDetails  显示各区的详细日志信息<br>-XX:  +PrintCommandLineFlags  隐性或显性传给虚拟机参数的输出<br><img src="/2019/02/13/JVM参数描述以及Tomcat简单调优/1.png" alt="在这里插入图片描述"></p>
 </blockquote>
 <p><strong>1.2堆常用参数</strong></p>
 <blockquote>
@@ -284,8 +284,8 @@
 </blockquote>
 <h2 id="5-Tomcat调优"><a href="#5-Tomcat调优" class="headerlink" title="5.Tomcat调优"></a>5.Tomcat调优</h2><p><strong>5.1 jvm层次调优</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">修改TOMCAT_HOME/bin/catalina.sh, 一定加在catalina.bat最前面。</span><br><span class="line">JAVA_OPTS=&quot;-server -Xms800m -Xmx800m -XX:PermSize=512m -XX:MaxPermSize=1024m -XX:MaxNewSize=512m&quot;</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20190212112548854.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p><img src="https://img-blog.csdnimg.cn/20190212112605669.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>5.2 配置优化</strong></p>
+<p><img src="/2019/02/13/JVM参数描述以及Tomcat简单调优/2.png" alt="在这里插入图片描述"></p>
+<p><img src="/2019/02/13/JVM参数描述以及Tomcat简单调优/3.png" alt="在这里插入图片描述"><br><strong>5.2 配置优化</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">修改TOMCAT_HOME/conf/server.xml</span><br><span class="line">原生：</span><br><span class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;  </span><br><span class="line">           connectionTimeout=&quot;20000&quot;  </span><br><span class="line">           redirectPort=&quot;8443&quot; /&gt;  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//1、-----打开Tomcat默认被注释的连接池配置-------------------------</span><br><span class="line">&lt;!--</span><br><span class="line">&lt;Executor name=&quot;tomcatThreadPool&quot; namePrefix=&quot;catalina-exec-&quot;</span><br><span class="line">maxThreads=&quot;150&quot; minSpareThreads=&quot;4&quot;/&gt;</span><br><span class="line">--&gt;</span><br><span class="line"></span><br><span class="line">//2、-----配置Tomcat连接参数------------------------</span><br><span class="line">在Connector中指定使用共享线程池</span><br><span class="line">&lt;Connector port=&quot;8080&quot;   </span><br><span class="line">          protocol=&quot;org.apache.coyote.http11.Http11NioProtocol&quot;   </span><br><span class="line">          maxThreads=&quot;1000&quot;   </span><br><span class="line">          minSpareThreads=&quot;100&quot;   </span><br><span class="line">          acceptCount=&quot;1000&quot;  </span><br><span class="line">          maxConnections=&quot;1000&quot;  </span><br><span class="line">          connectionTimeout=&quot;20000&quot;   </span><br><span class="line">          maxHttpHeaderSize=&quot;8192&quot;  </span><br><span class="line">          tcpNoDelay=&quot;true&quot;  </span><br><span class="line">          compression=&quot;on&quot;  </span><br><span class="line">          compressionMinSize=&quot;2048&quot;  </span><br><span class="line">          disableUploadTimeout=&quot;true&quot;  </span><br><span class="line">          redirectPort=&quot;8443&quot;  </span><br><span class="line">      enableLookups=&quot;false&quot;  </span><br><span class="line">          URIEncoding=&quot;UTF-8&quot; /&gt;  </span><br><span class="line"></span><br><span class="line">protocol设置：</span><br><span class="line">Tomcat 8 设置 nio2 更好：org.apache.coyote.http11.Http11Nio2Protocol（无用则配置下面方式）</span><br><span class="line">Tomcat 6、7 设置 nio 更好：org.apache.coyote.http11.Http11NioProtocol</span><br><span class="line"></span><br><span class="line">enableLookups： 是否反查域名【禁用DNS查询】，默认值为true。为了提高处理能力，应配置为false</span><br><span class="line"></span><br><span class="line">connnectionTimeout：  通常可配置为30000毫秒。</span><br><span class="line"></span><br><span class="line">maxKeepAliveRequests：maxKeepAliveRequests=&quot;1&quot;， 避免tomcat产生大量的TIME_WAIT连接，从而从一定程度上避免tomcat假死</span><br><span class="line"></span><br><span class="line">在Nginx+tomcat的架构中，禁用AJP连接器   注释代码即可</span><br></pre></td></tr></table></figure>
 <p><strong>5.3组件优化（不了解）</strong></p>
 <blockquote>
@@ -413,6 +413,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2019/02/27/DistributionLock/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          分布式锁
+        
+      </div>
+    </a>
   
   
     <a href="/2019/01/14/httpClient工具类 /" id="article-nav-older" class="article-nav-link-wrap">
@@ -596,6 +605,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">分布式锁</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">jvm参数详解</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">maven</a>
               </li>
              
@@ -604,7 +621,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jvm参数详解</a>
+                <a href="javascript:void(0)" class="js-tag color3">java虚拟机</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -612,15 +629,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">httpClient</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">aliPay</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">java虚拟机</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">httpClient</a>
+                <a href="javascript:void(0)" class="js-tag color2">log4j2</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -632,7 +649,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">log4j2</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -645,10 +662,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -676,11 +689,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
+                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
+                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
               </li>
              
               <li class="article-tag-list-item">
