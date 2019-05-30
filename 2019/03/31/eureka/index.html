@@ -16,17 +16,17 @@
 <meta property="og:site_name" content="KeepGoing博客">
 <meta property="og:description" content="1. eureka概念 在分布式中，可以使用Dubbo框架，使用的注册中心zookeeper实现服务的注册与调用">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190322195752659.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190322201436990.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190322201617960.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190322202905606.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190322203212889.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190322203510404.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2019-03-31T14:49:39.374Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/eureka/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/eureka/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/eureka/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/eureka/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/eureka/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/31/eureka/6.png">
+<meta property="og:updated_time" content="2019-05-30T14:33:07.652Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Eureka配置">
 <meta name="twitter:description" content="1. eureka概念 在分布式中，可以使用Dubbo框架，使用的注册中心zookeeper实现服务的注册与调用">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190322195752659.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/31/eureka/1.png">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -194,9 +194,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p> <strong>1. eureka概念</strong><br> 在分布式中，可以使用Dubbo框架，使用的注册中心zookeeper实现服务的注册与调用<a id="more"></a>，在此不做过多解释；而在spring cloud中可以使用eureka，虽然后面停更了，但是说1.X版本已经够用了。Eureka由两个组件组成：Eureka服务器和Eureka客户端。Eureka服务器用作服务注册服务器。Eureka客户端是一个java客户端，用来简化与服务器的交互、作为轮询负载均衡器，并提供服务的故障切换支持。Netflix在其生产环境中使用的是另外的客户端，它提供基于流量、资源利用率以及出错状态的加权负载均衡，如下图所示：<br><img src="https://img-blog.csdnimg.cn/20190322195752659.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt=""><br>但是今天要做的是配置双注册中心，实现eureka高可用。</p>
+        <p> <strong>1. eureka概念</strong><br> 在分布式中，可以使用Dubbo框架，使用的注册中心zookeeper实现服务的注册与调用<a id="more"></a>，在此不做过多解释；而在spring cloud中可以使用eureka，虽然后面停更了，但是说1.X版本已经够用了。Eureka由两个组件组成：Eureka服务器和Eureka客户端。Eureka服务器用作服务注册服务器。Eureka客户端是一个java客户端，用来简化与服务器的交互、作为轮询负载均衡器，并提供服务的故障切换支持。Netflix在其生产环境中使用的是另外的客户端，它提供基于流量、资源利用率以及出错状态的加权负载均衡，如下图所示：<br><img src="/2019/03/31/eureka/1.png" alt=""><br>但是今天要做的是配置双注册中心，实现eureka高可用。</p>
 <p><strong>2. 创建eureka-server服务端</strong></p>
-<p><strong>2.1使用idea创建项目</strong><br><img src="https://img-blog.csdnimg.cn/20190322201436990.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>2.2 使用<a href="https://start.spring.io/网址" target="_blank" rel="noopener">https://start.spring.io/网址</a></strong><br><img src="https://img-blog.csdnimg.cn/20190322201617960.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>2.3 加入pom依赖</strong></p>
+<p><strong>2.1使用idea创建项目</strong><br><img src="/2019/03/31/eureka/2.png" alt="在这里插入图片描述"><br><strong>2.2 使用<a href="https://start.spring.io/网址" target="_blank" rel="noopener">https://start.spring.io/网址</a></strong><br><img src="/2019/03/31/eureka/3.png" alt="在这里插入图片描述"><br><strong>2.3 加入pom依赖</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;parent&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;2.1.3.RELEASE&lt;/version&gt;</span><br><span class="line">	&lt;relativePath/&gt; </span><br><span class="line">&lt;!-- lookup parent from repository --&gt;</span><br><span class="line">&lt;/parent&gt;</span><br><span class="line">&lt;groupId&gt;com.springCloud&lt;/groupId&gt;</span><br><span class="line">&lt;artifactId&gt;eureka&lt;/artifactId&gt;</span><br><span class="line">&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;</span><br><span class="line">&lt;name&gt;eureka&lt;/name&gt;</span><br><span class="line">&lt;description&gt;Demo project for Spring Boot&lt;/description&gt;</span><br><span class="line"></span><br><span class="line">&lt;properties&gt;</span><br><span class="line">	&lt;java.version&gt;1.8&lt;/java.version&gt;</span><br><span class="line">	&lt;spring-cloud.version&gt;Greenwich.SR1&lt;/spring-cloud.version&gt;</span><br><span class="line">&lt;/properties&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line">	&lt;!--加入服务认证(密码),需要引入security--&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-cloud-starter-netflix-eureka-server&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
 <p><strong>2.4 配置两个配置文件</strong>（application-peer1.properties、application-peer2.properties）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">----application-peer1.properties------</span><br><span class="line">#作为peer1服务中心的配置，并将serviceUrl指向peer2</span><br><span class="line"></span><br><span class="line">#设置服务名称、端口号</span><br><span class="line">spring.application.name=eureka-server</span><br><span class="line">server.port=8000</span><br><span class="line">eureka.instance.hostname=peer1</span><br><span class="line"></span><br><span class="line">#表示是否将自己注册到Eureka Server，默认为true。</span><br><span class="line">eureka.client.register-with-eureka=true</span><br><span class="line"></span><br><span class="line">#表示是否从Eureka Server获取注册信息，默认为true。</span><br><span class="line">eureka.client.fetch-registry=true</span><br><span class="line">eureka.client.serviceUrl.defaultZone=http://peer2:8001/eureka/</span><br><span class="line"></span><br><span class="line">#设置eureka的登录密码</span><br><span class="line">spring.security.user.name=admin</span><br><span class="line">spring.security.user.password=admin</span><br></pre></td></tr></table></figure>
@@ -206,11 +206,11 @@
 <p>注意：由于eureka.client.serviceUrl.defaultZone使用的是域名访问，host文件中添加本地域名映射<br>（路径：C:\Windows\System32\drivers\etc）</p>
 <pre><code>127.0.0.1 peer1  
 127.0.0.1 peer2
-</code></pre><p><strong>2.5配置eureka注解</strong><br>@EnableEurekaServer<br><img src="https://img-blog.csdnimg.cn/20190322202905606.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>关于解决Request execution failure with status code 401; retrying on another server if available问题，只需在启动类中添加如下代码：</p>
+</code></pre><p><strong>2.5配置eureka注解</strong><br>@EnableEurekaServer<br><img src="/2019/03/31/eureka/4.png" alt="在这里插入图片描述"><br>关于解决Request execution failure with status code 401; retrying on another server if available问题，只需在启动类中添加如下代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootApplication</span><br><span class="line">@EnableEurekaServer</span><br><span class="line">public class EurekaApplication &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		SpringApplication.run(EurekaApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">	@EnableWebSecurity</span><br><span class="line">	static class WebSecurityConfig extends WebSecurityConfigurerAdapter &#123;</span><br><span class="line">		@Override</span><br><span class="line">		protected void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line">			http.csrf().ignoringAntMatchers(&quot;/eureka/**&quot;);</span><br><span class="line">			super.configure(http);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>至此，配置已经完成。</p>
-<p><strong>3.测试</strong><br><strong>3.1 启动eureka服务端</strong><br><img src="https://img-blog.csdnimg.cn/20190322203212889.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>另一个是peer1，就可以启动两个配置文件实现双注册中心。</p>
-<p><strong>界面展示</strong><br><img src="https://img-blog.csdnimg.cn/20190322203510404.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Blbmdqd2h4,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>在此就可可以看到两个注册中心已经注册完成，并且在DS中可以看到另一个注册中心的域名，有问题欢迎提问指教。</p>
+<p><strong>3.测试</strong><br><strong>3.1 启动eureka服务端</strong><br><img src="/2019/03/31/eureka/5.png" alt="在这里插入图片描述"><br>另一个是peer1，就可以启动两个配置文件实现双注册中心。</p>
+<p><strong>界面展示</strong><br><img src="/2019/03/31/eureka/6.png" alt="在这里插入图片描述"><br>在此就可可以看到两个注册中心已经注册完成，并且在DS中可以看到另一个注册中心的域名，有问题欢迎提问指教。</p>
 <p> <a href="https://github.com/p180j/spring-cloud-example.git" target="_blank" rel="noopener"> spring-cloud系列之 eureka示例代码-github</a></p>
 
       
@@ -510,10 +510,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">分布式锁</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
@@ -530,19 +526,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">JSAPI</a>
+                <a href="javascript:void(0)" class="js-tag color5">分布式锁</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+                <a href="javascript:void(0)" class="js-tag color2">config</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">java虚拟机</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">jvm参数详解</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -554,7 +546,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">config</a>
+                <a href="javascript:void(0)" class="js-tag color1">JSAPI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Eureka</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -562,7 +562,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Eureka</a>
+                <a href="javascript:void(0)" class="js-tag color3">mybatis-generator</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">jvm参数详解</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">httpClient</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -578,19 +586,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">httpClient</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis-generator</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">log4j2</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -602,11 +598,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -618,6 +610,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">rabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">消息中间件</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">shiro</a>
               </li>
              
@@ -626,7 +626,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JavaMailSender</a>
+                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -634,15 +634,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">RabbitTemplate</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -654,7 +646,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">线程同步工具</a>
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -666,7 +662,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+                <a href="javascript:void(0)" class="js-tag color2">线程同步工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JavaMailSender</a>
               </li>
             
             <div class="clearfix"></div>
