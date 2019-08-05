@@ -6,20 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>logj2日志保存 | KeepGoing博客</title>
+  <title>Tag: CORS跨域 | KeepGoing博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. log4j和log4j2格式区别  log4j2是log4j的升级版，log4j 2.0与以往的1.x有一个明显的不同，其配置文件只能采用.xml, .json或者 .jsn。在默认情况下">
-<meta name="keywords" content="博客,java,maven,log4j2">
-<meta property="og:type" content="article">
-<meta property="og:title" content="logj2日志保存">
-<meta property="og:url" content="http://yoursite.com/2018/09/18/log4j2日志保存/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="KeepGoing博客">
+<meta property="og:url" content="http://yoursite.com/tags/CORS跨域/index.html">
 <meta property="og:site_name" content="KeepGoing博客">
-<meta property="og:description" content="1. log4j和log4j2格式区别  log4j2是log4j的升级版，log4j 2.0与以往的1.x有一个明显的不同，其配置文件只能采用.xml, .json或者 .jsn。在默认情况下">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-11-21T13:12:38.154Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="logj2日志保存">
-<meta name="twitter:description" content="1. log4j和log4j2格式区别  log4j2是log4j的升级版，log4j 2.0与以往的1.x有一个明显的不同，其配置文件只能采用.xml, .json或者 .jsn。在默认情况下">
+<meta name="twitter:title" content="KeepGoing博客">
   
     <link rel="alternative" href="/atom.xml" title="KeepGoing博客" type="application/atom+xml">
   
@@ -162,101 +157,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-log4j2日志保存" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      logj2日志保存
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/08/05/CORS/" class="archive-article-date">
+  	<time datetime="2019-08-05T15:17:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-05</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/08/05/CORS/">CORS跨域问题</a>
     </h1>
   
 
-        
-        <a href="/2018/09/18/log4j2日志保存/" class="archive-article-date">
-  	<time datetime="2018-09-18T13:26:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-18</time>
-</a>
-		
-		<span class="archive-article-date">
-			阅读量 <span id="busuanzi_value_page_pv"></span>
-		</span>
-        
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>1. log4j和log4j2格式区别</strong></p>
-<blockquote>
-<p>log4j2是log4j的升级版，log4j 2.0与以往的1.x有一个明显的不同，其配置文件只能采用.xml, .json或者 .jsn。在默认情况下<a id="more"></a>，系统选择           configuration文件的优先级如下：（classpath为scr文件夹）：<br>1.classpath下名为 log4j-test.json 或者log4j-test.jsn文件<br>2.classpath下名为 log4j2-test.xml<br>3.classpath下名为 log4j.json 或者 log4j.jsn文件<br>4.classpath下名为 log4j2.xml<br>必须注意.xml 文件的文件名为log4j2</p>
-</blockquote>
-<p><strong> 2. 加载方式不同 （web.xml）</strong></p>
-<blockquote>
-<ul>
-<li>log4j  配置方式</li>
-<li>log4j2 配置方式（servlet 2.5以上）</li>
-</ul>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;listener&gt;</span><br><span class="line">    &lt;listener-class&gt;org.springframework.web.util.Log4jConfigListener&lt;/listener-class&gt;</span><br><span class="line">&lt;/listener&gt;</span><br><span class="line">&lt;context-param&gt;</span><br><span class="line">    &lt;param-name&gt;log4jConfigLocation&lt;/param-name&gt;</span><br><span class="line">    &lt;param-value&gt;classpath:config/log4j.properties&lt;/param-value&gt;</span><br><span class="line">&lt;/context-param&gt;</span><br><span class="line">&lt;context-param&gt;</span><br><span class="line">    &lt;param-name&gt;log4jRefreshInterval&lt;/param-name&gt;</span><br><span class="line">    &lt;param-value&gt;60000&lt;/param-value&gt;</span><br><span class="line">&lt;/context-param&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 指定监听器加载的log4j2配置文件 --&gt;</span><br><span class="line">&lt;listener&gt;</span><br><span class="line">    &lt;listener-class&gt;org.apache.logging.log4j.web.Log4jServletContextListener&lt;/listener-class&gt;</span><br><span class="line">  &lt;/listener&gt;</span><br><span class="line">  &lt;context-param&gt;</span><br><span class="line">      &lt;param-name&gt;isLog4jAutoInitializationDisabled&lt;/param-name&gt;</span><br><span class="line">      &lt;param-value&gt;true&lt;/param-value&gt;</span><br><span class="line">  &lt;/context-param&gt;</span><br></pre></td></tr></table></figure>
-<p><strong> lo4j2的配置</strong></p>
-<blockquote>
-<p> <strong>1. lo4j2参数说明</strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root标签为log的默认输出形式，如果一个类的log没有在loggers中明确指定其输出lever与格式，那么就会采用root中定义的格式。</span><br><span class="line">Appenders标签，其实就是输出，有各种扩展组件，主要类型有：</span><br><span class="line">ConsoleAppender   输出结果到控制台</span><br><span class="line">FileAppender  输出结果到指定文件</span><br><span class="line">RollingFileAppender   同样输出结果到文件，区别是用一个buffer，因此速度会快点</span><br><span class="line">这里介绍下RollingRandomessFile 的相关属性：</span><br><span class="line">name：表示该appender的名称</span><br><span class="line">fileName：表示输出的文件的路径</span><br><span class="line">append：是否追加，true表示追加内容到所在的日志，false表示每次都覆盖</span><br><span class="line">filePattern：表示当日志到达指定的大小或者时间，产生新日志时，旧日志的命名路径。</span><br><span class="line">PatternLayout：和log4j1一样，指定输出日志的格式</span><br><span class="line">Policies：策略，表示日志什么时候应该产生新日志，可以有时间策略和大小策略等</span><br><span class="line">ThresholdFilter ：过滤器，如果你要选择控制台只能输出ERROR以上的类别，你就用ThresholdFilter，把level设置成ERROR，onMatch=&quot;ACCEPT&quot; onMismatch=&quot;DENY&quot; 的意思是匹配就接受，否则直接拒绝</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>2. lo4j2 具体配置（resource 路径下）</strong></p>
-<ul>
-<li>java项目</li>
-<li>web项目 （${sys:catalina.home} 是tomcat下的根目录）</li>
-</ul>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!--  级别：OFF &gt; FATAL &gt; ERROR &gt; WARN &gt; INFO &gt; DEBUG &gt; TRACE &gt; ALL --&gt;</span><br><span class="line">&lt;configuration status=&quot;OFF&quot;&gt;</span><br><span class="line">	&lt;appenders&gt;</span><br><span class="line">		&lt;Console name=&quot;Console&quot; target=&quot;SYSTEM_OUT&quot;&gt;</span><br><span class="line">			&lt;ThresholdFilter level=&quot;trace&quot; onMatch=&quot;ACCEPT&quot;</span><br><span class="line">				onMismatch=&quot;DENY&quot; /&gt;</span><br><span class="line">			&lt;PatternLayout</span><br><span class="line">				pattern=&quot;%d&#123;HH:mm:ss.SSS&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot; /&gt;</span><br><span class="line">		&lt;/Console&gt;</span><br><span class="line">		&lt;File name=&quot;log&quot; fileName=&quot;target/test.log&quot; append=&quot;false&quot;&gt;</span><br><span class="line">			&lt;PatternLayout</span><br><span class="line">				pattern=&quot;%d&#123;HH:mm:ss.SSS&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot; /&gt;</span><br><span class="line">		&lt;/File&gt;</span><br><span class="line">		&lt;File name=&quot;requestReport&quot; fileName=&quot;target/report_request.log&quot;</span><br><span class="line">			append=&quot;false&quot;&gt;</span><br><span class="line">			&lt;PatternLayout</span><br><span class="line">				pattern=&quot;%d&#123;HH:mm:ss.SSS&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot; /&gt;</span><br><span class="line">		&lt;/File&gt;</span><br><span class="line">		&lt;RollingFile name=&quot;RollingFile&quot; fileName=&quot;logs/payrule.log&quot;</span><br><span class="line">			filePattern=&quot;logs/$$&#123;date:yyyy-MM&#125;/payrule-%d&#123;yyyy-MM-dd&#125;.log&quot;&gt;</span><br><span class="line">			&lt;PatternLayout</span><br><span class="line">				pattern=&quot;%d&#123;yyyy.MM.dd &apos;at&apos; HH:mm:ss z&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot; /&gt;</span><br><span class="line">			&lt;!-- 按天生成日志文件 --&gt;</span><br><span class="line">			&lt;Policies&gt;</span><br><span class="line">				&lt;TimeBasedTriggeringPolicy modulate=&quot;true&quot;</span><br><span class="line">					interval=&quot;1&quot; /&gt;</span><br><span class="line">			&lt;/Policies&gt;</span><br><span class="line">		&lt;/RollingFile&gt;</span><br><span class="line">	&lt;/appenders&gt;</span><br><span class="line">	&lt;loggers&gt;</span><br><span class="line">		&lt;root level=&quot;info&quot;&gt;</span><br><span class="line">			&lt;appender-ref ref=&quot;RollingFile&quot; /&gt;</span><br><span class="line">			&lt;appender-ref ref=&quot;Console&quot; /&gt;</span><br><span class="line">		&lt;/root&gt;</span><br><span class="line">		&lt;logger name=&quot;report&quot; level=&quot;trace&quot; additivity=&quot;false&quot;&gt;</span><br><span class="line">			&lt;appender-ref ref=&quot;requestReport&quot;&gt;&lt;/appender-ref&gt;</span><br><span class="line">		&lt;/logger&gt;</span><br><span class="line">	&lt;/loggers&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!--  级别： OFF &gt; FATAL &gt; ERROR &gt; WARN &gt; INFO &gt; DEBUG &gt; TRACE &gt; ALL --&gt;</span><br><span class="line">&lt;configuration status=&quot;INFO&quot;&gt;</span><br><span class="line">    &lt;appenders&gt;</span><br><span class="line">        &lt;Console name=&quot;Console&quot; target=&quot;SYSTEM_OUT&quot;&gt;</span><br><span class="line">            &lt;ThresholdFilter level=&quot;trace&quot; onMatch=&quot;ACCEPT&quot; onMismatch=&quot;DENY&quot;/&gt;</span><br><span class="line">            &lt;PatternLayout pattern=&quot;%d&#123;HH:mm:ss.SSS&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot;/&gt;</span><br><span class="line">        &lt;/Console&gt;</span><br><span class="line">        &lt;File name=&quot;log&quot; fileName=&quot;target/test.log&quot; append=&quot;false&quot;&gt;</span><br><span class="line">            &lt;PatternLayout pattern=&quot;%d&#123;HH:mm:ss.SSS&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot;/&gt;</span><br><span class="line">        &lt;/File&gt;</span><br><span class="line">        &lt;File name=&quot;requestReport&quot; fileName=&quot;target/report_request.log&quot; append=&quot;false&quot;&gt;</span><br><span class="line">            &lt;PatternLayout pattern=&quot;%d&#123;HH:mm:ss.SSS&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot;/&gt;</span><br><span class="line">        &lt;/File&gt;</span><br><span class="line">        &lt;RollingFile name=&quot;RollingFile&quot; fileName=&quot;$&#123;sys:catalina.home&#125;/sinopaylog/wechatpay/wechatpay.log&quot;</span><br><span class="line">                     filePattern=&quot;$&#123;sys:catalina.home&#125;/sinopaylog/wechatpay/$$&#123;date:yyyy-MM&#125;/wechatpay-%d&#123;yyyy-MM-dd&#125;.log&quot;&gt;</span><br><span class="line">            &lt;PatternLayout pattern =&quot;%d&#123;yyyy.MM.dd &apos;at&apos; HH:mm:ss z&#125; %-5level %class&#123;36&#125; %L %M - %msg%xEx%n&quot;/&gt;</span><br><span class="line">            &lt;!-- 按天生成日志文件 --&gt;</span><br><span class="line">          &lt;Policies&gt;</span><br><span class="line">    			&lt;TimeBasedTriggeringPolicy modulate=&quot;true&quot; interval=&quot;1&quot;/&gt;</span><br><span class="line">    		&lt;/Policies&gt;</span><br><span class="line">        &lt;/RollingFile&gt;</span><br><span class="line">    &lt;/appenders&gt;</span><br><span class="line">    &lt;loggers&gt;</span><br><span class="line">          &lt;logger name=&quot;org.springframework&quot; level=&quot;INFO&quot;&gt;&lt;/logger&gt;</span><br><span class="line">         &lt;logger name=&quot;org.mybatis&quot; level=&quot;INFO&quot;&gt;&lt;/logger&gt;</span><br><span class="line">        &lt;root level=&quot;DEBUG&quot;&gt;</span><br><span class="line">            &lt;appender-ref ref=&quot;RollingFile&quot;/&gt;</span><br><span class="line">            &lt;appender-ref ref=&quot;Console&quot;/&gt;</span><br><span class="line">        &lt;/root&gt;</span><br><span class="line">    &lt;/loggers&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>顺便贴上log4j的配置文件已备以后使用</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">log4j.rootLogger=$&#123;log4j.leve&#125;,A1,DRF</span><br><span class="line">log4j.appender.A1=org.apache.log4j.ConsoleAppender</span><br><span class="line">log4j.appender.A1.layout=org.apache.log4j.PatternLayout</span><br><span class="line"># log4j.appender.A1.layout.ConversionPattern=%d %5p [%t] (%F:%L) - %m%n</span><br><span class="line">log4j.appender.A1.layout.ConversionPattern=%d %5p [%F:%L] : %m%n</span><br><span class="line"></span><br><span class="line">log4j.appender.DRF=org.apache.log4j.DailyRollingFileAppender</span><br><span class="line">log4j.appender.DRF.Threshold=$&#123;log4j.leve&#125;</span><br><span class="line">log4j.appender.DRF.DatePattern=&apos;.&apos;yyyy-MM-dd</span><br><span class="line">log4j.appender.DRF.File=logs/sinopay-service-payrules.log</span><br><span class="line">log4j.appender.DRF.Append=true</span><br><span class="line">log4j.appender.DRF.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.DRF.layout.ConversionPattern=[%-5p][%d&#123;yyyyMMdd HH:mm:ss,SSS&#125;][%C&#123;1&#125;:%L] %m%n</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">###\u8F93\u51FASQL </span><br><span class="line">log4j.logger.com.ibatis=$&#123;log4j.ale&#125;</span><br><span class="line">log4j.logger.com.ibatis.common.jdbc.SimpleDataSource=$&#123;log4j.ale&#125;</span><br><span class="line">log4j.logger.com.ibatis.common.jdbc.ScriptRunner=$&#123;log4j.leve&#125;</span><br><span class="line">log4j.logger.com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate=$&#123;log4j.ale&#125;</span><br><span class="line">log4j.logger.java.sql.Connection=$&#123;log4j.ale&#125;</span><br><span class="line">log4j.logger.java.sql.Statement=$&#123;log4j.ale&#125;</span><br><span class="line">log4j.logger.java.sql.PreparedStatement=$&#123;log4j.ale&#125;</span><br><span class="line">org.springframework = $&#123;log4j.ale&#125;</span><br><span class="line">org.apache.zookeeper = $&#123;log4j.ale&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/zhi.png">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/wei.png">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -270,155 +200,25 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">maven</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">log4j2</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CORS跨域</a>
         		</li>
       		
 		</ul>
 	</div>
 
+          
 
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/09/18/log4j2日志保存/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2018/09/20/关于解决WEB-INF的JSP文件引webRoot下的Js、css和图片的问题 /" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          WEB-INF的JSP文件引webRoot下的Js、css和图片的问题
-        
-      </div>
-    </a>
   
   
-    <a href="/2018/09/06/spring集成kfka实现消息队列/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">spring 搭建kfkaTemlate实现消息发送</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    目录，不存在的…
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
-  <div id="gitment-ctn"></div> 
-<link rel="stylesheet" href="//imsun.github.io/gitment/style/default.css">
-<script src="//imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-  id: "http://yoursite.com/2018/09/18/log4j2日志保存/",
-  owner: 'p180j',
-  repo: 'p180j.github.io',
-  oauth: {
-    client_id: 'f08733074182ded4e7c9',
-    client_secret: '895c5e5cbe5c2b1a98371e8628457b5cc7f33707',
-  },
-})
-gitment.render('gitment-ctn')
-</script>
-  
+    
 
 
           </div>
@@ -450,9 +250,9 @@ gitment.render('gitment-ctn')
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
